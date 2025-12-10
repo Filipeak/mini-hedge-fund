@@ -19,7 +19,7 @@ public class CSVMarketDataProvider extends MarketDataProvider {
         try (BufferedReader breader = new BufferedReader(new FileReader(file))) {
             breader.readLine();
             String line = breader.readLine();
-            while ((line != null)) {
+            while (line != null) {
                 String[] data = line.split(splitBy);
                 MarketDataPayload mdp = new MarketDataPayload(
                         (int) LocalDateTime.parse(data[0], formatter).toEpochSecond(ZoneOffset.UTC),

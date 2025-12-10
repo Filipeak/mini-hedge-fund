@@ -9,6 +9,7 @@ public abstract class MarketDataProvider {
     public abstract void getData();
 
     public void addObserver(MarketDataObserver marketDataObserver) {
+     if (!observers.contains(marketDataObserver))
         observers.add(marketDataObserver);
     }
 
