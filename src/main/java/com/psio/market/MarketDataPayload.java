@@ -6,8 +6,9 @@ public class MarketDataPayload {
     public float close;
     public float high;
     public float low;
-    public int volume;
-    public MarketDataPayload(int timestamp, float open, float close, float high, float low, int volume){
+    public double volume;
+
+    public MarketDataPayload(int timestamp, float open, float close, float high, float low, double volume) {
         this.timestamp = timestamp;
         this.open = open;
         this.close = close;
