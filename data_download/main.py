@@ -48,7 +48,12 @@ df = pd.DataFrame(raw, columns=[
     "taker_buy_base", "taker_buy_quote", "ignore"
 ])
 df = df[["timestamp", "open", "close", "high", "low", "volume"]]
-df["timestamp"] = pd.to_datetime(df["timestamp"], unit="ms")
+df["timestamp"] = df["timestamp"].astype("int64")
+df["open"] = df["open"].astype(float)
+df["close"] = df["close"].astype(float)
+df["high"] = df["high"].astype(float)
+df["low"] = df["low"].astype(float)
+df["volume"] = df["volume"].astype(float)
 
 df.to_csv("data.csv", index=False)
 print("Saved to data.csv")
