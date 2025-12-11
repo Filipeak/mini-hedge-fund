@@ -49,21 +49,19 @@ public class AppMenu {
                 List<PortfolioData> data = dataLoader.loadDataFromFile(file);
                 portfolioChart.updateData(data);
             } catch (Exception e) {
-                showErrorDialog("Błąd odczytu pliku", "Plik jest niepoprawny lub uszkodzony.\n" + e.getMessage());
+                showErrorDialog("Plik jest niepoprawny lub uszkodzony.\n" + e.getMessage());
             }
         }
     }
 
-    private void showErrorDialog(String title, String content) {
+    private void showErrorDialog(String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
+        alert.setTitle("Błąd odczytu pliku");
         alert.setHeaderText("Nie udało się wczytać danych");
         alert.setContentText(content);
 
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(
-                Objects.requireNonNull(getClass().getResource(CryptoPortfolioApp.CSS_PATH)).toExternalForm()
-        );
+        dialogPane.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CryptoPortfolioApp.CSS_PATH)).toExternalForm());
         dialogPane.getStyleClass().add("my-dialog");
 
         alert.showAndWait();
@@ -76,9 +74,7 @@ public class AppMenu {
         alert.setContentText("Bubuś");
 
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(
-                Objects.requireNonNull(getClass().getResource(CryptoPortfolioApp.CSS_PATH)).toExternalForm()
-        );
+        dialogPane.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CryptoPortfolioApp.CSS_PATH)).toExternalForm());
         dialogPane.getStyleClass().add("my-dialog");
 
         alert.showAndWait();
