@@ -1,112 +1,130 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.2.4">
   <diagram name="Strona-1" id="4IEWQQ8Vejv4kjTBxXXD">
-    <mxGraphModel dx="1224" dy="1110" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4000" pageHeight="2000" math="0" shadow="0">
+    <mxGraphModel dx="3060" dy="2775" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4000" pageHeight="2000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="DsQs2UAFvfVbpWphkuw8-2" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;&lt;i&gt;MarketDataProvider&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;i&gt;getData(): void&lt;/i&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ addObserver(MarketDataObserver): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ removeObserver(MarketDataObserver): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# notifyObservers(MarketDataPayload): void&lt;/p&gt;" vertex="1">
-          <mxGeometry height="160" width="270" x="300" y="240" as="geometry" />
+        <mxCell id="DsQs2UAFvfVbpWphkuw8-2" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;MarketDataNotifier&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ addObserver(MarketDataObserver): void&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ removeObserver(MarketDataObserver): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ notifyObservers(MarketDataPayload): void&lt;/p&gt;" vertex="1">
+          <mxGeometry height="140" width="270" x="540" y="250" as="geometry" />
         </mxCell>
-        <mxCell id="DsQs2UAFvfVbpWphkuw8-3" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;CSVMarketDataProvider&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ getData(): void&lt;/span&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="90" width="210" x="330" y="480" as="geometry" />
-        </mxCell>
-        <mxCell id="DsQs2UAFvfVbpWphkuw8-4" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-3" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="DsQs2UAFvfVbpWphkuw8-2" value="">
-          <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="216" y="459" as="sourcePoint" />
-            <mxPoint x="594" y="220" as="targetPoint" />
-          </mxGeometry>
+        <mxCell id="DsQs2UAFvfVbpWphkuw8-3" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;CSVMarketDataProvider&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ hasNextFrame(): boolean&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getNextFrame(): MarketDataPayload&lt;/p&gt;" vertex="1">
+          <mxGeometry height="100" width="220" x="80" y="660" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-5" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;MarketDataObserver&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(MarketDataPayload): void&lt;br&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="100" width="210" x="860" y="270" as="geometry" />
+          <mxGeometry height="100" width="210" x="950" y="270" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-6" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;&lt;i&gt;TradingAgent&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# balance: float&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# currentStrategy: TradingStrategy&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;i&gt;update(MarketDataPayload): void&lt;/i&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getBalance(): float&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="110" width="210" x="860" y="460" as="geometry" />
+          <mxGeometry height="110" width="210" x="950" y="460" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-7" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-6" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="DsQs2UAFvfVbpWphkuw8-5" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="860" y="690" as="sourcePoint" />
-            <mxPoint x="860.91" y="580" as="targetPoint" />
+            <mxPoint x="950" y="690" as="sourcePoint" />
+            <mxPoint x="950.91" y="580" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-8" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ConservativeTradingAgent&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# balance: float&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# currentStrategy: TradingStrategy&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;i&gt;update(MarketDataPayload): void&lt;/i&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="110" width="210" x="710" y="650" as="geometry" />
+          <mxGeometry height="110" width="210" x="800" y="650" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-9" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;SmartTradingAgent&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# balance: float&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# currentStrategy: TradingStrategy&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;i&gt;update(MarketDataPayload): void&lt;/i&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="110" width="210" x="1000" y="650" as="geometry" />
+          <mxGeometry height="110" width="210" x="1090" y="650" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-10" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-8" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="DsQs2UAFvfVbpWphkuw8-6" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="810" y="610" as="sourcePoint" />
-            <mxPoint x="810" y="530" as="targetPoint" />
+            <mxPoint x="900" y="610" as="sourcePoint" />
+            <mxPoint x="900" y="530" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-11" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-9" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="DsQs2UAFvfVbpWphkuw8-6" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="1080" y="590" as="sourcePoint" />
-            <mxPoint x="1178" y="510" as="targetPoint" />
+            <mxPoint x="1170" y="590" as="sourcePoint" />
+            <mxPoint x="1268" y="510" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-12" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;TradingStrategy&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(MarketDataPayload): TradingAction&lt;br&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="140" width="290" x="1500" y="445" as="geometry" />
+          <mxGeometry height="140" width="290" x="1610" y="445" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-13" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;TradingAction&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;BUY&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;SELL&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;HOLD&lt;/p&gt;" vertex="1">
-          <mxGeometry height="120" width="190" x="1950" y="455" as="geometry" />
+          <mxGeometry height="120" width="190" x="2130" y="455" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-15" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-13" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="DsQs2UAFvfVbpWphkuw8-12" value="">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="2165" y="735" as="sourcePoint" />
-            <mxPoint x="1950" y="735" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="DsQs2UAFvfVbpWphkuw8-16" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-2" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="DsQs2UAFvfVbpWphkuw8-5" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="640" y="340" as="sourcePoint" />
-            <mxPoint x="690" y="290" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="DsQs2UAFvfVbpWphkuw8-17" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-6" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="DsQs2UAFvfVbpWphkuw8-12" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="1190" y="550" as="sourcePoint" />
-            <mxPoint x="1240" y="500" as="targetPoint" />
+            <mxPoint x="2275" y="735" as="sourcePoint" />
+            <mxPoint x="2060" y="735" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-18" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;BuyAndHoldTradingStrategy&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(MarketDataPayload):&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;TradingAction&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="110" width="250" x="1370" y="650" as="geometry" />
+          <mxGeometry height="110" width="250" x="1480" y="650" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-20" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;MomentumTradingStrategy&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(MarketDataPayload):&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;TradingAction&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="110" width="250" x="1680" y="650" as="geometry" />
+          <mxGeometry height="110" width="250" x="1790" y="650" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-22" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-18" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="DsQs2UAFvfVbpWphkuw8-12" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="1440" y="575" as="sourcePoint" />
-            <mxPoint x="1440" y="485" as="targetPoint" />
+            <mxPoint x="1550" y="575" as="sourcePoint" />
+            <mxPoint x="1550" y="485" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-23" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-20" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="DsQs2UAFvfVbpWphkuw8-12" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="1830" y="605" as="sourcePoint" />
-            <mxPoint x="1908" y="540" as="targetPoint" />
+            <mxPoint x="1940" y="605" as="sourcePoint" />
+            <mxPoint x="2018" y="540" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-24" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;MarketDataPayload&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ timestamp: int&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ open: float&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ close: float&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ high: float&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ low: float&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ volume: float&lt;/p&gt;" vertex="1">
-          <mxGeometry height="160" width="160" x="630" y="20" as="geometry" />
-        </mxCell>
-        <mxCell id="DsQs2UAFvfVbpWphkuw8-25" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-2" style="endArrow=none;html=1;rounded=0;exitX=0.478;exitY=-0.016;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="DsQs2UAFvfVbpWphkuw8-24" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <Array as="points">
-              <mxPoint x="429" y="100" />
-            </Array>
-            <mxPoint x="430" y="200" as="sourcePoint" />
-            <mxPoint x="480" y="150" as="targetPoint" />
-          </mxGeometry>
+          <mxGeometry height="160" width="160" x="595" y="20" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-26" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-24" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="DsQs2UAFvfVbpWphkuw8-5" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
             <Array as="points">
-              <mxPoint x="965" y="100" />
+              <mxPoint x="1055" y="100" />
             </Array>
             <mxPoint x="880" y="197" as="sourcePoint" />
             <mxPoint x="1111" y="60" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wa1S2OuMBVkhxKXnn2XE-1" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-2" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="DsQs2UAFvfVbpWphkuw8-5" value="">
+          <mxGeometry relative="1" width="160" as="geometry">
+            <mxPoint x="610" y="320" as="sourcePoint" />
+            <mxPoint x="770" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wa1S2OuMBVkhxKXnn2XE-3" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-6" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="DsQs2UAFvfVbpWphkuw8-12" value="">
+          <mxGeometry relative="1" width="160" as="geometry">
+            <mxPoint x="1200" y="520" as="sourcePoint" />
+            <mxPoint x="1360" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wa1S2OuMBVkhxKXnn2XE-4" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;MarketDataProvider&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ hasNextFrame(): boolean&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getNextFrame(): MarketDataPayload&lt;/p&gt;" vertex="1">
+          <mxGeometry height="117.5" width="225" x="232.5" y="477.5" as="geometry" />
+        </mxCell>
+        <mxCell id="wa1S2OuMBVkhxKXnn2XE-7" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-3" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="wa1S2OuMBVkhxKXnn2XE-4" value="">
+          <mxGeometry relative="1" width="160" as="geometry">
+            <mxPoint x="330" y="667.5" as="sourcePoint" />
+            <mxPoint x="408" y="602.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hL8aPjxEbtndCl8zuShI-1" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;JSONMarketDataProvider&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ hasNextFrame(): boolean&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getNextFrame(): MarketDataPayload&lt;/p&gt;" vertex="1">
+          <mxGeometry height="100" width="220" x="400" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="hL8aPjxEbtndCl8zuShI-2" edge="1" parent="1" source="hL8aPjxEbtndCl8zuShI-1" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="wa1S2OuMBVkhxKXnn2XE-4" value="">
+          <mxGeometry relative="1" width="160" as="geometry">
+            <mxPoint x="320" y="695" as="sourcePoint" />
+            <mxPoint x="400" y="620" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hL8aPjxEbtndCl8zuShI-3" edge="1" parent="1" source="wa1S2OuMBVkhxKXnn2XE-4" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="DsQs2UAFvfVbpWphkuw8-24" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="345" y="100" />
+            </Array>
+            <mxPoint x="330" y="640" as="sourcePoint" />
+            <mxPoint x="335" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hL8aPjxEbtndCl8zuShI-6" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-2" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="DsQs2UAFvfVbpWphkuw8-24" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="680" y="250" as="sourcePoint" />
+            <mxPoint x="730" y="200" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
