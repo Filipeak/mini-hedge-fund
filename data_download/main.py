@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import time
+import json
 
 
 def get_binance_klines(symbol, interval, start_time, end_time):
@@ -47,9 +48,22 @@ df = pd.DataFrame(raw, columns=[
     "taker_buy_base", "taker_buy_quote", "ignore"
 ])
 df = df[["timestamp", "open", "close", "high", "low", "volume"]]
-df["timestamp"] = pd.to_datetime(df["timestamp"], unit="ms")
+df["timestamp"] = df["timestamp"].astype("int64")
+df["open"] = df["open"].astype(float)
+df["close"] = df["close"].astype(float)
+df["high"] = df["high"].astype(float)
+df["low"] = df["low"].astype(float)
+df["volume"] = df["volume"].astype(float)
 
 df.to_csv("data.csv", index=False)
-
 print("Saved to data.csv")
+
+with open("data.json", "w") as f:
+    out = df.to_json(orient='records')
+    pretty = json.dumps(json.loads(out), indent=4)
+
+    f.write(pretty)
+
+    print("Saved to data.json")
+
 print(df.head())
