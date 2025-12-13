@@ -1,41 +1,41 @@
 package com.psio.market;
 
-
 import java.io.*;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 
-public class CSVMarketDataProvider extends MarketDataProvider {
+public class CSVMarketDataProvider implements MarketDataProvider {
     private String filePath;
 
     public CSVMarketDataProvider(String filePath) {
         this.filePath = filePath;
     }
 
-    public void getData() {
+    public void getData(MarketDataNotifier marketDataNotifier) {
         File file = new File(filePath);
-        String splitBy = ",";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
         try (BufferedReader breader = new BufferedReader(new FileReader(file))) {
             breader.readLine();
-            String line = breader.readLine();
-            while (line != null) {
-                String[] data = line.split(splitBy);
-                MarketDataPayload mdp = new MarketDataPayload(
-                        (int) LocalDateTime.parse(data[0], formatter).toEpochSecond(ZoneOffset.UTC),
+            String line;
+
+            while ((line = breader.readLine()) != null) {
+                String[] data = line.split(",");
+
+                MarketDataPayload marketDataPayload = new MarketDataPayload(
+                        Long.parseLong(data[0]),
                         Float.parseFloat(data[1]),
                         Float.parseFloat(data[2]),
                         Float.parseFloat(data[3]),
                         Float.parseFloat(data[4]),
-                        Double.parseDouble(data[5]));
-                this.notifyObserver(mdp);
-                line = breader.readLine();
-                System.out.println(mdp.timestamp + " " + mdp.open + " " + mdp.close + " " + mdp.high + " " + mdp.low + " " + mdp.volume);
-            }
+                        Double.parseDouble(data[5])
+                );
 
+                marketDataNotifier.notifyObservers(marketDataPayload);
+                //  System.out.println(marketDataPayload);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
 
     }
 }
