@@ -2,9 +2,18 @@ package com.psio.trading;
 
 import com.psio.market.MarketDataPayload;
 
-public class BuyAndHoldTradingStrategy implements TradingStrategy{
+public class BuyAndHoldTradingStrategy implements TradingStrategy {
+    private boolean hasBought = false;
+
     @Override
-    public TradingAction update(MarketDataPayload marketDataPayload) {
-        return null;
+    public TradingAction decide(MarketDataPayload marketDataPayload) {
+
+        if (hasBought)
+            return TradingAction.HOLD;
+
+
+        hasBought = true;
+        return TradingAction.BUY;
+
     }
 }
