@@ -6,19 +6,17 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class AppMenu {
 
     private final Stage stage;
-    private final DataLoader dataLoader;
-    private final PortfolioChart portfolioChart;
+    private final Consumer<File> onFileSelected;
 
-    public AppMenu(Stage stage, DataLoader dataLoader, PortfolioChart portfolioChart) {
+    public AppMenu(Stage stage, Consumer<File> onFileSelected) {
         this.stage = stage;
-        this.dataLoader = dataLoader;
-        this.portfolioChart = portfolioChart;
+        this.onFileSelected = onFileSelected;
     }
 
     public MenuBar createMenu() {
@@ -31,7 +29,7 @@ public class AppMenu {
 
         Menu menuHelp = new Menu("Pomoc");
         MenuItem itemAbout = new MenuItem("O programie");
-        itemAbout.setOnAction(_ -> showAboutDialog());
+        itemAbout.setOnAction(e -> showAboutDialog());
         menuHelp.getItems().add(itemAbout);
 
         menuBar.getMenus().addAll(menuFile, menuHelp);
@@ -43,39 +41,29 @@ public class AppMenu {
         fileChooser.setTitle("Wybierz plik z danymi");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pliki CSV", "*.csv"));
 
-        File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            try {
-                List<PortfolioData> data = dataLoader.loadDataFromFile(file);
-                portfolioChart.updateData(data);
-            } catch (Exception e) {
-                showErrorDialog("Plik jest niepoprawny lub uszkodzony.\n" + e.getMessage());
-            }
+        File initialDir = new File("src/main/resources");
+        if (initialDir.exists()) {
+            fileChooser.setInitialDirectory(initialDir);
         }
-    }
 
-    private void showErrorDialog(String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Błąd odczytu pliku");
-        alert.setHeaderText("Nie udało się wczytać danych");
-        alert.setContentText(content);
+        File file = fileChooser.showOpenDialog(stage);
 
-        DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CryptoPortfolioApp.CSS_PATH)).toExternalForm());
-        dialogPane.getStyleClass().add("my-dialog");
-
-        alert.showAndWait();
+        if (file != null) {
+            onFileSelected.accept(file);
+        }
     }
 
     private void showAboutDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("O Aplikacji");
-        alert.setHeaderText("Portfolio Tracker v1.1");
-        alert.setContentText("Bubuś");
+        alert.setHeaderText("Portfolio Tracker v2.0");
+        alert.setContentText("Integracja z modułem MarketData.");
 
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CryptoPortfolioApp.CSS_PATH)).toExternalForm());
-        dialogPane.getStyleClass().add("my-dialog");
+        try {
+            dialogPane.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CryptoPortfolioApp.CSS_PATH)).toExternalForm());
+            dialogPane.getStyleClass().add("my-dialog");
+        } catch (Exception ignored) {}
 
         alert.showAndWait();
     }

@@ -1,99 +1,77 @@
 package com.psio.ui;
 
-import javafx.beans.value.ObservableValue;
-import javafx.scene.Node;
+import com.psio.market.MarketDataObserver;
+import com.psio.market.MarketDataPayload;
+import com.psio.trading.TradingAgent;
+import javafx.application.Platform;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Tooltip;
-import javafx.util.Duration;
-import javafx.util.StringConverter;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 
-public class PortfolioChart {
+public class PortfolioChart implements MarketDataObserver {
 
     private XYChart.Series<Number, Number> series;
     private NumberAxis xAxis;
+    private NumberAxis yAxis;
+    private final List<TradingAgent> agents;
 
-    private final DecimalFormat currencyFormat;
+    private double initialTotalValue = 0;
+    private int tickCounter = 0;
 
-    public PortfolioChart() {
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
-        symbols.setGroupingSeparator(' ');
-        symbols.setDecimalSeparator('.');
+    public PortfolioChart(List<TradingAgent> agents) {
+        this.agents = agents;
 
-        this.currencyFormat = new DecimalFormat("#,##0.00", symbols);
+        for (TradingAgent agent : agents) {
+            initialTotalValue += agent.getBalance();
+        }
     }
 
     public LineChart<Number, Number> createChart() {
         xAxis = new NumberAxis();
-        xAxis.setLabel("Data");
-        xAxis.setAutoRanging(false);
-        xAxis.setTickUnit(1);
+        xAxis.setLabel("Czas");
+        xAxis.setAutoRanging(true);
 
-        NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel("Wartość portfela (PLN)");
+        yAxis = new NumberAxis();
+        yAxis.setLabel("Zysk / Strata (PLN)");
+        yAxis.setAutoRanging(true);
 
         LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-        lineChart.setTitle("Historia Portfela");
-        lineChart.setCreateSymbols(true);
+        lineChart.setTitle("Symulacja Live: Wynik Finansowy");
+
+        lineChart.setCreateSymbols(false);
+        lineChart.setAnimated(false);
         lineChart.setLegendVisible(false);
 
         series = new XYChart.Series<>();
-        series.setName("Portfel");
+        series.setName("PnL");
         lineChart.getData().add(series);
 
         return lineChart;
     }
 
-    public void updateData(List<PortfolioData> newData) {
-        series.getData().clear();
+    public void update(MarketDataPayload marketDataPayload) {
+        double currentPrice = marketDataPayload.close;
+        double currentTotalValue = 0;
 
-        int dataSize = newData.size();
-        xAxis.setLowerBound(0);
-        xAxis.setUpperBound(dataSize > 0 ? dataSize - 1 : 10);
-
-        xAxis.setTickLabelFormatter(new StringConverter<>() {
-            @Override
-            public String toString(Number object) {
-                int index = object.intValue();
-                if (index >= 0 && index < newData.size()) {
-                    return newData.get(index).date().format(DateTimeFormatter.ofPattern("dd MMM"));
-                }
-                return "";
-            }
-
-            public Number fromString(String string) {
-                return 0;
-            }
-        });
-
-        for (int i = 0; i < newData.size(); i++) {
-            PortfolioData entry = newData.get(i);
-            var dataPoint = new XYChart.Data<Number, Number>(i, entry.value());
-
-            String dateStr = entry.date().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-
-            String formattedValue = currencyFormat.format(entry.value());
-
-            String tooltipText = String.format("Data: %s\nWartość: %s PLN", dateStr, formattedValue);
-
-            dataPoint.nodeProperty().addListener((ObservableValue<? extends Node> _, Node _, Node newNode) -> {
-                if (newNode != null) {
-                    Tooltip tooltip = new Tooltip(tooltipText);
-                    tooltip.setShowDelay(Duration.millis(50));
-                    Tooltip.install(newNode, tooltip);
-                    newNode.setOnMouseEntered(_ -> newNode.setStyle("-fx-scale-x: 1.5; -fx-scale-y: 1.5; -fx-cursor: hand;"));
-                    newNode.setOnMouseExited(_ -> newNode.setStyle("-fx-scale-x: 1.0; -fx-scale-y: 1.0;"));
-                }
-            });
-
-            series.getData().add(dataPoint);
+        for (TradingAgent agent : agents) {
+            currentTotalValue += agent.getBalance() + (agent.getAssets() * currentPrice);
         }
+
+        final double absolutePnL = currentTotalValue - initialTotalValue;
+        final int currentTick = tickCounter++;
+
+        Platform.runLater(() -> {
+            var dataPoint = new XYChart.Data<Number, Number>(currentTick, absolutePnL);
+            series.getData().add(dataPoint);
+        });
+    }
+
+    public void clear() {
+        Platform.runLater(() -> {
+            series.getData().clear();
+            tickCounter = 0;
+        });
     }
 }
