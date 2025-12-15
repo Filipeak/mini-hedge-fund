@@ -9,7 +9,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,22 +18,14 @@ public class CryptoPortfolioApp extends Application {
     private static final int WINDOW_WIDTH = 1024;
     private static final int WINDOW_HEIGHT = 768;
 
-    private PortfolioChart portfolioChart;
-    private MarketDataNotifier marketDataNotifier;
+    private static List<TradingAgent> agents;
+    private static MarketDataNotifier marketDataNotifier;
 
+    private PortfolioChart portfolioChart;
+
+    @Override
     public void start(Stage primaryStage) {
         BorderPane root = new BorderPane();
-
-        TradingAgent agent1 = new ConservativeTradingAgent(new Wallet(10000.0f, 0.0f));
-        TradingAgent agent2 = new SmartTradingAgent(new Wallet(10000.0f, 0.0f));
-
-        List<TradingAgent> agents = new ArrayList<>();
-        agents.add(agent1);
-        agents.add(agent2);
-
-        marketDataNotifier = new MarketDataNotifier();
-        marketDataNotifier.addObserver(agent1);
-        marketDataNotifier.addObserver(agent2);
 
         portfolioChart = new PortfolioChart(agents);
         marketDataNotifier.addObserver(portfolioChart);
@@ -48,15 +39,16 @@ public class CryptoPortfolioApp extends Application {
                 Objects.requireNonNull(getClass().getResource(CSS_PATH)).toExternalForm()
         );
 
-        primaryStage.setTitle("FinTech Portfolio Tracker - Maciek Integration");
+        primaryStage.setTitle("FinTech Portfolio Tracker");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        runSimulation(new File("src/main/resources/data.csv"));
     }
 
     private void runSimulation(File file) {
-        if (file == null || !file.exists()) return;
+        if (file == null || !file.exists())
+        {
+            return;
+        }
 
         System.out.println("Uruchamianie symulacji dla pliku: " + file.getAbsolutePath());
 
@@ -66,7 +58,6 @@ public class CryptoPortfolioApp extends Application {
             try { Thread.sleep(500); } catch (InterruptedException e) {}
 
             CSVMarketDataProvider provider = new CSVMarketDataProvider(file.getAbsolutePath());
-
             provider.getData(marketDataNotifier);
         });
 
@@ -74,7 +65,10 @@ public class CryptoPortfolioApp extends Application {
         simulationThread.start();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args, List<TradingAgent> agentsList, MarketDataNotifier notifier) {
+        agents = agentsList;
+        marketDataNotifier = notifier;
+
         launch(args);
     }
 }

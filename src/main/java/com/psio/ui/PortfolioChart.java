@@ -13,11 +13,9 @@ import java.util.List;
 public class PortfolioChart implements MarketDataObserver {
 
     private XYChart.Series<Number, Number> series;
-    private NumberAxis xAxis;
-    private NumberAxis yAxis;
     private final List<TradingAgent> agents;
 
-    private double initialTotalValue = 0;
+    private float initialTotalValue = 0;
     private int tickCounter = 0;
 
     public PortfolioChart(List<TradingAgent> agents) {
@@ -29,11 +27,11 @@ public class PortfolioChart implements MarketDataObserver {
     }
 
     public LineChart<Number, Number> createChart() {
-        xAxis = new NumberAxis();
+        NumberAxis xAxis = new NumberAxis();
         xAxis.setLabel("Czas");
         xAxis.setAutoRanging(true);
 
-        yAxis = new NumberAxis();
+        NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Zysk / Strata (PLN)");
         yAxis.setAutoRanging(true);
 
@@ -52,14 +50,14 @@ public class PortfolioChart implements MarketDataObserver {
     }
 
     public void update(MarketDataPayload marketDataPayload) {
-        double currentPrice = marketDataPayload.close;
-        double currentTotalValue = 0;
+        float currentPrice = marketDataPayload.close;
+        float currentTotalValue = 0;
 
         for (TradingAgent agent : agents) {
             currentTotalValue += agent.getBalance() + (agent.getAssets() * currentPrice);
         }
 
-        final double absolutePnL = currentTotalValue - initialTotalValue;
+        final float absolutePnL = currentTotalValue - initialTotalValue;
         final int currentTick = tickCounter++;
 
         Platform.runLater(() -> {
