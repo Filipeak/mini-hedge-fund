@@ -5,13 +5,13 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class JSONMarketDataProvider implements MarketDataProvider {
-    private String filePath;
+    private final String filePath;
 
     public JSONMarketDataProvider(String filePath) {
         this.filePath = filePath;
     }
 
-
+    @Override
     public void getData(MarketDataNotifier marketDataNotifier) {
         try {
             BufferedReader breader = new BufferedReader(new FileReader(filePath));
@@ -40,7 +40,6 @@ public class JSONMarketDataProvider implements MarketDataProvider {
                 breader.readLine();
 
                 marketDataNotifier.notifyObservers(marketDataPayload);
-                //  System.out.println(marketDataPayload);
             }
 
         } catch (IOException e) {
