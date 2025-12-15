@@ -3,7 +3,7 @@ package com.psio.market;
 import java.util.HashSet;
 
 public class MarketDataNotifier {
-    private HashSet<MarketDataObserver> observers = new HashSet<MarketDataObserver>();
+    private final HashSet<MarketDataObserver> observers = new HashSet<MarketDataObserver>();
 
     public void addObserver(MarketDataObserver marketDataObserver) {
         observers.add(marketDataObserver);
@@ -14,7 +14,6 @@ public class MarketDataNotifier {
     }
 
     public void notifyObservers(MarketDataPayload marketDataPayload) {
-       // System.out.println("notified");
         if (observers != null) {
             for (MarketDataObserver observer : observers) {
                 observer.update(marketDataPayload);

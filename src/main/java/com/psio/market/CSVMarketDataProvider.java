@@ -4,12 +4,13 @@ import java.io.*;
 import java.time.*;
 
 public class CSVMarketDataProvider implements MarketDataProvider {
-    private String filePath;
+    private final String filePath;
 
     public CSVMarketDataProvider(String filePath) {
         this.filePath = filePath;
     }
 
+    @Override
     public void getData(MarketDataNotifier marketDataNotifier) {
         File file = new File(filePath);
 
@@ -30,12 +31,9 @@ public class CSVMarketDataProvider implements MarketDataProvider {
                 );
 
                 marketDataNotifier.notifyObservers(marketDataPayload);
-                //  System.out.println(marketDataPayload);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 }
