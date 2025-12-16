@@ -1,5 +1,6 @@
 package com.psio.ui;
 
+import com.psio.ui.CryptoPortfolioApp;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -23,7 +24,7 @@ public class AppMenu {
         MenuBar menuBar = new MenuBar();
 
         Menu menuFile = new Menu("Plik");
-        MenuItem itemOpen = new MenuItem("Wczytaj CSV...");
+        MenuItem itemOpen = new MenuItem("Wczytaj dane (CSV/JSON)...");
         itemOpen.setOnAction(this::handleOpenFile);
         menuFile.getItems().add(itemOpen);
 
@@ -39,15 +40,16 @@ public class AppMenu {
     private void handleOpenFile(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Wybierz plik z danymi");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pliki CSV", "*.csv"));
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Wszystkie pliki danych", "*.csv", "*.json"),
+                new FileChooser.ExtensionFilter("Pliki CSV", "*.csv"),
+                new FileChooser.ExtensionFilter("Pliki JSON", "*.json")
+        );
 
         File initialDir = new File("src/main/resources");
-        if (initialDir.exists()) {
-            fileChooser.setInitialDirectory(initialDir);
-        }
+        if (initialDir.exists()) fileChooser.setInitialDirectory(initialDir);
 
         File file = fileChooser.showOpenDialog(stage);
-
         if (file != null) {
             onFileSelected.accept(file);
         }
@@ -56,8 +58,8 @@ public class AppMenu {
     private void showAboutDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("O Aplikacji");
-        alert.setHeaderText("Portfolio Tracker v2.0");
-        alert.setContentText("Integracja z modułem MarketData.");
+        alert.setHeaderText("Portfolio Tracker v2.1");
+        alert.setContentText("Obsługa plików CSV oraz JSON.");
 
         DialogPane dialogPane = alert.getDialogPane();
         try {
