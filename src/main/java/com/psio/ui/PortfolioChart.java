@@ -14,13 +14,11 @@ public class PortfolioChart implements MarketDataObserver {
 
     private XYChart.Series<Number, Number> series;
     private final List<TradingAgent> agents;
-
     private float initialTotalValue = 0;
     private int tickCounter = 0;
 
     public PortfolioChart(List<TradingAgent> agents) {
         this.agents = agents;
-
         for (TradingAgent agent : agents) {
             initialTotalValue += agent.getBalance();
         }
@@ -37,7 +35,6 @@ public class PortfolioChart implements MarketDataObserver {
 
         LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
         lineChart.setTitle("Symulacja Live: Wynik Finansowy");
-
         lineChart.setCreateSymbols(false);
         lineChart.setAnimated(false);
         lineChart.setLegendVisible(false);
