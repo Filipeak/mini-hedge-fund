@@ -6,6 +6,7 @@ import com.psio.market.MarketDataNotifier;
 import com.psio.market.MarketDataProvider;
 import com.psio.trading.TradingAgent;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -20,21 +21,22 @@ public class CryptoPortfolioApp extends Application {
     private static final int WINDOW_WIDTH = 1024;
     private static final int WINDOW_HEIGHT = 768;
 
+    private static List<TradingAgent> injectedAgents;
+    private static MarketDataNotifier injectedNotifier;
+
     private PortfolioChart portfolioChart;
-    private MarketDataNotifier marketDataNotifier;
 
     public void start(Stage primaryStage) {
-        List<TradingAgent> agents = SimulationContext.getAgents();
-        this.marketDataNotifier = SimulationContext.getNotifier();
-
-        if (agents == null || marketDataNotifier == null) {
-            throw new RuntimeException("BŁĄD: Uruchom aplikację przez Main.java! Brak danych symulacji.");
+        if (injectedAgents == null || injectedNotifier == null) {
+            System.err.println("ERROR: Run application via Main.java. No simulation data.");
+            Platform.exit();
+            return;
         }
 
         BorderPane root = new BorderPane();
 
-        portfolioChart = new PortfolioChart(agents);
-        this.marketDataNotifier.addObserver(portfolioChart);
+        portfolioChart = new PortfolioChart(injectedAgents);
+        injectedNotifier.addObserver(portfolioChart);
         root.setCenter(portfolioChart.createChart());
 
         AppMenu appMenu = new AppMenu(primaryStage, this::runSimulation);
@@ -43,7 +45,9 @@ public class CryptoPortfolioApp extends Application {
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         try {
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH)).toExternalForm());
-        } catch (Exception e) { System.err.println("Brak stylów: " + e.getMessage()); }
+        } catch (Exception e) {
+            System.err.println("No styles: " + e.getMessage());
+        }
 
         primaryStage.setTitle("FinTech Portfolio Tracker");
         primaryStage.setScene(scene);
@@ -52,8 +56,8 @@ public class CryptoPortfolioApp extends Application {
 
     private void runSimulation(File file) {
         if (file == null || !file.exists()) return;
-        System.out.println("UI: Uruchamianie nowej symulacji dla pliku: " + file.getName());
 
+        System.out.println("UI: Starting a new simulation for a file: " + file.getName());
         portfolioChart.clear();
 
         Thread simulationThread = new Thread(() -> {
@@ -67,13 +71,16 @@ public class CryptoPortfolioApp extends Application {
             } else {
                 provider = new CSVMarketDataProvider(path);
             }
-            provider.getData(marketDataNotifier);
+            provider.getData(injectedNotifier);
         });
         simulationThread.setDaemon(true);
         simulationThread.start();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args, List<TradingAgent> agents, MarketDataNotifier notifier) {
+        injectedAgents = agents;
+        injectedNotifier = notifier;
+
         launch(args);
     }
 }
