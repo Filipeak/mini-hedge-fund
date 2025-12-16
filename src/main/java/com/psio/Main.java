@@ -4,6 +4,7 @@ import com.psio.market.CSVMarketDataProvider;
 import com.psio.market.MarketDataNotifier;
 import com.psio.trading.*;
 import com.psio.ui.CryptoPortfolioApp;
+import com.psio.ui.SimulationContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +24,10 @@ public class Main {
         agentsList.add(tradingAgent1);
         agentsList.add(tradingAgent2);
 
-        CryptoPortfolioApp.injectData(agentsList, marketDataNotifier);
+        SimulationContext.setSimulationData(agentsList, marketDataNotifier);
 
         new Thread(() -> {
             try { Thread.sleep(1000); } catch (InterruptedException e) {}
-
-            System.out.println("Start symulacji z Main...");
             csvMarketDataProvider.getData(marketDataNotifier);
         }).start();
 

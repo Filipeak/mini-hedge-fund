@@ -5,16 +5,12 @@ import com.psio.market.JSONMarketDataProvider;
 import com.psio.market.MarketDataNotifier;
 import com.psio.market.MarketDataProvider;
 import com.psio.trading.TradingAgent;
-import com.psio.trading.Wallet;
-import com.psio.trading.ConservativeTradingAgent;
-import com.psio.trading.SmartTradingAgent;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,36 +20,18 @@ public class CryptoPortfolioApp extends Application {
     private static final int WINDOW_WIDTH = 1024;
     private static final int WINDOW_HEIGHT = 768;
 
-    private static List<TradingAgent> injectedAgents;
-    private static MarketDataNotifier injectedNotifier;
-
     private PortfolioChart portfolioChart;
     private MarketDataNotifier marketDataNotifier;
 
-    public static void injectData(List<TradingAgent> agents, MarketDataNotifier notifier) {
-        injectedAgents = agents;
-        injectedNotifier = notifier;
-    }
-
     public void start(Stage primaryStage) {
-        BorderPane root = new BorderPane();
-        List<TradingAgent> agents;
+        List<TradingAgent> agents = SimulationContext.getAgents();
+        this.marketDataNotifier = SimulationContext.getNotifier();
 
-        if (injectedAgents != null && injectedNotifier != null) {
-            System.out.println("UI: Używam danych dostarczonych z Maina.");
-            agents = injectedAgents;
-            this.marketDataNotifier = injectedNotifier;
-        } else {
-            System.out.println("UI: Brak danych z Maina - tryb samodzielny (testowy).");
-            TradingAgent agent1 = new ConservativeTradingAgent(new Wallet(10000.0f, 0.0f));
-            TradingAgent agent2 = new SmartTradingAgent(new Wallet(10000.0f, 0.0f));
-            agents = new ArrayList<>();
-            agents.add(agent1);
-            agents.add(agent2);
-            this.marketDataNotifier = new MarketDataNotifier();
-            this.marketDataNotifier.addObserver(agent1);
-            this.marketDataNotifier.addObserver(agent2);
+        if (agents == null || marketDataNotifier == null) {
+            throw new RuntimeException("BŁĄD: Uruchom aplikację przez Main.java! Brak danych symulacji.");
         }
+
+        BorderPane root = new BorderPane();
 
         portfolioChart = new PortfolioChart(agents);
         this.marketDataNotifier.addObserver(portfolioChart);
