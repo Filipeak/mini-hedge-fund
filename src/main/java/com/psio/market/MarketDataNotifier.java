@@ -14,10 +14,8 @@ public class MarketDataNotifier {
     }
 
     public void notifyObservers(MarketDataPayload marketDataPayload) {
-        if (observers != null) {
-            for (MarketDataObserver observer : observers) {
-                observer.update(marketDataPayload);
-            }
+        for (MarketDataObserver observer : observers) {
+            observer.update(marketDataPayload);
         }
     }
 }
