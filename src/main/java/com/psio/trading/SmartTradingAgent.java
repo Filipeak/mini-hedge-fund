@@ -14,14 +14,4 @@ public class SmartTradingAgent extends TradingAgent {
         super.update(marketDataPayload);
     }
 
-    @Override
-    public void begin() {
-
-    }
-
-    @Override
-    public void end() {
-
-    }
-
 }

@@ -1,7 +1,6 @@
 package com.psio;
 
 import com.psio.market.MarketDataNotifier;
-import com.psio.market.MarketDataPayload;
 import com.psio.portfolio.PortfolioManager;
 import com.psio.trading.*;
 import com.psio.ui.CryptoPortfolioApp;

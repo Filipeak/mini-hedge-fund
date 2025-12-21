@@ -1,6 +1,5 @@
 package com.psio.trading;
 
-import com.psio.market.MarketDataObserver;
 import com.psio.market.MarketDataPayload;
 
 public abstract class TradingAgent{
