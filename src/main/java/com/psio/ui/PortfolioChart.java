@@ -24,6 +24,15 @@ public class PortfolioChart implements MarketDataObserver {
         }
     }
 
+    //-------------------------------
+    //dodane temp z powodu testowania
+    @Override
+    public void begin() {}
+
+    @Override
+    public void end() {}
+    //-------------------------------
+
     public LineChart<Number, Number> createChart() {
         NumberAxis xAxis = new NumberAxis();
         xAxis.setLabel("Czas");

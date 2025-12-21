@@ -2,5 +2,10 @@ package com.psio.market;
 
 public interface MarketDataObserver {
 
-    public void update(MarketDataPayload marketDataPayload);
+    void update(MarketDataPayload marketDataPayload);
+
+    void begin();
+
+    void end();
+
 }

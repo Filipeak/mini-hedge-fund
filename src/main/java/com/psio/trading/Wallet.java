@@ -13,15 +13,31 @@ public class Wallet {
         return balance;
     }
 
-    public void setBalance(float balance) {
-        this.balance = balance;
-    }
-
     public float getAssetAmount() {
         return assetAmount;
     }
 
-    public void setAssetAmount(float assetAmount) {
-        this.assetAmount = assetAmount;
+    public float getCurrentValue(float currentPrice) {
+        return balance + assetAmount * currentPrice;
     }
+
+    public void buyAssets(float currentPrice) {
+        if (balance > 0) {
+            System.out.println("!!! Purchase of " + balance / currentPrice + " for " + currentPrice);
+
+            this.assetAmount = balance / currentPrice;
+            this.balance = 0;
+        } //else throw new InvalidTransactionException("Insufficient balance");
+
+    }
+
+    public void sellAssets(float currentPrice) {
+        if (assetAmount > 0) {
+            System.out.println("!!! Sell of " + assetAmount + " for " + currentPrice);
+
+            this.balance = balance + assetAmount * currentPrice;
+            this.assetAmount = 0;
+        } //else throw new InvalidTransactionException("Insufficient assets");
+    }
+
 }
