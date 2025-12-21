@@ -5,33 +5,48 @@ import com.psio.market.MarketDataPayload;
 import com.psio.trading.TradingAgent;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PortfolioManager implements MarketDataObserver{
-    TradingAgent[] tradingAgents;
-    ArrayList<PortfolioObserver> observers;
+    private final TradingAgent[] tradingAgents;
+    private final List<PortfolioObserver> observers;
 
     public PortfolioManager(TradingAgent[] tradingAgents) {
         this.tradingAgents = tradingAgents;
+        observers = new ArrayList<>();
     }
 
     @Override
     public void update(MarketDataPayload marketDataPayload) {
         for (TradingAgent tradingAgent : tradingAgents) {
-            tradingAgent.begin();
             tradingAgent.update(marketDataPayload);
-            tradingAgent.end();
         }
 
+        for (PortfolioObserver observer : observers) {
+            observer.onChange();
+        }
     }
 
     @Override
     public void begin(){
+        for (TradingAgent tradingAgent : tradingAgents) {
+            tradingAgent.begin();
+        }
 
+        for (PortfolioObserver observer : observers) {
+            observer.onBegin();
+        }
     }
 
     @Override
     public void end(){
+        for (TradingAgent tradingAgent : tradingAgents) {
+            tradingAgent.end();
+        }
 
+        for (PortfolioObserver observer : observers) {
+            observer.onEnd();
+        }
     }
 
     public void addObserver(PortfolioObserver portfolioObserver){

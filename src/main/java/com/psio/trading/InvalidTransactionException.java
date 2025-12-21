@@ -1,4 +1,4 @@
-package com.psio.exceptions;
+package com.psio.trading;
 
 public class InvalidTransactionException extends RuntimeException {
     public InvalidTransactionException(String message) {

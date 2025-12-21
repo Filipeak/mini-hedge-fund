@@ -2,7 +2,7 @@ package com.psio.trading;
 
 import com.psio.market.MarketDataPayload;
 
-public abstract class TradingAgent{
+public abstract class TradingAgent {
     protected Wallet wallet;
     protected TradingStrategy currentStrategy;
 
@@ -14,16 +14,14 @@ public abstract class TradingAgent{
 
         TradingAction decision = currentStrategy.decide(marketDataPayload);
 
-        float currentPrice = marketDataPayload.open;
+        float currentPrice = marketDataPayload.close;
 
         switch (decision) {
             case TradingAction.BUY:
-                System.out.println(decision);
                 wallet.buyAssets(currentPrice);
                 break;
 
             case TradingAction.SELL:
-                System.out.println(decision);
                 wallet.sellAssets(currentPrice);
                 break;
 
@@ -35,10 +33,11 @@ public abstract class TradingAgent{
     }
 
     public void begin() {
-
+        this.wallet.reset();
     }
 
     public void end() {
+        this.wallet.endInfo();
 
     }
 

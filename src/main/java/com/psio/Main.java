@@ -10,8 +10,8 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        TradingAgent tradingAgent1 = new ConservativeTradingAgent(new Wallet(10000.0f, 0.0f));
-        TradingAgent tradingAgent2 = new SmartTradingAgent(new Wallet(10000.0f, 0.0f));
+        TradingAgent tradingAgent1 = new ConservativeTradingAgent(new Wallet(10000.0f, 0.0f, "Conservative wallet"));
+        TradingAgent tradingAgent2 = new SmartTradingAgent(new Wallet(10000.0f, 0.0f, "Smart wallet"));
 
         TradingAgent[] tradingAgents = new TradingAgent[]{tradingAgent1, tradingAgent2};
 
@@ -30,7 +30,7 @@ public class Main {
 
 
         System.out.println();
-        System.out.println("The value of all wallets: " + portfolioManager.getCurrentValue(90032.31f));
-        //Magic number used for testing is the last open value of the data set
+        System.out.println("The value of all wallets: " + portfolioManager.getCurrentValue(90023.14f));
+        //Magic number used for testing is the last close value of the data set
     }
 }

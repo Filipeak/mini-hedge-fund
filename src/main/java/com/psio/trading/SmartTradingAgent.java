@@ -10,7 +10,6 @@ public class SmartTradingAgent extends TradingAgent {
 
     @Override
     public void update(MarketDataPayload marketDataPayload) {
-        System.out.println("SmartTradingAgent update for " + marketDataPayload.timestamp + ": ");
         super.update(marketDataPayload);
     }
 

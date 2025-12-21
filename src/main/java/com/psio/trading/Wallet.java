@@ -1,12 +1,36 @@
 package com.psio.trading;
 
 public class Wallet {
+    private final float defaultBalance;
+    private final float defaultAssetAmount;
+    private final String name;
+
     private float balance;
     private float assetAmount;
+    private int transactionCount = 0;
+    private int transactionWinCount = 0;
+    private float transactionBuyPrice;
 
-    public Wallet(float balance, float assetAmount) {
-        this.balance = balance;
-        this.assetAmount = assetAmount;
+
+    public Wallet(float defaultBalance, float defaultAssetAmount, String name) {
+        this.defaultBalance = defaultBalance;
+        this.defaultAssetAmount = defaultAssetAmount;
+        this.name = name;
+
+        reset();
+    }
+
+    public void reset() {
+        this.balance = defaultBalance;
+        this.assetAmount = defaultAssetAmount;
+    }
+
+    public void endInfo() {
+        System.out.println("\nWallet " + name
+                + "\nEnd balance: " + balance
+                + "\nEnd asset amount: " + assetAmount
+                + "\nTransaction count: " + transactionCount
+                + "\nTransactions won: " + transactionWinCount);
     }
 
     public float getBalance() {
@@ -23,21 +47,35 @@ public class Wallet {
 
     public void buyAssets(float currentPrice) {
         if (balance > 0) {
-            System.out.println("!!! Purchase of " + balance / currentPrice + " for " + currentPrice);
+            System.out.println("[" + name + " Log]: Purchase of " + balance / currentPrice + " for " + currentPrice);
 
             this.assetAmount = balance / currentPrice;
             this.balance = 0;
+            this.transactionBuyPrice = currentPrice;
         } //else throw new InvalidTransactionException("Insufficient balance");
 
     }
 
     public void sellAssets(float currentPrice) {
         if (assetAmount > 0) {
-            System.out.println("!!! Sell of " + assetAmount + " for " + currentPrice);
+            System.out.println("[" + name + " Log]: Sell of " + assetAmount + " for " + currentPrice);
+            this.transactionCount++;
 
             this.balance = balance + assetAmount * currentPrice;
             this.assetAmount = 0;
+
+            if (currentPrice > transactionBuyPrice) {
+                this.transactionWinCount++;
+            }
         } //else throw new InvalidTransactionException("Insufficient assets");
+    }
+
+    public int getTransactionCount() {
+        return transactionCount;
+    }
+
+    public int getTransactionWinCount() {
+        return transactionWinCount;
     }
 
 }

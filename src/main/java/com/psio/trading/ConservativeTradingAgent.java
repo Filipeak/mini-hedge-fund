@@ -10,7 +10,6 @@ public class ConservativeTradingAgent extends TradingAgent {
 
     @Override
     public void update(MarketDataPayload marketDataPayload) {
-        System.out.println("ConservativeTradingAgent update for " + marketDataPayload.timestamp + ": ");
         super.update(marketDataPayload);
     }
 
