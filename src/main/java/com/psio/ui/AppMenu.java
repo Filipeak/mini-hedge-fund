@@ -1,6 +1,5 @@
 package com.psio.ui;
 
-import com.psio.ui.CryptoPortfolioApp;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;

@@ -1,12 +1,21 @@
 package com.psio.market;
 
+import com.psio.trading.PortfolioObserver;
+
 import java.util.HashSet;
+import java.util.Set;
 
 public class MarketDataNotifier {
-    private final HashSet<MarketDataObserver> observers = new HashSet<MarketDataObserver>();
+    private final Set<MarketDataObserver> observers = new HashSet<>();
+    //TODO Move to PortfolioManager when PortfolioManager will be created
+    private final Set<PortfolioObserver> portfolioObservers = new HashSet<>();
 
     public void addObserver(MarketDataObserver marketDataObserver) {
         observers.add(marketDataObserver);
+    }
+
+    public void addPortfolioObserver(PortfolioObserver portfolioObserver) {
+        portfolioObservers.add(portfolioObserver);
     }
 
     public void removeObserver(MarketDataObserver marketDataObserver) {
@@ -14,10 +23,12 @@ public class MarketDataNotifier {
     }
 
     public void notifyObservers(MarketDataPayload marketDataPayload) {
-        if (observers != null) {
-            for (MarketDataObserver observer : observers) {
-                observer.update(marketDataPayload);
-            }
+        for (MarketDataObserver observer : observers) {
+            observer.update(marketDataPayload);
+        }
+        //TODO Move to PortfolioManager when PortfolioManager will be created
+        for (PortfolioObserver observer : portfolioObservers) {
+            observer.onChange(marketDataPayload);
         }
     }
 }

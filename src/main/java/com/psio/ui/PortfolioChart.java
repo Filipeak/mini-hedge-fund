@@ -1,7 +1,7 @@
 package com.psio.ui;
 
-import com.psio.market.MarketDataObserver;
 import com.psio.market.MarketDataPayload;
+import com.psio.trading.PortfolioObserver;
 import com.psio.trading.TradingAgent;
 import javafx.application.Platform;
 import javafx.scene.chart.LineChart;
@@ -10,7 +10,7 @@ import javafx.scene.chart.XYChart;
 
 import java.util.List;
 
-public class PortfolioChart implements MarketDataObserver {
+public class PortfolioChart implements PortfolioObserver {
 
     private XYChart.Series<Number, Number> series;
     private final List<TradingAgent> agents;
@@ -46,7 +46,8 @@ public class PortfolioChart implements MarketDataObserver {
         return lineChart;
     }
 
-    public void update(MarketDataPayload marketDataPayload) {
+    @Override
+    public void onChange(MarketDataPayload marketDataPayload) {
         float currentPrice = marketDataPayload.close;
         float currentTotalValue = 0;
 
@@ -63,10 +64,16 @@ public class PortfolioChart implements MarketDataObserver {
         });
     }
 
-    public void clear() {
+    @Override
+    public void onBegin() {
         Platform.runLater(() -> {
             series.getData().clear();
             tickCounter = 0;
         });
+    }
+
+    @Override
+    public void onEnd() {
+
     }
 }
