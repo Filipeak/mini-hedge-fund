@@ -1,18 +1,17 @@
 package com.psio.market;
 
 import java.io.*;
+import java.time.*;
 
 public class CSVMarketDataProvider implements MarketDataProvider {
     private final String filePath;
-    private MarketDataNotifier marketDataNotifier;
 
-    public CSVMarketDataProvider(String filePath, MarketDataNotifier marketDataNotifier) {
+    public CSVMarketDataProvider(String filePath) {
         this.filePath = filePath;
-        this.marketDataNotifier = marketDataNotifier;
     }
 
     @Override
-    public void getData() {
+    public void getData(MarketDataNotifier marketDataNotifier) {
         File file = new File(filePath);
 
         try (BufferedReader breader = new BufferedReader(new FileReader(file))) {

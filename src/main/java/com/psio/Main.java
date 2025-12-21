@@ -50,13 +50,13 @@ public class Main {
             String path = file.getAbsolutePath();
 
             if (file.getName().toLowerCase().endsWith(".json")) {
-                provider = new JSONMarketDataProvider(path, marketDataNotifier);
+                provider = new JSONMarketDataProvider(path);
             } else {
-                provider = new CSVMarketDataProvider(path, marketDataNotifier);
+                provider = new CSVMarketDataProvider(path);
             }
 
             portfolioChart.onBegin();
-            provider.getData();
+            provider.getData(marketDataNotifier);
         });
 
         simulationThread.setDaemon(true);

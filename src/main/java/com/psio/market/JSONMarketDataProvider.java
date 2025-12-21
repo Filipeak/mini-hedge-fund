@@ -6,15 +6,13 @@ import java.io.IOException;
 
 public class JSONMarketDataProvider implements MarketDataProvider {
     private final String filePath;
-    private MarketDataNotifier marketDataNotifier;
 
-    public JSONMarketDataProvider(String filePath, MarketDataNotifier marketDataNotifier) {
+    public JSONMarketDataProvider(String filePath) {
         this.filePath = filePath;
-        this.marketDataNotifier = marketDataNotifier;
     }
 
     @Override
-    public void getData() {
+    public void getData(MarketDataNotifier marketDataNotifier) {
         try {
             BufferedReader breader = new BufferedReader(new FileReader(filePath));
             breader.readLine();
