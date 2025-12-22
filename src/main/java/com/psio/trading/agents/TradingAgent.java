@@ -41,7 +41,6 @@ public abstract class TradingAgent {
 
     public void end() {
         this.wallet.endInfo();
-
     }
 
     public Wallet getWallet() {

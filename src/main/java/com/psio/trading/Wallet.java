@@ -47,7 +47,7 @@ public class Wallet {
 
     public void tryBuyMaxAssets(float currentPrice) {
         if (balance > 0) {
-            System.out.println("[" + name + " Log]: Purchase of " + balance / currentPrice + " for " + currentPrice);
+            System.out.println("[" + name + " LOG]: Purchase of " + balance / currentPrice + " for " + currentPrice);
 
             this.assetAmount = balance / currentPrice;
             this.balance = 0;
@@ -58,7 +58,7 @@ public class Wallet {
 
     public void trySellAllAssets(float currentPrice) {
         if (assetAmount > 0) {
-            System.out.println("[" + name + " Log]: Sell of " + assetAmount + " for " + currentPrice);
+            System.out.println("[" + name + " LOG]: Sell of " + assetAmount + " for " + currentPrice);
             this.transactionCount++;
 
             this.balance = balance + assetAmount * currentPrice;
