@@ -4,7 +4,7 @@ import com.psio.market.CSVMarketDataProvider;
 import com.psio.market.JSONMarketDataProvider;
 import com.psio.market.MarketDataNotifier;
 import com.psio.market.MarketDataProvider;
-import com.psio.trading.TradingAgent;
+import com.psio.trading.agents.TradingAgent;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;

@@ -2,7 +2,7 @@ package com.psio.ui;
 
 import com.psio.market.MarketDataObserver;
 import com.psio.market.MarketDataPayload;
-import com.psio.trading.TradingAgent;
+import com.psio.trading.agents.TradingAgent;
 import javafx.application.Platform;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -23,6 +23,15 @@ public class PortfolioChart implements MarketDataObserver {
             initialTotalValue += agent.getBalance();
         }
     }
+
+    //-------------------------------
+    //dodane temp z powodu testowania
+    @Override
+    public void begin() {}
+
+    @Override
+    public void end() {}
+    //-------------------------------
 
     public LineChart<Number, Number> createChart() {
         NumberAxis xAxis = new NumberAxis();

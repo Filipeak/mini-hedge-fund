@@ -1,6 +1,7 @@
-package com.psio.trading;
+package com.psio.trading.strategies;
 
 import com.psio.market.MarketDataPayload;
+import com.psio.trading.TradingAction;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class MomentumTradingStrategy implements TradingStrategy {
     @Override
     public TradingAction decide(MarketDataPayload marketDataPayload) {
 
-        //Market history data for LONG_PERIOD of entries
+        //Market history data for longPeriod of entries
         if (marketHistory.size() < longPeriod) {
             marketHistory.add(marketDataPayload);
 
