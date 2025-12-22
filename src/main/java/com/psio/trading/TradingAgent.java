@@ -18,11 +18,11 @@ public abstract class TradingAgent {
 
         switch (decision) {
             case TradingAction.BUY:
-                wallet.buyAssets(currentPrice);
+                wallet.tryBuyMaxAssets(currentPrice);
                 break;
 
             case TradingAction.SELL:
-                wallet.sellAssets(currentPrice);
+                wallet.trySellAllAssets(currentPrice);
                 break;
 
             case TradingAction.HOLD:

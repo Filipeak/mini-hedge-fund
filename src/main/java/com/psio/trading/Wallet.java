@@ -45,18 +45,18 @@ public class Wallet {
         return balance + assetAmount * currentPrice;
     }
 
-    public void buyAssets(float currentPrice) {
+    public void tryBuyMaxAssets(float currentPrice) {
         if (balance > 0) {
             System.out.println("[" + name + " Log]: Purchase of " + balance / currentPrice + " for " + currentPrice);
 
             this.assetAmount = balance / currentPrice;
             this.balance = 0;
             this.transactionBuyPrice = currentPrice;
-        } //else throw new InvalidTransactionException("Insufficient balance");
+        }
 
     }
 
-    public void sellAssets(float currentPrice) {
+    public void trySellAllAssets(float currentPrice) {
         if (assetAmount > 0) {
             System.out.println("[" + name + " Log]: Sell of " + assetAmount + " for " + currentPrice);
             this.transactionCount++;
@@ -67,7 +67,7 @@ public class Wallet {
             if (currentPrice > transactionBuyPrice) {
                 this.transactionWinCount++;
             }
-        } //else throw new InvalidTransactionException("Insufficient assets");
+        }
     }
 
     public int getTransactionCount() {
