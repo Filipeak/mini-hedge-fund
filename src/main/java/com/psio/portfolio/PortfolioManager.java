@@ -2,7 +2,7 @@ package com.psio.portfolio;
 
 import com.psio.market.MarketDataObserver;
 import com.psio.market.MarketDataPayload;
-import com.psio.trading.TradingAgent;
+import com.psio.trading.agents.TradingAgent;
 
 import java.util.ArrayList;
 import java.util.List;

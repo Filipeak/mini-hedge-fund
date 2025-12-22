@@ -1,6 +1,8 @@
-package com.psio.trading;
+package com.psio.trading.agents;
 
 import com.psio.market.MarketDataPayload;
+import com.psio.trading.Wallet;
+import com.psio.trading.strategies.MomentumTradingStrategy;
 
 public class SmartTradingAgent extends TradingAgent {
     public SmartTradingAgent(Wallet wallet) {

@@ -2,7 +2,7 @@ package com.psio.ui;
 
 import com.psio.market.MarketDataObserver;
 import com.psio.market.MarketDataPayload;
-import com.psio.trading.TradingAgent;
+import com.psio.trading.agents.TradingAgent;
 import javafx.application.Platform;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;

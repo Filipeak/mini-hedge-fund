@@ -1,6 +1,8 @@
-package com.psio.trading;
+package com.psio.trading.agents;
 
 import com.psio.market.MarketDataPayload;
+import com.psio.trading.Wallet;
+import com.psio.trading.strategies.BuyAndHoldTradingStrategy;
 
 public class ConservativeTradingAgent extends TradingAgent {
     public ConservativeTradingAgent(Wallet wallet) {

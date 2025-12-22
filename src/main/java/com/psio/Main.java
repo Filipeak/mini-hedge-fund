@@ -3,6 +3,9 @@ package com.psio;
 import com.psio.market.MarketDataNotifier;
 import com.psio.portfolio.PortfolioManager;
 import com.psio.trading.*;
+import com.psio.trading.agents.ConservativeTradingAgent;
+import com.psio.trading.agents.SmartTradingAgent;
+import com.psio.trading.agents.TradingAgent;
 import com.psio.ui.CryptoPortfolioApp;
 
 import java.util.ArrayList;

@@ -1,6 +1,9 @@
-package com.psio.trading;
+package com.psio.trading.agents;
 
 import com.psio.market.MarketDataPayload;
+import com.psio.trading.TradingAction;
+import com.psio.trading.strategies.TradingStrategy;
+import com.psio.trading.Wallet;
 
 public abstract class TradingAgent {
     protected Wallet wallet;

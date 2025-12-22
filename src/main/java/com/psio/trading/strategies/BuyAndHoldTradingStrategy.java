@@ -1,6 +1,7 @@
-package com.psio.trading;
+package com.psio.trading.strategies;
 
 import com.psio.market.MarketDataPayload;
+import com.psio.trading.TradingAction;
 
 public class BuyAndHoldTradingStrategy implements TradingStrategy {
     private boolean hasBought = false;
