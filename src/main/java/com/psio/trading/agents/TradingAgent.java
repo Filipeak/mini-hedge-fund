@@ -14,7 +14,6 @@ public abstract class TradingAgent {
     }
 
     public void update(MarketDataPayload marketDataPayload) {
-
         TradingAction decision = currentStrategy.decide(marketDataPayload);
 
         float currentPrice = marketDataPayload.close;
@@ -30,9 +29,7 @@ public abstract class TradingAgent {
 
             case TradingAction.HOLD:
                 break;
-
         }
-
     }
 
     public void begin() {
@@ -40,7 +37,7 @@ public abstract class TradingAgent {
     }
 
     public void end() {
-        this.wallet.endInfo();
+        this.wallet.printInfo();
     }
 
     public Wallet getWallet() {
@@ -54,5 +51,4 @@ public abstract class TradingAgent {
     public float getAssets() {
         return wallet.getAssetAmount();
     }
-
 }

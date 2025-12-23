@@ -8,13 +8,11 @@ public class BuyAndHoldTradingStrategy implements TradingStrategy {
 
     @Override
     public TradingAction decide(MarketDataPayload marketDataPayload) {
-
         if (hasBought)
             return TradingAction.HOLD;
 
-
         hasBought = true;
-        return TradingAction.BUY;
 
+        return TradingAction.BUY;
     }
 }
