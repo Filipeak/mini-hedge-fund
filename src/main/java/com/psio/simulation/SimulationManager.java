@@ -19,9 +19,7 @@ public class SimulationManager {
         Thread simulationThread = new Thread(() -> {
             MarketDataProvider provider = createProvider(file);
 
-            marketDataNotifier.beginObservers(); // TODO change to use PortfolioManager
             provider.getData(marketDataNotifier);
-            marketDataNotifier.endObservers(); // TODO change to use PortfolioManager
         });
 
         simulationThread.setDaemon(true);

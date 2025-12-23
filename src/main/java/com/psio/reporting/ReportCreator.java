@@ -2,8 +2,8 @@ package com.psio.reporting;
 
 import com.psio.files.ReportSaver;
 import com.psio.market.MarketDataPayload;
-import com.psio.trading.PortfolioObserver;
-import com.psio.trading.TradingAgent;
+import com.psio.portfolio.PortfolioObserver;
+import com.psio.trading.agents.TradingAgent;
 
 import java.util.List;
 

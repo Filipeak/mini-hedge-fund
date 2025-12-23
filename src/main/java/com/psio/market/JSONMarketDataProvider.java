@@ -18,6 +18,8 @@ public class JSONMarketDataProvider implements MarketDataProvider {
             breader.readLine();
             breader.readLine();
 
+            marketDataNotifier.beginObservers();
+
             while (breader.ready()) {
                 StringBuilder builder = new StringBuilder();
 
@@ -39,11 +41,13 @@ public class JSONMarketDataProvider implements MarketDataProvider {
                 breader.readLine();
                 breader.readLine();
 
-                marketDataNotifier.notifyObservers(marketDataPayload);
+                marketDataNotifier.updateObservers(marketDataPayload);
             }
 
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            marketDataNotifier.endObservers();
         }
     }
 }
