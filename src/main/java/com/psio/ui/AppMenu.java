@@ -12,12 +12,10 @@ public class AppMenu {
 
     private final Stage stage;
     private final Consumer<File> onFileSelected;
-    private final Runnable onToggleView;
 
-    public AppMenu(Stage stage, Consumer<File> onFileSelected, Runnable onToggleView) {
+    public AppMenu(Stage stage, Consumer<File> onFileSelected) {
         this.stage = stage;
         this.onFileSelected = onFileSelected;
-        this.onToggleView = onToggleView;
     }
 
     public MenuBar createMenu() {
@@ -28,17 +26,12 @@ public class AppMenu {
         itemOpen.setOnAction(this::handleOpenFile);
         menuFile.getItems().add(itemOpen);
 
-        Menu menuView = new Menu("Widok");
-        CheckMenuItem itemPercent = new CheckMenuItem("Procentowy zwrot");
-        itemPercent.setOnAction(e -> onToggleView.run());
-        menuView.getItems().add(itemPercent);
-
         Menu menuHelp = new Menu("Pomoc");
         MenuItem itemAbout = new MenuItem("O programie");
         itemAbout.setOnAction(e -> showAboutDialog());
         menuHelp.getItems().add(itemAbout);
 
-        menuBar.getMenus().addAll(menuFile, menuView, menuHelp);
+        menuBar.getMenus().addAll(menuFile, menuHelp);
         return menuBar;
     }
 

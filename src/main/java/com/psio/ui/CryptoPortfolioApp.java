@@ -1,8 +1,12 @@
 package com.psio.ui;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import java.io.File;
 import java.util.Objects;
@@ -19,10 +23,17 @@ public class CryptoPortfolioApp extends Application {
 
     public void start(Stage primaryStage) {
         BorderPane root = new BorderPane();
+
+        // 1. Center: Chart
         root.setCenter(portfolioChart.createChart());
 
-        AppMenu appMenu = new AppMenu(primaryStage, this::onFileSelected, portfolioChart::toggleViewMode);
+        // 2. Top: Menu
+        AppMenu appMenu = new AppMenu(primaryStage, this::onFileSelected);
         root.setTop(appMenu.createMenu());
+
+        // 3. Bottom: Toggle Bar
+        HBox bottomBar = createBottomBar();
+        root.setBottom(bottomBar);
 
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         try {
@@ -34,6 +45,24 @@ public class CryptoPortfolioApp extends Application {
         primaryStage.setTitle("FinTech Portfolio Tracker");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private HBox createBottomBar() {
+        CheckBox toggleViewMode = new CheckBox("Pokaż procentowy zwrot");
+
+        toggleViewMode.getStyleClass().add("view-toggle");
+
+        toggleViewMode.setOnAction(e -> {
+            if (portfolioChart != null) {
+                portfolioChart.toggleViewMode();
+            }
+        });
+
+        HBox bottomBox = new HBox(toggleViewMode);
+        bottomBox.getStyleClass().add("bottom-status-bar");
+        bottomBox.setAlignment(Pos.CENTER);
+
+        return bottomBox;
     }
 
     private void onFileSelected(File file) {
