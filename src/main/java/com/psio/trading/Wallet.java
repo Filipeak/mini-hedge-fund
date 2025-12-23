@@ -11,7 +11,6 @@ public class Wallet {
     private int transactionWinCount = 0;
     private float transactionBuyPrice;
 
-
     public Wallet(float defaultBalance, float defaultAssetAmount, String name) {
         this.defaultBalance = defaultBalance;
         this.defaultAssetAmount = defaultAssetAmount;
@@ -25,10 +24,10 @@ public class Wallet {
         this.assetAmount = defaultAssetAmount;
     }
 
-    public void endInfo() {
+    public void printInfo() {
         System.out.println("\nWallet " + name
-                + "\nEnd balance: " + balance
-                + "\nEnd asset amount: " + assetAmount
+                + "\nBalance: " + balance
+                + "\nAsset amount: " + assetAmount
                 + "\nTransaction count: " + transactionCount
                 + "\nTransactions won: " + transactionWinCount);
     }
@@ -53,14 +52,13 @@ public class Wallet {
             this.balance = 0;
             this.transactionBuyPrice = currentPrice;
         }
-
     }
 
     public void trySellAllAssets(float currentPrice) {
         if (assetAmount > 0) {
             System.out.println("[" + name + " LOG]: Sell of " + assetAmount + " for " + currentPrice);
-            this.transactionCount++;
 
+            this.transactionCount++;
             this.balance = balance + assetAmount * currentPrice;
             this.assetAmount = 0;
 
@@ -77,5 +75,4 @@ public class Wallet {
     public int getTransactionWinCount() {
         return transactionWinCount;
     }
-
 }
