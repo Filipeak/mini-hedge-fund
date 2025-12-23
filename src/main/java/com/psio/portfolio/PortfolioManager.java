@@ -59,11 +59,11 @@ public class PortfolioManager implements MarketDataObserver{
         observers.remove(portfolioObserver);
     }
 
-    public float getCurrentValue(float currentPrice){
+    public float getCurrentValue(){
         float result = 0;
 
         for(TradingAgent tradingAgent : tradingAgents){
-            result += tradingAgent.getWallet().getCurrentValue(currentPrice);
+            result += tradingAgent.getWallet().getTotalValue();
         }
 
         return result;
@@ -72,5 +72,4 @@ public class PortfolioManager implements MarketDataObserver{
     public TradingAgent[] getAgents(){
         return tradingAgents;
     }
-
 }

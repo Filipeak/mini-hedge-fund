@@ -30,6 +30,8 @@ public abstract class TradingAgent {
             case TradingAction.HOLD:
                 break;
         }
+
+        wallet.updateCurrentPrice(currentPrice);
     }
 
     public void begin() {
@@ -42,13 +44,5 @@ public abstract class TradingAgent {
 
     public Wallet getWallet() {
         return wallet;
-    }
-
-    public float getBalance() {
-        return wallet.getBalance();
-    }
-
-    public float getAssets() {
-        return wallet.getAssetAmount();
     }
 }

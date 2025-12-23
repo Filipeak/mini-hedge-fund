@@ -7,6 +7,7 @@ public class Wallet {
 
     private float balance;
     private float assetAmount;
+    private float currentValue;
     private int transactionCount = 0;
     private int transactionWinCount = 0;
     private float transactionBuyPrice;
@@ -40,8 +41,12 @@ public class Wallet {
         return assetAmount;
     }
 
-    public float getCurrentValue(float currentPrice) {
-        return balance + assetAmount * currentPrice;
+    public float getTotalValue() {
+        return currentValue;
+    }
+
+    public void updateCurrentPrice(float currentPrice) {
+        currentValue = balance + assetAmount * currentPrice;
     }
 
     public void tryBuyMaxAssets(float currentPrice) {
