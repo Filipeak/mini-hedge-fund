@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -13,10 +12,12 @@ public class AppMenu {
 
     private final Stage stage;
     private final Consumer<File> onFileSelected;
+    private final Runnable onToggleView;
 
-    public AppMenu(Stage stage, Consumer<File> onFileSelected) {
+    public AppMenu(Stage stage, Consumer<File> onFileSelected, Runnable onToggleView) {
         this.stage = stage;
         this.onFileSelected = onFileSelected;
+        this.onToggleView = onToggleView;
     }
 
     public MenuBar createMenu() {
@@ -27,12 +28,17 @@ public class AppMenu {
         itemOpen.setOnAction(this::handleOpenFile);
         menuFile.getItems().add(itemOpen);
 
+        Menu menuView = new Menu("Widok");
+        CheckMenuItem itemPercent = new CheckMenuItem("Procentowy zwrot");
+        itemPercent.setOnAction(e -> onToggleView.run());
+        menuView.getItems().add(itemPercent);
+
         Menu menuHelp = new Menu("Pomoc");
         MenuItem itemAbout = new MenuItem("O programie");
         itemAbout.setOnAction(e -> showAboutDialog());
         menuHelp.getItems().add(itemAbout);
 
-        menuBar.getMenus().addAll(menuFile, menuHelp);
+        menuBar.getMenus().addAll(menuFile, menuView, menuHelp);
         return menuBar;
     }
 
@@ -44,28 +50,22 @@ public class AppMenu {
                 new FileChooser.ExtensionFilter("Pliki CSV", "*.csv"),
                 new FileChooser.ExtensionFilter("Pliki JSON", "*.json")
         );
-
         File initialDir = new File("src/main/resources");
         if (initialDir.exists()) fileChooser.setInitialDirectory(initialDir);
-
         File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            onFileSelected.accept(file);
-        }
+        if (file != null) onFileSelected.accept(file);
     }
 
     private void showAboutDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("O Aplikacji");
-        alert.setHeaderText("Portfolio Tracker v2.1");
-        alert.setContentText("Obsługa plików CSV oraz JSON.");
-
+        alert.setHeaderText("Portfolio Tracker");
+        alert.setContentText("BUBUŚ");
         DialogPane dialogPane = alert.getDialogPane();
         try {
             dialogPane.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CryptoPortfolioApp.CSS_PATH)).toExternalForm());
             dialogPane.getStyleClass().add("my-dialog");
         } catch (Exception ignored) {}
-
         alert.showAndWait();
     }
 }

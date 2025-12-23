@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -22,7 +21,7 @@ public class CryptoPortfolioApp extends Application {
         BorderPane root = new BorderPane();
         root.setCenter(portfolioChart.createChart());
 
-        AppMenu appMenu = new AppMenu(primaryStage, this::onFileSelected);
+        AppMenu appMenu = new AppMenu(primaryStage, this::onFileSelected, portfolioChart::toggleViewMode);
         root.setTop(appMenu.createMenu());
 
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -39,14 +38,10 @@ public class CryptoPortfolioApp extends Application {
 
     private void onFileSelected(File file) {
         if (file == null || !file.exists()) {
+            System.out.println("File Not Found");
             return;
         }
-
-        System.out.println("UI: Preparing chart for new simulation...");
-
-        if (fileImportHandler != null) {
-            fileImportHandler.accept(file);
-        }
+        if (fileImportHandler != null) fileImportHandler.accept(file);
     }
 
     public static void start(String[] args, PortfolioChart portfolioChart, Consumer<File> fileImportHandler) {

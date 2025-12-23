@@ -34,4 +34,18 @@ public class MarketDataNotifier {
             observer.onChange(marketDataPayload);
         }
     }
+
+    public void beginObservers() {
+        //TODO Move to PortfolioManager when PortfolioManager will be created
+        for (PortfolioObserver observer : portfolioObservers) {
+            observer.onBegin();
+        }
+    }
+
+    public void endObservers() {
+        //TODO Move to PortfolioManager when PortfolioManager will be created
+        for (PortfolioObserver observer : portfolioObservers) {
+            observer.onEnd();
+        }
+    }
 }

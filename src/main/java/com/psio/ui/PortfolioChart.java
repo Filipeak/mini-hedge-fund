@@ -7,34 +7,52 @@ import javafx.application.Platform;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.util.StringConverter;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PortfolioChart implements PortfolioObserver {
 
     private XYChart.Series<Number, Number> series;
     private final List<TradingAgent> agents;
-    private float initialTotalValue = 0;
-    private int tickCounter = 0;
+    private final List<Snapshot> history = new ArrayList<>();
+
+    private final float fixedInitialCapital;
+
+    private boolean percentageMode = false;
+    private NumberAxis yAxis;
+
+    private record Snapshot(long timestamp, float currentTotalValue) {}
 
     public PortfolioChart(List<TradingAgent> agents) {
         this.agents = agents;
-        for (TradingAgent agent : agents) {
-            initialTotalValue += agent.getBalance();
-        }
+        this.fixedInitialCapital = calculateCurrentTotalBalance();
+
+        System.out.println("PortfolioChart: Base for percentage calculations set at: " + fixedInitialCapital + " PLN");
     }
 
     public LineChart<Number, Number> createChart() {
         NumberAxis xAxis = new NumberAxis();
-        xAxis.setLabel("Czas");
+        xAxis.setLabel("Data");
         xAxis.setAutoRanging(true);
+        xAxis.setForceZeroInRange(false);
+        xAxis.setTickLabelFormatter(new StringConverter<>() {
+            private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            @Override
+            public String toString(Number t) { return sdf.format(new Date(t.longValue())); }
+            @Override
+            public Number fromString(String s) { return 0; }
+        });
 
-        NumberAxis yAxis = new NumberAxis();
+        yAxis = new NumberAxis();
         yAxis.setLabel("Zysk / Strata (PLN)");
         yAxis.setAutoRanging(true);
 
         LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-        lineChart.setTitle("Symulacja Live: Wynik Finansowy");
+        lineChart.setTitle("Symulacja Live");
         lineChart.setCreateSymbols(false);
         lineChart.setAnimated(false);
         lineChart.setLegendVisible(false);
@@ -46,34 +64,66 @@ public class PortfolioChart implements PortfolioObserver {
         return lineChart;
     }
 
-    @Override
-    public void onChange(MarketDataPayload marketDataPayload) {
-        float currentPrice = marketDataPayload.close;
-        float currentTotalValue = 0;
+    public void toggleViewMode() {
+        percentageMode = !percentageMode;
+        yAxis.setLabel(percentageMode ? "Zwrot z inwestycji (%)" : "Zysk / Strata (PLN)");
+        Platform.runLater(this::refreshSeries);
+    }
 
-        for (TradingAgent agent : agents) {
-            currentTotalValue += agent.getBalance() + (agent.getAssets() * currentPrice);
+    private void refreshSeries() {
+        series.getData().clear();
+        for (Snapshot s : history) {
+            addPointToSeries(s.timestamp, s.currentTotalValue);
+        }
+    }
+
+    private void addPointToSeries(long timestamp, float currentTotalValue) {
+        float valueToPlot;
+
+        float profitOrLoss = currentTotalValue - fixedInitialCapital;
+
+        if (percentageMode) {
+            if (fixedInitialCapital != 0) {
+                valueToPlot = (profitOrLoss / fixedInitialCapital) * 100;
+            } else {
+                valueToPlot = 0;
+            }
+        } else {
+            valueToPlot = profitOrLoss;
         }
 
-        final float absolutePnL = currentTotalValue - initialTotalValue;
-        final int currentTick = tickCounter++;
+        series.getData().add(new XYChart.Data<>(timestamp, valueToPlot));
+    }
 
-        Platform.runLater(() -> {
-            var dataPoint = new XYChart.Data<Number, Number>(currentTick, absolutePnL);
-            series.getData().add(dataPoint);
-        });
+    @Override
+    public void onChange(MarketDataPayload marketDataPayload) {
+        float currentTotalValue = 0;
+        for (TradingAgent agent : agents) {
+            currentTotalValue += agent.getBalance() + (agent.getAssets() * marketDataPayload.close);
+        }
+
+        long timestamp = marketDataPayload.timestamp;
+
+        synchronized (history) {
+            history.add(new Snapshot(timestamp, currentTotalValue));
+        }
     }
 
     @Override
     public void onBegin() {
-        Platform.runLater(() -> {
-            series.getData().clear();
-            tickCounter = 0;
-        });
+        history.clear();
     }
 
     @Override
     public void onEnd() {
+        Platform.runLater(this::refreshSeries);
+    }
 
+    private float calculateCurrentTotalBalance() {
+        float total = 0;
+        for (TradingAgent agent : agents) {
+            total += agent.getBalance();
+        }
+        return total;
     }
 }
