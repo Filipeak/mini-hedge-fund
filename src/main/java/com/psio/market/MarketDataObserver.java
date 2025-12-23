@@ -7,5 +7,4 @@ public interface MarketDataObserver {
     void begin();
 
     void end();
-
 }

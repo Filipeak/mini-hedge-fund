@@ -18,6 +18,8 @@ public class CSVMarketDataProvider implements MarketDataProvider {
             breader.readLine();
             String line;
 
+            marketDataNotifier.beginObservers();
+
             while ((line = breader.readLine()) != null) {
                 String[] data = line.split(",");
 
@@ -30,10 +32,12 @@ public class CSVMarketDataProvider implements MarketDataProvider {
                         Double.parseDouble(data[5])
                 );
 
-                marketDataNotifier.notifyObservers(marketDataPayload);
+                marketDataNotifier.updateObservers(marketDataPayload);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            marketDataNotifier.endObservers();
         }
     }
 }
