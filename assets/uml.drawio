@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.2.9">
   <diagram name="Strona-1" id="4IEWQQ8Vejv4kjTBxXXD">
-    <mxGraphModel dx="4532" dy="1709" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4000" pageHeight="2000" math="0" shadow="0">
+    <mxGraphModel dx="3273" dy="1234" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4000" pageHeight="2000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -14,42 +14,42 @@
           <mxGeometry height="120" width="210" x="1140" y="311.25" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-6" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;i&gt;TradingAgent&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(MarketDataPayload): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ begin(): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ end(): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getWallet(): Wallet&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="133.75" width="210" x="1480" y="686.25" as="geometry" />
+          <mxGeometry height="133.75" width="210" x="1480" y="715" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-8" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ConservativeTradingAgent&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ update(MarketDataPayload): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="85" width="210" x="1320" y="926.25" as="geometry" />
+          <mxGeometry height="85" width="210" x="1320" y="958.75" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-9" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;SmartTradingAgent&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ update(MarketDataPayload): void&lt;/p&gt;" vertex="1">
-          <mxGeometry height="85" width="210" x="1630" y="926.25" as="geometry" />
+          <mxGeometry height="85" width="210" x="1630" y="958.75" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-12" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;TradingStrategy&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ decide(MarketDataPayload): TradingAction&lt;br&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="120" width="260" x="1450" y="1120" as="geometry" />
+          <mxGeometry height="120" width="260" x="1450" y="1152.5" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-13" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;TradingAction&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;BUY&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;SELL&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;HOLD&lt;/p&gt;" vertex="1">
-          <mxGeometry height="100" width="170" x="1880" y="1130" as="geometry" />
+          <mxGeometry height="100" width="170" x="1880" y="1162.5" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-15" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-13" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="DsQs2UAFvfVbpWphkuw8-12" value="">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="2105" y="1400" as="sourcePoint" />
-            <mxPoint x="1890" y="1400" as="targetPoint" />
+            <mxPoint x="2105" y="1432.5" as="sourcePoint" />
+            <mxPoint x="1890" y="1432.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-18" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;BuyAndHoldTradingStrategy&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ decide(MarketDataPayload):&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;TradingAction&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="110" width="250" x="1270" y="1315" as="geometry" />
+          <mxGeometry height="110" width="250" x="1270" y="1347.5" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-20" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;MomentumTradingStrategy&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ decide(MarketDataPayload):&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;TradingAction&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="110" width="250" x="1640" y="1315" as="geometry" />
+          <mxGeometry height="110" width="250" x="1640" y="1347.5" as="geometry" />
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-22" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-18" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="DsQs2UAFvfVbpWphkuw8-12" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="1380" y="1240" as="sourcePoint" />
-            <mxPoint x="1380" y="1150" as="targetPoint" />
+            <mxPoint x="1380" y="1272.5" as="sourcePoint" />
+            <mxPoint x="1380" y="1182.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-23" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-20" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="DsQs2UAFvfVbpWphkuw8-12" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="1770" y="1270" as="sourcePoint" />
-            <mxPoint x="1848" y="1205" as="targetPoint" />
+            <mxPoint x="1770" y="1302.5" as="sourcePoint" />
+            <mxPoint x="1848" y="1237.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="DsQs2UAFvfVbpWphkuw8-24" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;MarketDataPayload&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ timestamp: long&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ open: float&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ close: float&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ high: float&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ low: float&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ volume: double&lt;/p&gt;" vertex="1">
@@ -113,10 +113,10 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="szB5t5zR24mhFGgWqUhn-1" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;Wallet&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style: solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;- balance: float&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;- assetAmount: float&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;- transactionCount: int&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;- transactionWinCount: int&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style: solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ getBalance(): float&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ getAssetAmount(): float&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getTotalValue(): float&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ getTransactionCount(): int&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ getTransactionWinCount(): int&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ updateCurrentPrice(float): void&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ tryBuyMaxAssets(float): void&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ trySellAllAssets(float): void&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ reset(): void&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ printInfo(): void&lt;/p&gt;" vertex="1">
-          <mxGeometry height="249.57" width="210" x="1980" y="628.3399999999999" as="geometry" />
+          <mxGeometry height="249.57" width="210" x="1980" y="657.0899999999999" as="geometry" />
         </mxCell>
-        <mxCell id="fMvhdixfflPuhng1t6j9-5" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b style=&quot;&quot;&gt;PortfolioManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ PortfolioManager(TradingAgent[])&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(MarketDataPayload): void&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ begin(): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ end(): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ addObserver(PortfolioObserver): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ removeObserver(PortfolioObserver): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getCurrentValue(): float&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getAgents(): TradingAgent[]&lt;/p&gt;" vertex="1">
-          <mxGeometry height="180" width="240" x="1125" y="495" as="geometry" />
+        <mxCell id="fMvhdixfflPuhng1t6j9-5" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b style=&quot;&quot;&gt;PortfolioManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ PortfolioManager(TradingAgent[])&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(MarketDataPayload): void&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ begin(): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ end(): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ addObserver(PortfolioObserver): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ removeObserver(PortfolioObserver): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getCurrentValue(): float&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getLastTimestamp(): long&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getAgents(): TradingAgent[]&lt;/p&gt;" vertex="1">
+          <mxGeometry height="205" width="240" x="1125" y="510" as="geometry" />
         </mxCell>
         <mxCell id="fMvhdixfflPuhng1t6j9-6" edge="1" parent="1" source="fMvhdixfflPuhng1t6j9-5" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="DsQs2UAFvfVbpWphkuw8-5" value="">
           <mxGeometry relative="1" width="160" as="geometry">
@@ -131,19 +131,19 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="fMvhdixfflPuhng1t6j9-8" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;PortfolioObserver&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ onChange(): void&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ onBegin(): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ onEnd(): void&lt;/p&gt;" vertex="1">
-          <mxGeometry height="130" width="210" x="812.5" y="697.5" as="geometry" />
+          <mxGeometry height="130" width="210" x="812.5" y="726.25" as="geometry" />
         </mxCell>
         <mxCell id="fMvhdixfflPuhng1t6j9-10" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-6" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="fMvhdixfflPuhng1t6j9-5" value="">
           <mxGeometry relative="1" width="160" as="geometry">
             <Array as="points">
-              <mxPoint x="1585" y="585" />
+              <mxPoint x="1585" y="613.75" />
             </Array>
-            <mxPoint x="1220" y="838" as="sourcePoint" />
-            <mxPoint x="1345" y="720" as="targetPoint" />
+            <mxPoint x="1220" y="866.75" as="sourcePoint" />
+            <mxPoint x="1345" y="748.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="OTmg52iej18-WQKMzUDD-1" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;PortfolioChart&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ onChange(): void&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ onBegin(): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ onEnd(): void&lt;/p&gt;" vertex="1">
-          <mxGeometry height="112.5" width="185" x="970" y="897.5" as="geometry" />
+          <mxGeometry height="112.5" width="185" x="970" y="930" as="geometry" />
         </mxCell>
         <mxCell id="OTmg52iej18-WQKMzUDD-2" edge="1" parent="1" source="OTmg52iej18-WQKMzUDD-1" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" target="fMvhdixfflPuhng1t6j9-8" value="">
           <mxGeometry relative="1" width="160" as="geometry">
@@ -152,7 +152,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="xOSCcXm6G-TnflQd4hcD-3" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ReportCreator&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ ReportCreator(BufferedWriterCreator)&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ onChange(): void&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ onBegin(): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ onEnd(): void&lt;/p&gt;" vertex="1">
-          <mxGeometry height="132.5" width="230" x="650" y="887.5" as="geometry" />
+          <mxGeometry height="132.5" width="230" x="650" y="920" as="geometry" />
         </mxCell>
         <mxCell id="xOSCcXm6G-TnflQd4hcD-4" edge="1" parent="1" source="xOSCcXm6G-TnflQd4hcD-3" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" target="fMvhdixfflPuhng1t6j9-8" value="">
           <mxGeometry relative="1" width="160" as="geometry">
@@ -163,22 +163,22 @@
         <mxCell id="xOSCcXm6G-TnflQd4hcD-6" edge="1" parent="1" source="fMvhdixfflPuhng1t6j9-8" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="fMvhdixfflPuhng1t6j9-5" value="">
           <mxGeometry relative="1" width="160" as="geometry">
             <Array as="points">
-              <mxPoint x="917" y="585" />
+              <mxPoint x="917" y="613.75" />
             </Array>
-            <mxPoint x="990" y="748" as="sourcePoint" />
-            <mxPoint x="820" y="620" as="targetPoint" />
+            <mxPoint x="990" y="776.75" as="sourcePoint" />
+            <mxPoint x="820" y="648.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="xOSCcXm6G-TnflQd4hcD-7" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-12" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="DsQs2UAFvfVbpWphkuw8-8" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="1320" y="1070" as="sourcePoint" />
-            <mxPoint x="1490" y="1060" as="targetPoint" />
+            <mxPoint x="1320" y="1102.5" as="sourcePoint" />
+            <mxPoint x="1490" y="1092.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="xOSCcXm6G-TnflQd4hcD-8" edge="1" parent="1" source="DsQs2UAFvfVbpWphkuw8-12" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="DsQs2UAFvfVbpWphkuw8-9" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="1740" y="1032.5" as="sourcePoint" />
-            <mxPoint x="1620" y="1080" as="targetPoint" />
+            <mxPoint x="1740" y="1065" as="sourcePoint" />
+            <mxPoint x="1620" y="1112.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="xOSCcXm6G-TnflQd4hcD-10" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ValueBelowZeroException&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ ValueBelowZeroException()&lt;/span&gt;&lt;/p&gt;" vertex="1">
@@ -202,31 +202,31 @@
             <mxPoint x="1608" y="860" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="hWolcqhCBnpudhsi9EVO-3" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;BufferedWriterCreator&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ createWriter(String): BufferedWriter&lt;/p&gt;" vertex="1">
-          <mxGeometry height="102.5" width="215" x="330" y="902.5" as="geometry" />
+        <mxCell id="hWolcqhCBnpudhsi9EVO-3" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;WriterCreator&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ createWriter(): Writer&lt;/p&gt;" vertex="1">
+          <mxGeometry height="102.5" width="215" x="330" y="935" as="geometry" />
         </mxCell>
         <mxCell id="hWolcqhCBnpudhsi9EVO-5" edge="1" parent="1" source="hWolcqhCBnpudhsi9EVO-3" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="xOSCcXm6G-TnflQd4hcD-3" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="420" y="1080" as="sourcePoint" />
-            <mxPoint x="580" y="1080" as="targetPoint" />
+            <mxPoint x="420" y="1112.5" as="sourcePoint" />
+            <mxPoint x="580" y="1112.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="hWolcqhCBnpudhsi9EVO-6" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;FileBufferedWriterCreator&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ createWriter(String): BufferedWriter&lt;/p&gt;" vertex="1">
-          <mxGeometry height="102.5" width="215" x="170" y="1080" as="geometry" />
+        <mxCell id="hWolcqhCBnpudhsi9EVO-6" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;FileWriterCreator&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ createWriter(): Writer&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;FileWriterCreator(String)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="102.5" width="215" x="170" y="1112.5" as="geometry" />
         </mxCell>
-        <mxCell id="hWolcqhCBnpudhsi9EVO-7" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;StringBufferedWriterCreator&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ createWriter(String): BufferedWriter&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getData(): String&lt;/p&gt;" vertex="1">
-          <mxGeometry height="102.5" width="215" x="490" y="1080" as="geometry" />
+        <mxCell id="hWolcqhCBnpudhsi9EVO-7" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;StringWriterCreator&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ createWriter(): Writer&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getData(): String&lt;/p&gt;" vertex="1">
+          <mxGeometry height="102.5" width="215" x="490" y="1112.5" as="geometry" />
         </mxCell>
         <mxCell id="hWolcqhCBnpudhsi9EVO-8" edge="1" parent="1" source="hWolcqhCBnpudhsi9EVO-6" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" target="hWolcqhCBnpudhsi9EVO-3" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="200" y="998.75" as="sourcePoint" />
-            <mxPoint x="300" y="938.75" as="targetPoint" />
+            <mxPoint x="200" y="1031.25" as="sourcePoint" />
+            <mxPoint x="300" y="971.25" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hWolcqhCBnpudhsi9EVO-9" edge="1" parent="1" source="hWolcqhCBnpudhsi9EVO-7" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" target="hWolcqhCBnpudhsi9EVO-3" value="">
           <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="350" y="1085" as="sourcePoint" />
-            <mxPoint x="466" y="1030" as="targetPoint" />
+            <mxPoint x="350" y="1117.5" as="sourcePoint" />
+            <mxPoint x="466" y="1062.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
