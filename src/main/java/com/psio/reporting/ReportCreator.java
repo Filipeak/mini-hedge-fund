@@ -1,0 +1,68 @@
+package com.psio.reporting;
+
+import com.psio.portfolio.PortfolioManager;
+import com.psio.portfolio.PortfolioObserver;
+import com.psio.reporting.creators.WriterCreator;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Arrays;
+
+public class ReportCreator implements PortfolioObserver {
+
+    private final WriterCreator writerCreator;
+    private final PortfolioManager portfolioManager;
+
+    private float initialTotalBalance = 0;
+    private float maxPeakValue = 0;
+    private float maxDrawdown = 0;
+
+    public ReportCreator(PortfolioManager portfolioManager, WriterCreator writerCreator) {
+        this.portfolioManager = portfolioManager;
+        this.writerCreator = writerCreator;
+        portfolioManager.addObserver(this);
+    }
+
+    @Override
+    public void onBegin() {
+        initialTotalBalance = portfolioManager.getCurrentValue();
+        maxPeakValue = initialTotalBalance;
+        maxDrawdown = 0;
+    }
+
+    @Override
+    public void onChange() {
+        float currentTotalValue = portfolioManager.getCurrentValue();
+
+        if (currentTotalValue > maxPeakValue) {
+            maxPeakValue = currentTotalValue;
+        }
+
+        if (maxPeakValue > 0) {
+            float currentDrawdown = (maxPeakValue - currentTotalValue) / maxPeakValue * 100;
+            if (currentDrawdown > maxDrawdown) {
+                maxDrawdown = currentDrawdown;
+            }
+        }
+    }
+
+    @Override
+    public void onEnd() {
+        float finalValue = portfolioManager.getCurrentValue();
+
+        double ror = ((finalValue - initialTotalBalance) / initialTotalBalance) * 100;
+
+        long winners = Arrays.stream(portfolioManager.getAgents())
+                .filter(a -> a.getWallet().getBalance() > (initialTotalBalance / portfolioManager.getAgents().length))
+                .count();
+        double winRate = (double) winners / portfolioManager.getAgents().length * 100;
+
+        ReportMetrics metrics = new ReportMetrics(ror, maxDrawdown, winRate, finalValue);
+
+        try (Writer writer = writerCreator.createWriter()) {
+            writer.write(metrics.toString());
+        } catch (IOException e) {
+            System.err.println("Report error: " + e.getMessage());
+        }
+    }
+}

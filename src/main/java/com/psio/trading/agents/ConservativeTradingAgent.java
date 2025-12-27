@@ -1,8 +1,11 @@
-package com.psio.trading;
+package com.psio.trading.agents;
 
 import com.psio.market.MarketDataPayload;
+import com.psio.trading.Wallet;
+import com.psio.trading.strategies.BuyAndHoldTradingStrategy;
 
 public class ConservativeTradingAgent extends TradingAgent {
+
     public ConservativeTradingAgent(Wallet wallet) {
         super(wallet);
         this.currentStrategy = new BuyAndHoldTradingStrategy();
@@ -10,8 +13,6 @@ public class ConservativeTradingAgent extends TradingAgent {
 
     @Override
     public void update(MarketDataPayload marketDataPayload) {
-        System.out.println("ConservativeTradingAgent update for " + marketDataPayload.timestamp + ": ");
         super.update(marketDataPayload);
     }
-
 }

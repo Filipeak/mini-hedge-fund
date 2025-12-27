@@ -1,31 +1,33 @@
 package com.psio;
 
-import com.psio.market.MarketDataNotifier;
+import com.psio.market.*;
+import com.psio.portfolio.*;
+import com.psio.reporting.*;
+import com.psio.reporting.creators.FileWriterCreator;
+import com.psio.simulation.*;
 import com.psio.trading.*;
-import com.psio.ui.CryptoPortfolioApp;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.psio.trading.agents.*;
+import com.psio.ui.*;
 
 public class Main {
     public static void main(String[] args) {
         MarketDataNotifier marketDataNotifier = new MarketDataNotifier();
 
-        TradingAgent tradingAgent1 = new ConservativeTradingAgent(new Wallet(10000.0f, 0.0f));
-        marketDataNotifier.addObserver(tradingAgent1);
+        final float defaultBalance = 10000.0f;
+        final float defaultAssetAmount = 0.0f;
 
-        TradingAgent tradingAgent2 = new SmartTradingAgent(new Wallet(10000.0f, 0.0f));
-        marketDataNotifier.addObserver(tradingAgent2);
+        TradingAgent[] tradingAgents = new TradingAgent[]{
+                new ConservativeTradingAgent(new Wallet(defaultBalance, defaultAssetAmount, "Conservative wallet")),
+                new SmartTradingAgent(new Wallet(defaultBalance, defaultAssetAmount, "Smart wallet")),
+        };
 
-        List<TradingAgent> agents = new ArrayList<>();
-        agents.add(tradingAgent1);
-        agents.add(tradingAgent2);
+        PortfolioManager portfolioManager = new PortfolioManager(tradingAgents);
+        marketDataNotifier.addObserver(portfolioManager);
 
-        CryptoPortfolioApp.main(args, agents, marketDataNotifier);
+        PortfolioChart portfolioChart = new PortfolioChart(portfolioManager);
+        new ReportCreator(portfolioManager, new FileWriterCreator("final-report.txt"));
 
-        System.out.println();
-        tradingAgent1.getWalletInfo();
-        System.out.println();
-        tradingAgent2.getWalletInfo();
+        SimulationManager simulationManager = new SimulationManager(marketDataNotifier);
+        CryptoPortfolioApp.start(args, portfolioChart, simulationManager::loadAndRunSimulation);
     }
 }

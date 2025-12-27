@@ -1,19 +1,15 @@
 package com.psio.ui;
 
-import com.psio.market.CSVMarketDataProvider;
-import com.psio.market.JSONMarketDataProvider;
-import com.psio.market.MarketDataNotifier;
-import com.psio.market.MarketDataProvider;
-import com.psio.trading.TradingAgent;
 import javafx.application.Application;
-import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-
 import java.io.File;
-import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class CryptoPortfolioApp extends Application {
 
@@ -21,26 +17,22 @@ public class CryptoPortfolioApp extends Application {
     private static final int WINDOW_WIDTH = 1024;
     private static final int WINDOW_HEIGHT = 768;
 
-    private static List<TradingAgent> injectedAgents;
-    private static MarketDataNotifier injectedNotifier;
-
-    private PortfolioChart portfolioChart;
+    private static Consumer<File> fileImportHandler;
+    private static PortfolioChart portfolioChart;
 
     public void start(Stage primaryStage) {
-        if (injectedAgents == null || injectedNotifier == null) {
-            System.err.println("ERROR: Run application via Main.java. No simulation data.");
-            Platform.exit();
-            return;
-        }
-
         BorderPane root = new BorderPane();
 
-        portfolioChart = new PortfolioChart(injectedAgents);
-        injectedNotifier.addObserver(portfolioChart);
+        // 1. Center: Chart
         root.setCenter(portfolioChart.createChart());
 
-        AppMenu appMenu = new AppMenu(primaryStage, this::runSimulation);
+        // 2. Top: Menu
+        AppMenu appMenu = new AppMenu(primaryStage, this::onFileSelected);
         root.setTop(appMenu.createMenu());
+
+        // 3. Bottom: Toggle Bar
+        HBox bottomBar = createBottomBar();
+        root.setBottom(bottomBar);
 
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         try {
@@ -54,32 +46,35 @@ public class CryptoPortfolioApp extends Application {
         primaryStage.show();
     }
 
-    private void runSimulation(File file) {
-        if (file == null || !file.exists()) return;
+    private HBox createBottomBar() {
+        CheckBox toggleViewMode = new CheckBox("Pokaż procentowy zwrot");
 
-        System.out.println("UI: Starting a new simulation for a file: " + file.getName());
-        portfolioChart.clear();
+        toggleViewMode.getStyleClass().add("view-toggle");
 
-        Thread simulationThread = new Thread(() -> {
-            try { Thread.sleep(500); } catch (InterruptedException e) {}
-
-            MarketDataProvider provider;
-            String path = file.getAbsolutePath();
-
-            if (file.getName().toLowerCase().endsWith(".json")) {
-                provider = new JSONMarketDataProvider(path);
-            } else {
-                provider = new CSVMarketDataProvider(path);
+        toggleViewMode.setOnAction(e -> {
+            if (portfolioChart != null) {
+                portfolioChart.toggleViewMode();
             }
-            provider.getData(injectedNotifier);
         });
-        simulationThread.setDaemon(true);
-        simulationThread.start();
+
+        HBox bottomBox = new HBox(toggleViewMode);
+        bottomBox.getStyleClass().add("bottom-status-bar");
+        bottomBox.setAlignment(Pos.CENTER);
+
+        return bottomBox;
     }
 
-    public static void main(String[] args, List<TradingAgent> agents, MarketDataNotifier notifier) {
-        injectedAgents = agents;
-        injectedNotifier = notifier;
+    private void onFileSelected(File file) {
+        if (file == null || !file.exists()) {
+            System.out.println("File Not Found");
+            return;
+        }
+        if (fileImportHandler != null) fileImportHandler.accept(file);
+    }
+
+    public static void start(String[] args, PortfolioChart portfolioChart, Consumer<File> fileImportHandler) {
+        CryptoPortfolioApp.portfolioChart = portfolioChart;
+        CryptoPortfolioApp.fileImportHandler = fileImportHandler;
 
         launch(args);
     }

@@ -1,11 +1,9 @@
 package com.psio.ui;
 
-import com.psio.ui.CryptoPortfolioApp;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -45,28 +43,22 @@ public class AppMenu {
                 new FileChooser.ExtensionFilter("Pliki CSV", "*.csv"),
                 new FileChooser.ExtensionFilter("Pliki JSON", "*.json")
         );
-
         File initialDir = new File("src/main/resources");
         if (initialDir.exists()) fileChooser.setInitialDirectory(initialDir);
-
         File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            onFileSelected.accept(file);
-        }
+        if (file != null) onFileSelected.accept(file);
     }
 
     private void showAboutDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("O Aplikacji");
-        alert.setHeaderText("Portfolio Tracker v2.1");
-        alert.setContentText("Obsługa plików CSV oraz JSON.");
-
+        alert.setHeaderText("Portfolio Tracker");
+        alert.setContentText("BUBUŚ");
         DialogPane dialogPane = alert.getDialogPane();
         try {
             dialogPane.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CryptoPortfolioApp.CSS_PATH)).toExternalForm());
             dialogPane.getStyleClass().add("my-dialog");
         } catch (Exception ignored) {}
-
         alert.showAndWait();
     }
 }
