@@ -7,9 +7,10 @@ import com.psio.trading.agents.TradingAgent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PortfolioManager implements MarketDataObserver{
+public class PortfolioManager implements MarketDataObserver {
     private final TradingAgent[] tradingAgents;
     private final List<PortfolioObserver> observers;
+    private MarketDataPayload lastPayload;
 
     public PortfolioManager(TradingAgent[] tradingAgents) {
         this.tradingAgents = tradingAgents;
@@ -18,6 +19,8 @@ public class PortfolioManager implements MarketDataObserver{
 
     @Override
     public void update(MarketDataPayload marketDataPayload) {
+        lastPayload = marketDataPayload;
+
         for (TradingAgent tradingAgent : tradingAgents) {
             tradingAgent.update(marketDataPayload);
         }
@@ -28,7 +31,7 @@ public class PortfolioManager implements MarketDataObserver{
     }
 
     @Override
-    public void begin(){
+    public void begin() {
         for (TradingAgent tradingAgent : tradingAgents) {
             tradingAgent.begin();
         }
@@ -39,7 +42,7 @@ public class PortfolioManager implements MarketDataObserver{
     }
 
     @Override
-    public void end(){
+    public void end() {
         for (TradingAgent tradingAgent : tradingAgents) {
             tradingAgent.end();
         }
@@ -49,27 +52,35 @@ public class PortfolioManager implements MarketDataObserver{
         }
     }
 
-    public void addObserver(PortfolioObserver portfolioObserver){
-        if (!observers.contains(portfolioObserver)){
+    public void addObserver(PortfolioObserver portfolioObserver) {
+        if (!observers.contains(portfolioObserver)) {
             observers.add(portfolioObserver);
         }
     }
 
-    public void removeObserver(PortfolioObserver portfolioObserver){
+    public void removeObserver(PortfolioObserver portfolioObserver) {
         observers.remove(portfolioObserver);
     }
 
-    public float getCurrentValue(){
+    public float getCurrentValue() {
         float result = 0;
 
-        for(TradingAgent tradingAgent : tradingAgents){
+        for (TradingAgent tradingAgent : tradingAgents) {
             result += tradingAgent.getWallet().getTotalValue();
         }
 
         return result;
     }
 
-    public TradingAgent[] getAgents(){
+    public long getLastTimestamp() {
+        if (lastPayload == null) {
+            return 0;
+        }
+
+        return lastPayload.timestamp;
+    }
+
+    public TradingAgent[] getAgents() {
         return tradingAgents;
     }
 }
