@@ -43,6 +43,8 @@ public class PortfolioManager implements MarketDataObserver {
 
     @Override
     public void end() {
+        lastPayload = null;
+
         for (TradingAgent tradingAgent : tradingAgents) {
             tradingAgent.end();
         }
