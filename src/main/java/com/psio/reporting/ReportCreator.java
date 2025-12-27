@@ -1,36 +1,38 @@
 package com.psio.reporting;
 
-import com.psio.files.ReportSaver;
-import com.psio.market.MarketDataPayload;
+import com.psio.portfolio.PortfolioManager;
 import com.psio.portfolio.PortfolioObserver;
-import com.psio.trading.agents.TradingAgent;
+import com.psio.reporting.creators.WriterCreator;
 
-import java.util.List;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Arrays;
 
 public class ReportCreator implements PortfolioObserver {
 
-    private final List<TradingAgent> agents;
-    private final ReportSaver reportSaver;
+    private final WriterCreator writerCreator;
+    private final PortfolioManager portfolioManager;
 
     private float initialTotalBalance = 0;
     private float maxPeakValue = 0;
     private float maxDrawdown = 0;
 
-    public ReportCreator(List<TradingAgent> agents, ReportSaver reportSaver) {
-        this.agents = agents;
-        this.reportSaver = reportSaver;
+    public ReportCreator(PortfolioManager portfolioManager, WriterCreator writerCreator) {
+        this.portfolioManager = portfolioManager;
+        this.writerCreator = writerCreator;
+        portfolioManager.addObserver(this);
     }
 
     @Override
     public void onBegin() {
-        initialTotalBalance = calculateTotalBalance(0);
+        initialTotalBalance = portfolioManager.getCurrentValue();
         maxPeakValue = initialTotalBalance;
         maxDrawdown = 0;
     }
 
     @Override
-    public void onChange(MarketDataPayload marketDataPayload) {
-        float currentTotalValue = calculateTotalBalance(marketDataPayload.close);
+    public void onChange() {
+        float currentTotalValue = portfolioManager.getCurrentValue();
 
         if (currentTotalValue > maxPeakValue) {
             maxPeakValue = currentTotalValue;
@@ -46,25 +48,21 @@ public class ReportCreator implements PortfolioObserver {
 
     @Override
     public void onEnd() {
-        float finalValue = calculateTotalBalance(0);
+        float finalValue = portfolioManager.getCurrentValue();
 
         double ror = ((finalValue - initialTotalBalance) / initialTotalBalance) * 100;
 
-        long winners = agents.stream()
-                .filter(a -> a.getBalance() > (initialTotalBalance / agents.size()))
+        long winners = Arrays.stream(portfolioManager.getAgents())
+                .filter(a -> a.getWallet().getBalance() > (initialTotalBalance / portfolioManager.getAgents().length))
                 .count();
-        double winRate = (double) winners / agents.size() * 100;
+        double winRate = (double) winners / portfolioManager.getAgents().length * 100;
 
         ReportMetrics metrics = new ReportMetrics(ror, maxDrawdown, winRate, finalValue);
 
-        reportSaver.saveReport(metrics);
-    }
-
-    private float calculateTotalBalance(float currentPrice) {
-        float total = 0;
-        for (TradingAgent agent : agents) {
-            total += agent.getBalance();
+        try (Writer writer = writerCreator.createWriter()) {
+            writer.write(metrics.toString());
+        } catch (IOException e) {
+            System.err.println("Report error: " + e.getMessage());
         }
-        return total;
     }
 }

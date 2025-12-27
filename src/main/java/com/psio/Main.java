@@ -1,9 +1,9 @@
 package com.psio;
 
-import com.psio.files.*;
 import com.psio.market.*;
 import com.psio.portfolio.*;
 import com.psio.reporting.*;
+import com.psio.reporting.creators.FileWriterCreator;
 import com.psio.simulation.*;
 import com.psio.trading.*;
 import com.psio.trading.agents.*;
@@ -24,11 +24,8 @@ public class Main {
         PortfolioManager portfolioManager = new PortfolioManager(tradingAgents);
         marketDataNotifier.addObserver(portfolioManager);
 
-        PortfolioChart portfolioChart = new PortfolioChart();
-        portfolioManager.addObserver(portfolioChart);
-
-        ReportCreator reportCreator = new ReportCreator(, new FileReportSaver("final-report.txt"));
-        portfolioManager.addObserver(reportCreator);
+        PortfolioChart portfolioChart = new PortfolioChart(portfolioManager);
+        new ReportCreator(portfolioManager, new FileWriterCreator("final-report.txt"));
 
         SimulationManager simulationManager = new SimulationManager(marketDataNotifier);
         CryptoPortfolioApp.start(args, portfolioChart, simulationManager::loadAndRunSimulation);

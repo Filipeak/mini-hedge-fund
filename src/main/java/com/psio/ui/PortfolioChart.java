@@ -1,8 +1,7 @@
 package com.psio.ui;
 
-import com.psio.market.MarketDataPayload;
+import com.psio.portfolio.PortfolioManager;
 import com.psio.portfolio.PortfolioObserver;
-import com.psio.trading.agents.TradingAgent;
 import javafx.application.Platform;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -17,7 +16,7 @@ import java.util.List;
 public class PortfolioChart implements PortfolioObserver {
 
     private XYChart.Series<Number, Number> series;
-    private final List<TradingAgent> agents;
+    private final PortfolioManager portfolioManager;
     private final List<Snapshot> history = new ArrayList<>();
 
     private final float fixedInitialCapital;
@@ -27,9 +26,10 @@ public class PortfolioChart implements PortfolioObserver {
 
     private record Snapshot(long timestamp, float currentTotalValue) {}
 
-    public PortfolioChart(List<TradingAgent> agents) {
-        this.agents = agents;
-        this.fixedInitialCapital = calculateCurrentTotalBalance();
+    public PortfolioChart(PortfolioManager portfolioManager) {
+        this.portfolioManager = portfolioManager;
+        this.fixedInitialCapital = portfolioManager.getCurrentValue();
+        portfolioManager.addObserver(this);
 
         System.out.println("PortfolioChart: Base for percentage calculations set at: " + fixedInitialCapital + " PLN");
     }
@@ -96,13 +96,9 @@ public class PortfolioChart implements PortfolioObserver {
     }
 
     @Override
-    public void onChange(MarketDataPayload marketDataPayload) {
-        float currentTotalValue = 0;
-        for (TradingAgent agent : agents) {
-            currentTotalValue += agent.getBalance() + (agent.getAssets() * marketDataPayload.close);
-        }
-
-        long timestamp = marketDataPayload.timestamp;
+    public void onChange() {
+        float currentTotalValue = portfolioManager.getCurrentValue();
+        long timestamp = 1; //TODO portfolioManager.getLastTimestamp()
 
         synchronized (history) {
             history.add(new Snapshot(timestamp, currentTotalValue));
@@ -117,13 +113,5 @@ public class PortfolioChart implements PortfolioObserver {
     @Override
     public void onEnd() {
         Platform.runLater(this::refreshSeries);
-    }
-
-    private float calculateCurrentTotalBalance() {
-        float total = 0;
-        for (TradingAgent agent : agents) {
-            total += agent.getBalance();
-        }
-        return total;
     }
 }
