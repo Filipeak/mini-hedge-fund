@@ -2,7 +2,6 @@ package com.psio.ui;
 
 import com.psio.portfolio.PortfolioManager;
 import com.psio.portfolio.PortfolioObserver;
-import com.psio.trading.agents.TradingAgent;
 import javafx.application.Platform;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -29,7 +28,8 @@ public class PortfolioChart implements PortfolioObserver {
 
     public PortfolioChart(PortfolioManager portfolioManager) {
         this.portfolioManager = portfolioManager;
-        this.fixedInitialCapital = getAgentsBalance();
+        this.fixedInitialCapital = portfolioManager.getCurrentValue();
+
         portfolioManager.addObserver(this);
 
         System.out.println("PortfolioChart: Base for percentage calculations set at: " + fixedInitialCapital + " PLN");
@@ -114,13 +114,5 @@ public class PortfolioChart implements PortfolioObserver {
     @Override
     public void onEnd() {
         Platform.runLater(this::refreshSeries);
-    }
-
-    private float getAgentsBalance() {
-        float balance = 0;
-        for (TradingAgent agent : portfolioManager.getAgents()) {
-            balance += agent.getWallet().getBalance();
-        }
-        return balance;
     }
 }
