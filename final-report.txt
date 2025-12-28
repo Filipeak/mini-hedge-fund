@@ -1,9 +1,0 @@
-=== RAPORT SYMULACJI ===
-
-Finalny Balans:   20509,76 PLN
-Zwrot (ROR):      2,55 %
-
-Max Drawdown:     22,26 %
-Win Rate:         50,00 %
-
-========================
