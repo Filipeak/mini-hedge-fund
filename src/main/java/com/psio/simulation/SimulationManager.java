@@ -17,13 +17,16 @@ public class SimulationManager {
 
     public void loadAndRunSimulation(File file) {
         Thread simulationThread = new Thread(() -> {
-            MarketDataProvider provider = createProvider(file);
-
-            provider.getData(marketDataNotifier);
+            doLoadAndRunSimulation(file);
         });
 
         simulationThread.setDaemon(true);
         simulationThread.start();
+    }
+
+    public void doLoadAndRunSimulation(File file) {
+        MarketDataProvider provider = createProvider(file);
+        provider.getData(marketDataNotifier);
     }
 
     private MarketDataProvider createProvider(File file) {
