@@ -40,3 +40,4 @@ build/
 
 ### Custom ###
 final-report.txt
+/logs/app.log
