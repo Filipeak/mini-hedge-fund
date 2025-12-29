@@ -39,8 +39,8 @@ public class ReportCreator implements PortfolioObserver {
         }
 
         if (maxPeakValue > 0) {
-            float currentDrawdown = (maxPeakValue - currentTotalValue) / maxPeakValue * 100;
-            if (currentDrawdown > maxDrawdown) {
+            float currentDrawdown = (currentTotalValue - maxPeakValue) / maxPeakValue * 100;
+            if (currentDrawdown < maxDrawdown) {
                 maxDrawdown = currentDrawdown;
             }
         }
@@ -52,10 +52,18 @@ public class ReportCreator implements PortfolioObserver {
 
         double ror = ((finalValue - initialTotalBalance) / initialTotalBalance) * 100;
 
-        long winners = Arrays.stream(portfolioManager.getAgents())
-                .filter(a -> a.getWallet().getBalance() > (initialTotalBalance / portfolioManager.getAgents().length))
-                .count();
-        double winRate = (double) winners / portfolioManager.getAgents().length * 100;
+        long totalTransactions = Arrays.stream(portfolioManager.getAgents())
+                .mapToLong(a -> a.getWallet().getTransactionCount())
+                .sum();
+
+        long totalWins = Arrays.stream(portfolioManager.getAgents())
+                .mapToLong(a -> a.getWallet().getTransactionWinCount())
+                .sum();
+
+        double winRate = 0;
+        if (totalTransactions > 0) {
+            winRate = (double) totalWins / totalTransactions * 100;
+        }
 
         ReportMetrics metrics = new ReportMetrics(ror, maxDrawdown, winRate, finalValue);
 
