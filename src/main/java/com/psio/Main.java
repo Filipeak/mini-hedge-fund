@@ -8,6 +8,8 @@ import com.psio.simulation.*;
 import com.psio.trading.*;
 import com.psio.trading.agents.*;
 import com.psio.ui.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Main {
     private static TradingAgent[] getTradingAgents() {
@@ -21,7 +23,21 @@ public class Main {
         };
     }
 
+    // Creating a logger instance for this class
+    private static final Logger logger = LogManager.getLogger(Main.class);
+
     public static void main(String[] args) {
+        logger.info("The application has started.");
+
+        try {
+            int result = 10 / 0;
+        } catch (ArithmeticException e) {
+            logger.error("A math error occurred: {}", e.getMessage());
+        }
+
+        logger.debug("This won't show up if the Root level is set to INFO.");
+
+
         MarketDataNotifier marketDataNotifier = new MarketDataNotifier();
 
         TradingAgent[] tradingAgents = getTradingAgents();
