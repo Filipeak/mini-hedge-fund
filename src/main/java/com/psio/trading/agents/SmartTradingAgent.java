@@ -15,4 +15,10 @@ public class SmartTradingAgent extends TradingAgent {
     public void update(MarketDataPayload marketDataPayload) {
         super.update(marketDataPayload);
     }
+
+    @Override
+    public void begin() {
+        super.begin();
+        this.currentStrategy = new MomentumTradingStrategy(100, 1000);
+    }
 }

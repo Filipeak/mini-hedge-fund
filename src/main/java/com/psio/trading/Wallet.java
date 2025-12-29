@@ -23,6 +23,8 @@ public class Wallet {
     public void reset() {
         this.balance = defaultBalance;
         this.assetAmount = defaultAssetAmount;
+        this.transactionCount = 0;
+        this.transactionWinCount = 0;
 
         updateCurrentPrice(0);
     }
