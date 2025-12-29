@@ -15,7 +15,6 @@ public class JSONMarketDataProvider implements MarketDataProvider {
     public void getData(MarketDataNotifier marketDataNotifier) throws ValueBelowZeroException {
         try {
             BufferedReader breader = new BufferedReader(new FileReader(filePath));
-            boolean valueBelowZero;
 
             breader.readLine();
             breader.readLine();
@@ -23,8 +22,6 @@ public class JSONMarketDataProvider implements MarketDataProvider {
             marketDataNotifier.beginObservers();
 
             while (breader.ready()) {
-                valueBelowZero = false;
-
                 StringBuilder builder = new StringBuilder();
 
                 for (int i = 0; i < 6; i++) {
@@ -35,15 +32,9 @@ public class JSONMarketDataProvider implements MarketDataProvider {
 
                 for (int i = 1; i <= data.length; i = i + 2) {
                     if ((Double.parseDouble(data[i]) <= 0)) {
-                        valueBelowZero = true;
-                        break;
+                        throw new ValueBelowZeroException("Incorrect value");
                     }
                 }
-
-                if (valueBelowZero) {
-                    throw new ValueBelowZeroException("Incorrect value");
-                }
-
 
                 MarketDataPayload marketDataPayload = new MarketDataPayload(
                         Long.parseLong(data[1].trim()),
@@ -54,12 +45,10 @@ public class JSONMarketDataProvider implements MarketDataProvider {
                         Double.parseDouble(data[11])
                 );
 
-
                 marketDataNotifier.updateObservers(marketDataPayload);
 
                 breader.readLine();
                 breader.readLine();
-
             }
 
         } catch (IOException e) {

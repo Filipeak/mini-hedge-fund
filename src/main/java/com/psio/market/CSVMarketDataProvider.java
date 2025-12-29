@@ -17,26 +17,17 @@ public class CSVMarketDataProvider implements MarketDataProvider {
         try (BufferedReader breader = new BufferedReader(new FileReader(file))) {
             breader.readLine();
             String line;
-            boolean valueBelowZero;
 
             marketDataNotifier.beginObservers();
 
             while ((line = breader.readLine()) != null) {
                 String[] data = line.split(",");
 
-                valueBelowZero = false;
-
                 for (int i = 0; i < data.length; i++) {
                     if ((Double.parseDouble(data[i]) <= 0)) {
-                        valueBelowZero = true;
-                        break;
+                        throw new ValueBelowZeroException("Incorrect value");
                     }
                 }
-
-                if (valueBelowZero) {
-                    throw new ValueBelowZeroException("Incorrect value");
-                }
-
 
                 MarketDataPayload marketDataPayload = new MarketDataPayload(
                         Long.parseLong(data[0]),
@@ -48,7 +39,6 @@ public class CSVMarketDataProvider implements MarketDataProvider {
                 );
 
                 marketDataNotifier.updateObservers(marketDataPayload);
-
             }
 
         } catch (IOException e) {
