@@ -26,6 +26,7 @@ public class Wallet {
         this.currentPrice = 0;
         this.transactionCount = 0;
         this.transactionWinCount = 0;
+        this.transactionBuyPrice = 0;
     }
 
     public void printInfo() {
