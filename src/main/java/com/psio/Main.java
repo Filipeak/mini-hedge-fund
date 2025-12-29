@@ -10,16 +10,21 @@ import com.psio.trading.agents.*;
 import com.psio.ui.*;
 
 public class Main {
-    public static void main(String[] args) {
-        MarketDataNotifier marketDataNotifier = new MarketDataNotifier();
-
+    private static TradingAgent[] getTradingAgents() {
         final float defaultBalance = 10000.0f;
         final float defaultAssetAmount = 0.0f;
 
-        TradingAgent[] tradingAgents = new TradingAgent[]{
-                new ConservativeTradingAgent(new Wallet(defaultBalance, defaultAssetAmount, "Conservative wallet")),
-                new SmartTradingAgent(new Wallet(defaultBalance, defaultAssetAmount, "Smart wallet")),
+        return new TradingAgent[]{
+                new ConservativeTradingAgent(new Wallet(defaultBalance, defaultAssetAmount, "BuyAndHold wallet")),
+                new SmartTradingAgent(new Wallet(defaultBalance, defaultAssetAmount, "MovingAverageCrossovers wallet")),
+                new TestTradingAgent(new Wallet(defaultBalance, defaultAssetAmount, "Test wallet"))
         };
+    }
+
+    public static void main(String[] args) {
+        MarketDataNotifier marketDataNotifier = new MarketDataNotifier();
+
+        TradingAgent[] tradingAgents = getTradingAgents();
 
         PortfolioManager portfolioManager = new PortfolioManager(tradingAgents);
         marketDataNotifier.addObserver(portfolioManager);

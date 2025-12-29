@@ -8,11 +8,16 @@ public class ConservativeTradingAgent extends TradingAgent {
 
     public ConservativeTradingAgent(Wallet wallet) {
         super(wallet);
-        this.currentStrategy = new BuyAndHoldTradingStrategy();
     }
 
     @Override
     public void update(MarketDataPayload marketDataPayload) {
         super.update(marketDataPayload);
+    }
+
+    @Override
+    public void begin() {
+        super.begin();
+        this.currentStrategy = new BuyAndHoldTradingStrategy();
     }
 }

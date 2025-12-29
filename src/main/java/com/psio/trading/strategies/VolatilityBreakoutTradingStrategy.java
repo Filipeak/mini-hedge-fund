@@ -5,15 +5,15 @@ import com.psio.trading.TradingAction;
 
 import java.util.ArrayList;
 
-public class MomentumTradingStrategy implements TradingStrategy {
+public class VolatilityBreakoutTradingStrategy implements TradingStrategy {
     private final ArrayList<Float> prices = new ArrayList<>();
     private final int period;
 
-    public MomentumTradingStrategy() {
+    public VolatilityBreakoutTradingStrategy() {
         this.period = 10;
     }
 
-    public MomentumTradingStrategy(int period) {
+    public VolatilityBreakoutTradingStrategy(int period) {
         this.period = period;
     }
 
@@ -26,15 +26,26 @@ public class MomentumTradingStrategy implements TradingStrategy {
             prices.removeFirst();
             prices.add(marketDataPayload.close);
 
-            double momentum = prices.getLast() - prices.getFirst();
+            double rangeHigh = prices.getLast();
+            double rangeLow = prices.getFirst();
 
-            if (momentum > 0) {
+            for (int i = 0; i < period; i++) {
+                if (rangeHigh < prices.get(i)) {
+                    rangeHigh = prices.get(i);
+                }
+                if (rangeLow > prices.get(i)) {
+                    rangeLow = prices.get(i);
+                }
+            }
+
+            if (prices.getLast() >= rangeHigh) {
                 return TradingAction.BUY;
             }
 
-            if (momentum < 0) {
+            if (prices.getLast() <= rangeLow) {
                 return TradingAction.SELL;
             }
+
         }
 
         return TradingAction.HOLD;

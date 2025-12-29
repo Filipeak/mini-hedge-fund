@@ -5,15 +5,21 @@ import com.psio.trading.TradingAction;
 
 import java.util.ArrayList;
 
-public class MomentumTradingStrategy implements TradingStrategy {
+public class BuyAfterFallTradingStrategy implements TradingStrategy {
+    private final float fallPercentage;
+    private final float risePercentage;
     private final ArrayList<Float> prices = new ArrayList<>();
     private final int period;
 
-    public MomentumTradingStrategy() {
-        this.period = 10;
+    public BuyAfterFallTradingStrategy() {
+        this.fallPercentage = 0.05f;
+        this.risePercentage = 0.05f;
+        this.period = 100;
     }
 
-    public MomentumTradingStrategy(int period) {
+    public BuyAfterFallTradingStrategy(float fallPercentage, float risePercentage, int period) {
+        this.fallPercentage = fallPercentage;
+        this.risePercentage = risePercentage;
         this.period = period;
     }
 
@@ -26,13 +32,13 @@ public class MomentumTradingStrategy implements TradingStrategy {
             prices.removeFirst();
             prices.add(marketDataPayload.close);
 
-            double momentum = prices.getLast() - prices.getFirst();
+            double currentPrice = marketDataPayload.close;
 
-            if (momentum > 0) {
+            if (currentPrice <= prices.getFirst() * (1 - fallPercentage)) {
                 return TradingAction.BUY;
             }
 
-            if (momentum < 0) {
+            if (currentPrice >= prices.getFirst() * (1 + risePercentage)) {
                 return TradingAction.SELL;
             }
         }
