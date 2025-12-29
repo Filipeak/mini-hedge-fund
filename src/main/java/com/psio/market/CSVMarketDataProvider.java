@@ -11,7 +11,7 @@ public class CSVMarketDataProvider implements MarketDataProvider {
     }
 
     @Override
-    public void getData(MarketDataNotifier marketDataNotifier) {
+    public void getData(MarketDataNotifier marketDataNotifier) throws ValueBelowZeroException {
         File file = new File(filePath);
 
         try (BufferedReader breader = new BufferedReader(new FileReader(file))) {
@@ -22,6 +22,12 @@ public class CSVMarketDataProvider implements MarketDataProvider {
 
             while ((line = breader.readLine()) != null) {
                 String[] data = line.split(",");
+
+                for (int i = 0; i < data.length; i++) {
+                    if ((Double.parseDouble(data[i]) <= 0)) {
+                        throw new ValueBelowZeroException("Incorrect value");
+                    }
+                }
 
                 MarketDataPayload marketDataPayload = new MarketDataPayload(
                         Long.parseLong(data[0]),
@@ -34,6 +40,7 @@ public class CSVMarketDataProvider implements MarketDataProvider {
 
                 marketDataNotifier.updateObservers(marketDataPayload);
             }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
