@@ -17,23 +17,44 @@ public class CSVMarketDataProvider implements MarketDataProvider {
         try (BufferedReader breader = new BufferedReader(new FileReader(file))) {
             breader.readLine();
             String line;
+            boolean valueBelowZero;
 
             marketDataNotifier.beginObservers();
 
             while ((line = breader.readLine()) != null) {
-                String[] data = line.split(",");
+                try {
+                    String[] data = line.split(",");
 
-                MarketDataPayload marketDataPayload = new MarketDataPayload(
-                        Long.parseLong(data[0]),
-                        Float.parseFloat(data[1]),
-                        Float.parseFloat(data[2]),
-                        Float.parseFloat(data[3]),
-                        Float.parseFloat(data[4]),
-                        Double.parseDouble(data[5])
-                );
+                    valueBelowZero = false;
 
-                marketDataNotifier.updateObservers(marketDataPayload);
+                    for (int i = 0; i < data.length; i++) {
+                        if ((Double.parseDouble(data[i]) <= 0)) {
+                            valueBelowZero = true;
+                            break;
+                        }
+                    }
+
+                    if (valueBelowZero) {
+                        throw new ValueBelowZeroException("Incorrect value");
+                    }
+
+
+                    MarketDataPayload marketDataPayload = new MarketDataPayload(
+                            Long.parseLong(data[0]),
+                            Float.parseFloat(data[1]),
+                            Float.parseFloat(data[2]),
+                            Float.parseFloat(data[3]),
+                            Float.parseFloat(data[4]),
+                            Double.parseDouble(data[5])
+                    );
+
+                    marketDataNotifier.updateObservers(marketDataPayload);
+                } catch (ValueBelowZeroException e) {
+                    System.out.println("LOG: Couldn't get payload: " + e);
+
+                }
             }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
