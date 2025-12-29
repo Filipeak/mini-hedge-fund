@@ -1,0 +1,21 @@
+name: Test All
+
+on: push
+
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v5
+
+      - name: Set up Oracle JDK 24 with Cache
+        uses: actions/setup-java@v4
+        with:
+          java-version: 24
+          distribution: 'oracle'
+          cache: 'maven'
+
+      - name: Run tests with Maven
+        run: mvn test
