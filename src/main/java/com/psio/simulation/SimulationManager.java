@@ -1,9 +1,6 @@
 package com.psio.simulation;
 
-import com.psio.market.CSVMarketDataProvider;
-import com.psio.market.JSONMarketDataProvider;
-import com.psio.market.MarketDataNotifier;
-import com.psio.market.MarketDataProvider;
+import com.psio.market.*;
 
 import java.io.File;
 
@@ -25,8 +22,12 @@ public class SimulationManager {
     }
 
     public void doLoadAndRunSimulation(File file) {
-        MarketDataProvider provider = createProvider(file);
-        provider.getData(marketDataNotifier);
+        try {
+            MarketDataProvider provider = createProvider(file);
+            provider.getData(marketDataNotifier);
+        } catch (ValueBelowZeroException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private MarketDataProvider createProvider(File file) {

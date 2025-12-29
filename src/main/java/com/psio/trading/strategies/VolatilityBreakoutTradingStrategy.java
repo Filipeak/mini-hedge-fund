@@ -9,7 +9,7 @@ public class VolatilityBreakoutTradingStrategy implements TradingStrategy {
     private final ArrayList<Float> prices = new ArrayList<>();
     private final int period;
 
-    public VolatilityBreakoutTradingStrategy(){
+    public VolatilityBreakoutTradingStrategy() {
         this.period = 10;
     }
 
