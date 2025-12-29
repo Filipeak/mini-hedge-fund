@@ -11,7 +11,7 @@ public class CSVMarketDataProvider implements MarketDataProvider {
     }
 
     @Override
-    public void getData(MarketDataNotifier marketDataNotifier) {
+    public void getData(MarketDataNotifier marketDataNotifier) throws ValueBelowZeroException {
         File file = new File(filePath);
 
         try (BufferedReader breader = new BufferedReader(new FileReader(file))) {
@@ -22,37 +22,33 @@ public class CSVMarketDataProvider implements MarketDataProvider {
             marketDataNotifier.beginObservers();
 
             while ((line = breader.readLine()) != null) {
-                try {
-                    String[] data = line.split(",");
+                String[] data = line.split(",");
 
-                    valueBelowZero = false;
+                valueBelowZero = false;
 
-                    for (int i = 0; i < data.length; i++) {
-                        if ((Double.parseDouble(data[i]) <= 0)) {
-                            valueBelowZero = true;
-                            break;
-                        }
+                for (int i = 0; i < data.length; i++) {
+                    if ((Double.parseDouble(data[i]) <= 0)) {
+                        valueBelowZero = true;
+                        break;
                     }
-
-                    if (valueBelowZero) {
-                        throw new ValueBelowZeroException("Incorrect value");
-                    }
-
-
-                    MarketDataPayload marketDataPayload = new MarketDataPayload(
-                            Long.parseLong(data[0]),
-                            Float.parseFloat(data[1]),
-                            Float.parseFloat(data[2]),
-                            Float.parseFloat(data[3]),
-                            Float.parseFloat(data[4]),
-                            Double.parseDouble(data[5])
-                    );
-
-                    marketDataNotifier.updateObservers(marketDataPayload);
-                } catch (ValueBelowZeroException e) {
-                    System.out.println("LOG: Couldn't get payload: " + e);
-
                 }
+
+                if (valueBelowZero) {
+                    throw new ValueBelowZeroException("Incorrect value");
+                }
+
+
+                MarketDataPayload marketDataPayload = new MarketDataPayload(
+                        Long.parseLong(data[0]),
+                        Float.parseFloat(data[1]),
+                        Float.parseFloat(data[2]),
+                        Float.parseFloat(data[3]),
+                        Float.parseFloat(data[4]),
+                        Double.parseDouble(data[5])
+                );
+
+                marketDataNotifier.updateObservers(marketDataPayload);
+
             }
 
         } catch (IOException e) {
