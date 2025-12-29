@@ -11,7 +11,7 @@ public class MovingAverageCrossoversTradingStrategy implements TradingStrategy {
 
     private final ArrayList<Float> prices = new ArrayList<>();
 
-    public MovingAverageCrossoversTradingStrategy(){
+    public MovingAverageCrossoversTradingStrategy() {
         this.shortPeriod = 100;
         this.longPeriod = 1000;
     }

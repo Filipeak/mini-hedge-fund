@@ -18,6 +18,6 @@ public class SmartTradingAgent extends TradingAgent {
     @Override
     public void begin() {
         super.begin();
-        this.currentStrategy = new MovingAverageCrossoversTradingStrategy(100, 1000);
+        this.currentStrategy = new MovingAverageCrossoversTradingStrategy();
     }
 }

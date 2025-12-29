@@ -9,7 +9,7 @@ public class MomentumTradingStrategy implements TradingStrategy {
     private final ArrayList<Float> prices = new ArrayList<>();
     private final int period;
 
-    public MomentumTradingStrategy(){
+    public MomentumTradingStrategy() {
         this.period = 10;
     }
 

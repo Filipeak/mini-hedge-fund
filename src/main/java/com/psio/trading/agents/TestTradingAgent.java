@@ -18,11 +18,10 @@ public class TestTradingAgent extends TradingAgent {
     @Override
     public void begin() {
         super.begin();
-//        this.currentStrategy = new MomentumTradingStrategy(10);
-//        this.currentStrategy = new VolatilityBreakoutTradingStrategy(10);
-//        this.currentStrategy = new MeanReversionTradingStrategy(15, 2.0);
-        this.currentStrategy = new RelativeStrengthIndexTradingStrategy(14, 30, 70);
+//        this.currentStrategy = new MomentumTradingStrategy();
+//        this.currentStrategy = new VolatilityBreakoutTradingStrategy();
+//        this.currentStrategy = new MeanReversionTradingStrategy();
+//        this.currentStrategy = new RelativeStrengthIndexTradingStrategy();
+        this.currentStrategy = new BuyAfterFallTradingStrategy();
     }
 }
-
-

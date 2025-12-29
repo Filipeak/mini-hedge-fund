@@ -11,7 +11,7 @@ public class RelativeStrengthIndexTradingStrategy implements TradingStrategy {
     private final double sellThreshold;
     private final int period;
 
-    public RelativeStrengthIndexTradingStrategy(){
+    public RelativeStrengthIndexTradingStrategy() {
         this.period = 14;
         this.buyThreshold = 30;
         this.sellThreshold = 70;
