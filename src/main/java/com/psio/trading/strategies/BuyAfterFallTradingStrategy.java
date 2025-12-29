@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class BuyAfterFallTradingStrategy implements TradingStrategy {
     private final float fallPercentage;
     private final float risePercentage;
-    private boolean hasAssets = false;
     private final ArrayList<Float> prices = new ArrayList<>();
     private final int period;
 
@@ -35,13 +34,11 @@ public class BuyAfterFallTradingStrategy implements TradingStrategy {
 
             double currentPrice = marketDataPayload.close;
 
-            if (currentPrice <= prices.getFirst() * (1 - fallPercentage) && !hasAssets) {
-                hasAssets = true;
+            if (currentPrice <= prices.getFirst() * (1 - fallPercentage)) {
                 return TradingAction.BUY;
             }
 
-            if (currentPrice >= prices.getFirst() * (1 + risePercentage) && hasAssets) {
-                hasAssets = false;
+            if (currentPrice >= prices.getFirst() * (1 + risePercentage)) {
                 return TradingAction.SELL;
             }
         }
