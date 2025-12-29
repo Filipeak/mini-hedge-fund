@@ -3,37 +3,47 @@ package com.psio.trading.strategies;
 import com.psio.market.MarketDataPayload;
 import com.psio.trading.TradingAction;
 
+import java.util.ArrayList;
+
 public class BuyAfterFallTradingStrategy implements TradingStrategy {
     private final float fallPercentage;
     private final float risePercentage;
-    private double lastBuyPrice;
-    private double lastSellPrice = 10000000;
     private boolean hasAssets = false;
+    private final ArrayList<Float> prices = new ArrayList<>();
+    private final int period;
 
     public BuyAfterFallTradingStrategy() {
         this.fallPercentage = 0.05f;
         this.risePercentage = 0.05f;
+        this.period = 100;
     }
 
-    public BuyAfterFallTradingStrategy(float fallPercentage, float risePercentage) {
+    public BuyAfterFallTradingStrategy(float fallPercentage, float risePercentage, int period) {
         this.fallPercentage = fallPercentage;
         this.risePercentage = risePercentage;
+        this.period = period;
     }
 
     @Override
     public TradingAction decide(MarketDataPayload marketDataPayload) {
-        double currentPrice = marketDataPayload.close;
+        //Previous prices with period amount of entries
+        if (prices.size() < period) {
+            prices.add(marketDataPayload.close);
+        } else {
+            prices.removeFirst();
+            prices.add(marketDataPayload.close);
 
-        if (currentPrice <= lastSellPrice * (1 - fallPercentage) && !hasAssets) {
-            lastBuyPrice = currentPrice;
-            hasAssets = true;
-            return TradingAction.BUY;
-        }
+            double currentPrice = marketDataPayload.close;
 
-        if (currentPrice >= lastBuyPrice * (1 + risePercentage) && hasAssets) {
-            lastSellPrice = currentPrice;
-            hasAssets = false;
-            return TradingAction.SELL;
+            if (currentPrice <= prices.getFirst() * (1 - fallPercentage) && !hasAssets) {
+                hasAssets = true;
+                return TradingAction.BUY;
+            }
+
+            if (currentPrice >= prices.getFirst() * (1 + risePercentage) && hasAssets) {
+                hasAssets = false;
+                return TradingAction.SELL;
+            }
         }
 
         return TradingAction.HOLD;
