@@ -53,10 +53,10 @@ public class ReportCreatorTest {
         portfolioManager.end();
 
         String result = reportResult.getData();
-        assertTrue(result.contains("Finalny Balans:   20000,00 PLN"));
-        assertTrue(result.contains("Zwrot (ROR):      0,00 %"));
-        assertTrue(result.contains("Max Drawdown:     0,00 %"));
-        assertTrue(result.contains("Win Rate:         0,00 %"));
+        assertTrue(result.contains("Finalny Balans:   20000.00 PLN"));
+        assertTrue(result.contains("Zwrot (ROR):      0.00 %"));
+        assertTrue(result.contains("Max Drawdown:     0.00 %"));
+        assertTrue(result.contains("Win Rate:         0.00 %"));
         System.out.println(result);
     }
 
@@ -66,9 +66,9 @@ public class ReportCreatorTest {
         simulationManager.doLoadAndRunSimulation(csvFile);
 
         String result = reportResult.getData();
-        assertTrue(result.contains("Finalny Balans:   20509,76 PLN"));
-        assertTrue(result.contains("Zwrot (ROR):      2,55 %"));
-        assertTrue(result.contains("Max Drawdown:     -22,26 %"));
-        assertTrue(result.contains("Win Rate:         33,33 %"));
+        assertTrue(result.contains("Finalny Balans:   20509.76 PLN"));
+        assertTrue(result.contains("Zwrot (ROR):      2.55 %"));
+        assertTrue(result.contains("Max Drawdown:     -22.26 %"));
+        assertTrue(result.contains("Win Rate:         33.33 %"));
     }
 }
