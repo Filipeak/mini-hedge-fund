@@ -1,5 +1,8 @@
 package com.psio.trading;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Wallet {
     private final float defaultBalance;
     private final float defaultAssetAmount;
@@ -11,6 +14,8 @@ public class Wallet {
     private int transactionCount;
     private int transactionWinCount;
     private float transactionBuyPrice;
+
+    private static final Logger logger = LogManager.getLogger(Wallet.class);
 
     public Wallet(float defaultBalance, float defaultAssetAmount, String name) {
         this.defaultBalance = defaultBalance;
@@ -30,11 +35,13 @@ public class Wallet {
     }
 
     public void printInfo() {
-        System.out.println("\nWallet " + name
-                + "\nBalance: " + balance
-                + "\nAsset amount: " + assetAmount
-                + "\nTransaction count: " + transactionCount
-                + "\nTransactions won: " + transactionWinCount);
+        System.out.println();
+        logger.info("\nWallet {}\nBalance: {}\nAsset amount: {}\nTransaction count: {}\nTransactions won: {}", name, balance, assetAmount, transactionCount, transactionWinCount);
+//        System.out.println("\nWallet " + name
+//                + "\nBalance: " + balance
+//                + "\nAsset amount: " + assetAmount
+//                + "\nTransaction count: " + transactionCount
+//                + "\nTransactions won: " + transactionWinCount);
     }
 
     public void updateCurrentPrice(float currentPrice) {
@@ -55,7 +62,8 @@ public class Wallet {
 
     public void tryBuyMaxAssets() {
         if (balance > 0) {
-            System.out.println("[" + name + " LOG]: Purchase of " + balance / currentPrice + " for " + currentPrice);
+            logger.info("[{} LOG]: Purchase of {} for {}", name, balance / currentPrice, currentPrice);
+//            System.out.println("[" + name + " LOG]: Purchase of " + balance / currentPrice + " for " + currentPrice);
 
             this.assetAmount = balance / currentPrice;
             this.balance = 0;
@@ -65,7 +73,8 @@ public class Wallet {
 
     public void trySellAllAssets() {
         if (assetAmount > 0) {
-            System.out.println("[" + name + " LOG]: Sell of " + assetAmount + " for " + currentPrice);
+            logger.info("[{} LOG]: Sell of {} for {}", name, assetAmount, currentPrice);
+//            System.out.println("[" + name + " LOG]: Sell of " + assetAmount + " for " + currentPrice);
 
             this.transactionCount++;
             this.balance = balance + assetAmount * currentPrice;
