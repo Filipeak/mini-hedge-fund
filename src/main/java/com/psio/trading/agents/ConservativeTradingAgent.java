@@ -8,7 +8,6 @@ public class ConservativeTradingAgent extends TradingAgent {
 
     public ConservativeTradingAgent(Wallet wallet) {
         super(wallet);
-        this.currentStrategy = new BuyAndHoldTradingStrategy();
     }
 
     @Override

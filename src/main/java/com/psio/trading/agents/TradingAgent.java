@@ -17,21 +17,21 @@ public abstract class TradingAgent {
         TradingAction decision = currentStrategy.decide(marketDataPayload);
 
         float currentPrice = marketDataPayload.close;
+        this.wallet.updateCurrentPrice(currentPrice);
 
         switch (decision) {
             case TradingAction.BUY:
-                wallet.tryBuyMaxAssets(currentPrice);
+                wallet.tryBuyMaxAssets();
                 break;
 
             case TradingAction.SELL:
-                wallet.trySellAllAssets(currentPrice);
+                wallet.trySellAllAssets();
                 break;
 
             case TradingAction.HOLD:
                 break;
         }
 
-        wallet.updateCurrentPrice(currentPrice);
     }
 
     public void begin() {
@@ -39,6 +39,7 @@ public abstract class TradingAgent {
     }
 
     public void end() {
+        this.wallet.trySellAllAssets();
         this.wallet.printInfo();
     }
 
