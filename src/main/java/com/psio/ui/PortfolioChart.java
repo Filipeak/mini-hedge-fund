@@ -7,6 +7,8 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.util.StringConverter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +16,8 @@ import java.util.Date;
 import java.util.List;
 
 public class PortfolioChart implements PortfolioObserver {
+
+    private static final Logger logger = LogManager.getLogger(PortfolioChart.class);
 
     private XYChart.Series<Number, Number> series;
     private final PortfolioManager portfolioManager;
@@ -32,7 +36,7 @@ public class PortfolioChart implements PortfolioObserver {
 
         portfolioManager.addObserver(this);
 
-        System.out.println("PortfolioChart: Base for percentage calculations set at: " + fixedInitialCapital + " PLN");
+        logger.info("Base for percentage calculations set at: {} PLN", fixedInitialCapital);
     }
 
     public LineChart<Number, Number> createChart() {

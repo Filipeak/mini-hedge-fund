@@ -10,8 +10,12 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.Objects;
 import java.util.function.Consumer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CryptoPortfolioApp extends Application {
+
+    private static final Logger logger = LogManager.getLogger(CryptoPortfolioApp.class);
 
     public static final String CSS_PATH = "/styles.css";
     private static final int WINDOW_WIDTH = 1024;
@@ -38,7 +42,7 @@ public class CryptoPortfolioApp extends Application {
         try {
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH)).toExternalForm());
         } catch (Exception e) {
-            System.err.println("No styles: " + e.getMessage());
+            logger.error("No styles: {}", e.getMessage());
         }
 
         primaryStage.setTitle("FinTech Portfolio Tracker");
@@ -66,7 +70,7 @@ public class CryptoPortfolioApp extends Application {
 
     private void onFileSelected(File file) {
         if (file == null || !file.exists()) {
-            System.out.println("File Not Found");
+            logger.info("File Not Found");
             return;
         }
         if (fileImportHandler != null) fileImportHandler.accept(file);

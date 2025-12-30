@@ -29,15 +29,6 @@ public class Main {
     public static void main(String[] args) {
         logger.info("The application has started.");
 
-        try {
-            int result = 10 / 0;
-        } catch (ArithmeticException e) {
-            logger.error("A math error occurred: {}", e.getMessage());
-        }
-
-        logger.debug("This won't show up if the Root level is set to INFO.");
-
-
         MarketDataNotifier marketDataNotifier = new MarketDataNotifier();
 
         TradingAgent[] tradingAgents = getTradingAgents();

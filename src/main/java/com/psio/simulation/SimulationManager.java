@@ -1,10 +1,14 @@
 package com.psio.simulation;
 
 import com.psio.market.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
 public class SimulationManager {
+
+    private static final Logger logger = LogManager.getLogger(SimulationManager.class);
 
     private final MarketDataNotifier marketDataNotifier;
 
@@ -26,6 +30,7 @@ public class SimulationManager {
             MarketDataProvider provider = createProvider(file);
             provider.getData(marketDataNotifier);
         } catch (ValueBelowZeroException e) {
+            logger.error("Error loading MarketDataProvider: {}", e.getMessage());
             throw new RuntimeException(e);
         }
     }

@@ -36,12 +36,10 @@ public class Wallet {
 
     public void printInfo() {
         System.out.println();
-        logger.info("\nWallet {}\nBalance: {}\nAsset amount: {}\nTransaction count: {}\nTransactions won: {}", name, balance, assetAmount, transactionCount, transactionWinCount);
-//        System.out.println("\nWallet " + name
-//                + "\nBalance: " + balance
-//                + "\nAsset amount: " + assetAmount
-//                + "\nTransaction count: " + transactionCount
-//                + "\nTransactions won: " + transactionWinCount);
+        logger.info(
+                "{}\nBalance: {}\nAsset amount: {}\nTransaction count: {}\nTransactions won: {}",
+                name, balance, assetAmount, transactionCount, transactionWinCount
+        );
     }
 
     public void updateCurrentPrice(float currentPrice) {
@@ -62,8 +60,10 @@ public class Wallet {
 
     public void tryBuyMaxAssets() {
         if (balance > 0) {
-            logger.info("[{} LOG]: Purchase of {} for {}", name, balance / currentPrice, currentPrice);
-//            System.out.println("[" + name + " LOG]: Purchase of " + balance / currentPrice + " for " + currentPrice);
+            logger.debug(
+                    "[{} LOG]: Purchase of {} for {}",
+                    name, balance / currentPrice, currentPrice
+            );
 
             this.assetAmount = balance / currentPrice;
             this.balance = 0;
@@ -73,8 +73,10 @@ public class Wallet {
 
     public void trySellAllAssets() {
         if (assetAmount > 0) {
-            logger.info("[{} LOG]: Sell of {} for {}", name, assetAmount, currentPrice);
-//            System.out.println("[" + name + " LOG]: Sell of " + assetAmount + " for " + currentPrice);
+            logger.debug(
+                    "[{} LOG]: Sell of {} for {}",
+                    name, assetAmount, currentPrice
+            );
 
             this.transactionCount++;
             this.balance = balance + assetAmount * currentPrice;
