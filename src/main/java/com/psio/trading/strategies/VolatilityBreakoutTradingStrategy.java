@@ -50,4 +50,9 @@ public class VolatilityBreakoutTradingStrategy implements TradingStrategy {
 
         return TradingAction.HOLD;
     }
+
+    @Override
+    public void reset() {
+        prices.clear();
+    }
 }

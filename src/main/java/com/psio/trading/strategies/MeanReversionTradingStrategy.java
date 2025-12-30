@@ -58,4 +58,9 @@ public class MeanReversionTradingStrategy implements TradingStrategy {
 
         return Math.sqrt(variance);
     }
+
+    @Override
+    public void reset() {
+        prices.clear();
+    }
 }

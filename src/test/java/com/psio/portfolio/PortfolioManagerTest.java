@@ -5,6 +5,7 @@ import com.psio.reporting.creators.StringWriterCreator;
 import com.psio.trading.Wallet;
 import com.psio.trading.agents.ConservativeTradingAgent;
 import com.psio.trading.agents.TradingAgent;
+import com.psio.trading.strategies.BuyAndHoldTradingStrategy;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -15,7 +16,10 @@ class PortfolioManagerTest {
 
     @Test
     void testAddExistingObserverToListOfObservers() {
-        ConservativeTradingAgent agent = new ConservativeTradingAgent(new Wallet(0, 0, "Conservative wallet"));
+        ConservativeTradingAgent agent = new ConservativeTradingAgent(
+                new Wallet(0, 0, "Conservative wallet"),
+                new BuyAndHoldTradingStrategy()
+        );
 
         TradingAgent[] tradingAgents = new TradingAgent[]{agent};
 

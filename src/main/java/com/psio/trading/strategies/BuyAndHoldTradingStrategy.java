@@ -39,4 +39,9 @@ public class BuyAndHoldTradingStrategy implements TradingStrategy {
 
         return TradingAction.HOLD;
     }
+
+    @Override
+    public void reset() {
+        hasBought = false;
+    }
 }
