@@ -14,7 +14,6 @@ public class ReportCreator implements PortfolioObserver {
 
     private static final Logger logger = LogManager.getLogger(ReportCreator.class);
 
-
     private final WriterCreator writerCreator;
     private final PortfolioManager portfolioManager;
 

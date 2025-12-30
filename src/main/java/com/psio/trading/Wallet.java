@@ -61,7 +61,7 @@ public class Wallet {
     public void tryBuyMaxAssets() {
         if (balance > 0) {
             logger.debug(
-                    "[{} LOG]: Purchase of {} for {}",
+                    "[{}]: Purchase of {} for {}",
                     name, balance / currentPrice, currentPrice
             );
 
@@ -74,7 +74,7 @@ public class Wallet {
     public void trySellAllAssets() {
         if (assetAmount > 0) {
             logger.debug(
-                    "[{} LOG]: Sell of {} for {}",
+                    "[{}]: Sell of {} for {}",
                     name, assetAmount, currentPrice
             );
 

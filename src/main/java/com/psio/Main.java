@@ -41,5 +41,7 @@ public class Main {
 
         SimulationManager simulationManager = new SimulationManager(marketDataNotifier);
         CryptoPortfolioApp.start(args, portfolioChart, simulationManager::loadAndRunSimulation);
+
+        logger.info("The application has finished.");
     }
 }
