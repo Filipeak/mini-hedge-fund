@@ -3,12 +3,16 @@ package com.psio.reporting;
 import com.psio.portfolio.PortfolioManager;
 import com.psio.portfolio.PortfolioObserver;
 import com.psio.reporting.creators.WriterCreator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Arrays;
 
 public class ReportCreator implements PortfolioObserver {
+
+    private static final Logger logger = LogManager.getLogger(ReportCreator.class);
 
     private final WriterCreator writerCreator;
     private final PortfolioManager portfolioManager;
@@ -70,7 +74,7 @@ public class ReportCreator implements PortfolioObserver {
         try (Writer writer = writerCreator.createWriter()) {
             writer.write(metrics.toString());
         } catch (IOException e) {
-            System.err.println("Report error: " + e.getMessage());
+            logger.error("Report error: {}", e.getMessage());
         }
     }
 }

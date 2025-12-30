@@ -1,12 +1,17 @@
 package com.psio.market;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.List;
 import java.util.ArrayList;
 
 public class MarketDataNotifier {
-    private final ArrayList<MarketDataObserver> observers = new ArrayList<>();
+    private static final Logger logger = LogManager.getLogger(MarketDataNotifier.class);
+
+    private final List<MarketDataObserver> observers = new ArrayList<>();
 
     public void addObserver(MarketDataObserver marketDataObserver) {
-       if(!observers.contains(marketDataObserver))
         observers.add(marketDataObserver);
     }
 
@@ -21,18 +26,20 @@ public class MarketDataNotifier {
     }
 
     public void beginObservers() {
+        logger.info("Started reading the file");
         for (MarketDataObserver observer : observers) {
             observer.begin();
         }
     }
 
     public void endObservers() {
+        logger.info("Finished reading the file");
         for (MarketDataObserver observer : observers) {
             observer.end();
         }
     }
 
-    public ArrayList<MarketDataObserver> getObservers() {
+    public List<MarketDataObserver> getObservers() {
         return observers;
     }
 }
