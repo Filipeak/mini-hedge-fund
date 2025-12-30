@@ -3,13 +3,13 @@ package com.psio.market;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashSet;
+import java.util.List;
+import java.util.ArrayList;
 
 public class MarketDataNotifier {
-
     private static final Logger logger = LogManager.getLogger(MarketDataNotifier.class);
 
-    private final HashSet<MarketDataObserver> observers = new HashSet<>();
+    private final List<MarketDataObserver> observers = new ArrayList<>();
 
     public void addObserver(MarketDataObserver marketDataObserver) {
         observers.add(marketDataObserver);
@@ -37,5 +37,9 @@ public class MarketDataNotifier {
         for (MarketDataObserver observer : observers) {
             observer.end();
         }
+    }
+
+    public List<MarketDataObserver> getObservers() {
+        return observers;
     }
 }

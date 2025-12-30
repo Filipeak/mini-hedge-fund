@@ -85,4 +85,8 @@ public class PortfolioManager implements MarketDataObserver {
     public TradingAgent[] getAgents() {
         return tradingAgents;
     }
+
+    public List<PortfolioObserver> getObservers() {
+        return observers;
+    }
 }
