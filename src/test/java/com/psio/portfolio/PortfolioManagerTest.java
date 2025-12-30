@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PortfolioManagerTest {
 
     @Test
-    void AddExistingObserverToListOfObservers() {
+    void testAddExistingObserverToListOfObservers() {
         ConservativeTradingAgent agent = new ConservativeTradingAgent(new Wallet(0, 0, "Conservative wallet"));
 
         TradingAgent[] tradingAgents = new TradingAgent[]{agent};
@@ -30,7 +30,5 @@ class PortfolioManagerTest {
         List<PortfolioObserver> listAfterAddition = manager.getObservers();
 
         assertEquals(list, listAfterAddition);
-
     }
-
 }

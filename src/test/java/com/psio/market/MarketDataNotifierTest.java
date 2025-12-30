@@ -10,10 +10,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MarketDataNotifierTest {
+public class MarketDataNotifierTest {
 
     @Test
-    void AddExistingObserverToListOfObservers() {
+    void testAddExistingObserverToListOfObservers() {
         MarketDataNotifier notifier = new MarketDataNotifier();
         ConservativeTradingAgent agent = new ConservativeTradingAgent(new Wallet(0, 0, "Conservative wallet"));
         TradingAgent[] tradingAgents = new TradingAgent[]{agent};
@@ -24,7 +24,7 @@ class MarketDataNotifierTest {
         //adding the same observer
         notifier.addObserver(manager);
         List<MarketDataObserver> listAfterAddition = notifier.getObservers();
-        assertEquals(list, listAfterAddition);
 
+        assertEquals(list, listAfterAddition);
     }
 }

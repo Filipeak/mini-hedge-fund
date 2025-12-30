@@ -4,21 +4,25 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class WalletTest {
-
-   private Wallet wallet = new Wallet(0,0,"Test");
+public class WalletTest {
 
     @Test
-    void TryToSellAssetsWhileNotHavingAnyTest(){
+    void testTryToSellAssetsWhileNotHavingAnyTest(){
+        Wallet wallet = new Wallet(0,0,"Test");
         float assets = wallet.getAssetAmount();
+
         wallet.trySellAllAssets();
+
         assertEquals(assets, wallet.getAssetAmount());
     }
 
     @Test
-    void TryToBuyAssetsWhileBalanceEqualsZeroTest(){
+    void testTryToBuyAssetsWhileBalanceEqualsZeroTest(){
+        Wallet wallet = new Wallet(0,0,"Test");
         float assets = wallet.getAssetAmount();
+
         wallet.tryBuyMaxAssets();
+
         assertEquals(assets, wallet.getAssetAmount());
     }
 }

@@ -1,6 +1,6 @@
 package com.psio.market;
 
-class Observer implements MarketDataObserver {
+public class DummyObserver implements MarketDataObserver {
     private int counter = 0;
 
     @Override
