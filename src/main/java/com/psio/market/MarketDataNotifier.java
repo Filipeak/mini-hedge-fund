@@ -1,11 +1,12 @@
 package com.psio.market;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public class MarketDataNotifier {
-    private final HashSet<MarketDataObserver> observers = new HashSet<>();
+    private final ArrayList<MarketDataObserver> observers = new ArrayList<>();
 
     public void addObserver(MarketDataObserver marketDataObserver) {
+       if(!observers.contains(marketDataObserver))
         observers.add(marketDataObserver);
     }
 
@@ -29,5 +30,9 @@ public class MarketDataNotifier {
         for (MarketDataObserver observer : observers) {
             observer.end();
         }
+    }
+
+    public ArrayList<MarketDataObserver> getObservers() {
+        return observers;
     }
 }
