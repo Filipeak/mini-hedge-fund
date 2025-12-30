@@ -12,6 +12,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Main {
+    private static final Logger logger = LogManager.getLogger(Main.class);
+
     private static TradingAgent[] getTradingAgents() {
         final float defaultBalance = 10000.0f;
         final float defaultAssetAmount = 0.0f;
@@ -22,9 +24,6 @@ public class Main {
                 new TestTradingAgent(new Wallet(defaultBalance, defaultAssetAmount, "Test wallet"))
         };
     }
-
-    // Creating a logger instance for this class
-    private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
         logger.info("The application has started.");

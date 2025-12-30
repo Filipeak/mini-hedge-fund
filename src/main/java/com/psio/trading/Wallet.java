@@ -37,7 +37,7 @@ public class Wallet {
     public void printInfo() {
         System.out.println();
         logger.info(
-                "{}\nBalance: {}\nAsset amount: {}\nTransaction count: {}\nTransactions won: {}",
+                "{}\n\tBalance: {}\n\tAsset amount: {}\n\tTransaction count: {}\n\tTransactions won: {}",
                 name, balance, assetAmount, transactionCount, transactionWinCount
         );
     }
