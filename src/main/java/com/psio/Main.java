@@ -8,8 +8,12 @@ import com.psio.simulation.*;
 import com.psio.trading.*;
 import com.psio.trading.agents.*;
 import com.psio.ui.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Main {
+    private static final Logger logger = LogManager.getLogger(Main.class);
+
     private static TradingAgent[] getTradingAgents() {
         final float defaultBalance = 10000.0f;
         final float defaultAssetAmount = 0.0f;
@@ -22,6 +26,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        logger.info("The application has started.");
+
         MarketDataNotifier marketDataNotifier = new MarketDataNotifier();
 
         TradingAgent[] tradingAgents = getTradingAgents();
@@ -34,5 +40,7 @@ public class Main {
 
         SimulationManager simulationManager = new SimulationManager(marketDataNotifier);
         CryptoPortfolioApp.start(args, portfolioChart, simulationManager::loadAndRunSimulation);
+
+        logger.info("The application has finished.");
     }
 }
