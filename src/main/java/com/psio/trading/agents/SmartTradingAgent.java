@@ -2,12 +2,12 @@ package com.psio.trading.agents;
 
 import com.psio.market.MarketDataPayload;
 import com.psio.trading.Wallet;
-import com.psio.trading.strategies.MovingAverageCrossoversTradingStrategy;
+import com.psio.trading.strategies.TradingStrategy;
 
 public class SmartTradingAgent extends TradingAgent {
 
-    public SmartTradingAgent(Wallet wallet) {
-        super(wallet);
+    public SmartTradingAgent(Wallet wallet, TradingStrategy currentStrategy) {
+        super(wallet, currentStrategy);
     }
 
     @Override
@@ -18,6 +18,7 @@ public class SmartTradingAgent extends TradingAgent {
     @Override
     public void begin() {
         super.begin();
-        this.currentStrategy = new MovingAverageCrossoversTradingStrategy();
+        this.currentStrategy.reset();
+        //Currently identical to ConservativeTradingAgent will change soon (temp comment)
     }
 }

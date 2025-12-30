@@ -7,8 +7,9 @@ import com.psio.reporting.creators.StringWriterCreator;
 import com.psio.simulation.SimulationManager;
 import com.psio.trading.Wallet;
 import com.psio.trading.agents.ConservativeTradingAgent;
-import com.psio.trading.agents.SmartTradingAgent;
 import com.psio.trading.agents.TradingAgent;
+import com.psio.trading.strategies.BuyAndHoldTradingStrategy;
+import com.psio.trading.strategies.MeanReversionTradingStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,8 +33,14 @@ public class ReportCreatorTest {
         final float defaultAssetAmount = 0.0f;
 
         TradingAgent[] tradingAgents = new TradingAgent[]{
-                new ConservativeTradingAgent(new Wallet(defaultBalance, defaultAssetAmount, "Conservative wallet")),
-                new SmartTradingAgent(new Wallet(defaultBalance, defaultAssetAmount, "Smart wallet")),
+                new ConservativeTradingAgent(
+                        new Wallet(defaultBalance, defaultAssetAmount, "BuyAndHold wallet"),
+                        new BuyAndHoldTradingStrategy()
+                ),
+                new ConservativeTradingAgent(
+                        new Wallet(defaultBalance, defaultAssetAmount, "MeanReversion wallet"),
+                        new MeanReversionTradingStrategy()
+                )
         };
 
         portfolioManager = new PortfolioManager(tradingAgents);

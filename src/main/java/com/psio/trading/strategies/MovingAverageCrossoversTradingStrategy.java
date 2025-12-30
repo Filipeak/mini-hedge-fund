@@ -58,4 +58,9 @@ public class MovingAverageCrossoversTradingStrategy implements TradingStrategy {
 
         return sum / period;
     }
+
+    @Override
+    public void reset() {
+        prices.clear();
+    }
 }
