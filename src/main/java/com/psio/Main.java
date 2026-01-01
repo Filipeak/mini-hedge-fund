@@ -47,6 +47,9 @@ public class Main {
                 new ConservativeTradingAgent(
                         new Wallet(defaultBalance, defaultAssetAmount, "VolatilityBreakout wallet"),
                         new VolatilityBreakoutTradingStrategy()
+                ),
+                new SmartTradingAgent(
+                        new Wallet(defaultBalance, defaultAssetAmount, "Smart wallet")
                 )
         };
     }
