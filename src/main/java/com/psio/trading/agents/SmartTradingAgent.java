@@ -2,16 +2,18 @@ package com.psio.trading.agents;
 
 import com.psio.market.MarketDataPayload;
 import com.psio.trading.Wallet;
-import com.psio.trading.strategies.BuyAndHoldTradingStrategy;
-import com.psio.trading.strategies.MeanReversionTradingStrategy;
-import com.psio.trading.strategies.MomentumTradingStrategy;
-import com.psio.trading.strategies.VolatilityBreakoutTradingStrategy;
+import com.psio.trading.strategies.*;
 
 import java.util.ArrayList;
 
 public class SmartTradingAgent extends TradingAgent {
     private final ArrayList<Float> prices = new ArrayList<>();
 
+    TradingStrategy[] strategies = new TradingStrategy[]{
+            new BuyAfterFallTradingStrategy(),
+            new RelativeStrengthIndexTradingStrategy(),
+            new VolatilityBreakoutTradingStrategy()
+    };
 
     public SmartTradingAgent(Wallet wallet) {
         super(wallet);
@@ -20,7 +22,6 @@ public class SmartTradingAgent extends TradingAgent {
 
     @Override
     public void update(MarketDataPayload marketDataPayload) {
-        super.update(marketDataPayload);
 
         int window = 720;
         if (prices.size() < window) {
@@ -36,20 +37,24 @@ public class SmartTradingAgent extends TradingAgent {
             double vol = calculateVolatility(prices);
 
             if (vol <= 0.005) {
-//                System.out.println("Volatility regime is low");
-                this.currentStrategy = new MeanReversionTradingStrategy();
+                this.currentStrategy = strategies[0];
+                strategies[1].decide(marketDataPayload);
+                strategies[2].decide(marketDataPayload);
             }
             if (vol > 0.005 && vol <= 0.015) {
-//                System.out.println("Volatility regime is medium");
-                this.currentStrategy = new MomentumTradingStrategy();
+                strategies[0].decide(marketDataPayload);
+                this.currentStrategy = strategies[1];
+                strategies[2].decide(marketDataPayload);
 
             }
             if (vol > 0.015) {
-//                System.out.println("Volatility regime is high");
-                this.currentStrategy = new VolatilityBreakoutTradingStrategy();
+                strategies[0].decide(marketDataPayload);
+                strategies[1].decide(marketDataPayload);
+                this.currentStrategy = strategies[2];
             }
         }
 
+        super.update(marketDataPayload);
     }
 
     @Override
