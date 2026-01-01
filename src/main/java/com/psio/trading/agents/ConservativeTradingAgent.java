@@ -7,7 +7,8 @@ import com.psio.trading.strategies.TradingStrategy;
 public class ConservativeTradingAgent extends TradingAgent {
 
     public ConservativeTradingAgent(Wallet wallet, TradingStrategy currentStrategy) {
-        super(wallet, currentStrategy);
+        super(wallet);
+        this.currentStrategy = currentStrategy;
     }
 
     @Override

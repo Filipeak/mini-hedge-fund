@@ -9,9 +9,8 @@ public abstract class TradingAgent {
     protected Wallet wallet;
     protected TradingStrategy currentStrategy;
 
-    public TradingAgent(Wallet wallet, TradingStrategy currentStrategy) {
+    public TradingAgent(Wallet wallet) {
         this.wallet = wallet;
-        this.currentStrategy = currentStrategy;
     }
 
     public void update(MarketDataPayload marketDataPayload) {

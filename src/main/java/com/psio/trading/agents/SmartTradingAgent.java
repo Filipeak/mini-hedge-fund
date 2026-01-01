@@ -2,12 +2,11 @@ package com.psio.trading.agents;
 
 import com.psio.market.MarketDataPayload;
 import com.psio.trading.Wallet;
-import com.psio.trading.strategies.TradingStrategy;
 
 public class SmartTradingAgent extends TradingAgent {
 
-    public SmartTradingAgent(Wallet wallet, TradingStrategy currentStrategy) {
-        super(wallet, currentStrategy);
+    public SmartTradingAgent(Wallet wallet) {
+        super(wallet);
     }
 
     @Override
