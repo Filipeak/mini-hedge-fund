@@ -8,8 +8,7 @@ import com.psio.simulation.SimulationManager;
 import com.psio.trading.Wallet;
 import com.psio.trading.agents.ConservativeTradingAgent;
 import com.psio.trading.agents.TradingAgent;
-import com.psio.trading.strategies.BuyAndHoldTradingStrategy;
-import com.psio.trading.strategies.MeanReversionTradingStrategy;
+import com.psio.trading.strategies.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,14 +24,15 @@ public class ReportCreatorTest {
 
     private final String CSV_DATA_FILE = "src/main/resources/data.csv";
 
-    @BeforeEach
-    void setUp() {
-        MarketDataNotifier marketDataNotifier = new MarketDataNotifier();
-
+    private static TradingAgent[] getTradingAgents() {
         final float defaultBalance = 10000.0f;
         final float defaultAssetAmount = 0.0f;
 
-        TradingAgent[] tradingAgents = new TradingAgent[]{
+        return new TradingAgent[]{
+                new ConservativeTradingAgent(
+                        new Wallet(defaultBalance, defaultAssetAmount, "BuyAfterFall wallet"),
+                        new BuyAfterFallTradingStrategy()
+                ),
                 new ConservativeTradingAgent(
                         new Wallet(defaultBalance, defaultAssetAmount, "BuyAndHold wallet"),
                         new BuyAndHoldTradingStrategy()
@@ -40,8 +40,31 @@ public class ReportCreatorTest {
                 new ConservativeTradingAgent(
                         new Wallet(defaultBalance, defaultAssetAmount, "MeanReversion wallet"),
                         new MeanReversionTradingStrategy()
+                ),
+                new ConservativeTradingAgent(
+                        new Wallet(defaultBalance, defaultAssetAmount, "Momentum wallet"),
+                        new MomentumTradingStrategy()
+                ),
+                new ConservativeTradingAgent(
+                        new Wallet(defaultBalance, defaultAssetAmount, "MovingAverage wallet"),
+                        new MovingAverageCrossoversTradingStrategy()
+                ),
+                new ConservativeTradingAgent(
+                        new Wallet(defaultBalance, defaultAssetAmount, "RelativeStrengthIndex wallet"),
+                        new RelativeStrengthIndexTradingStrategy()
+                ),
+                new ConservativeTradingAgent(
+                        new Wallet(defaultBalance, defaultAssetAmount, "VolatilityBreakout wallet"),
+                        new VolatilityBreakoutTradingStrategy()
                 )
         };
+    }
+
+    @BeforeEach
+    void setUp() {
+        MarketDataNotifier marketDataNotifier = new MarketDataNotifier();
+
+        TradingAgent[] tradingAgents = getTradingAgents();
 
         portfolioManager = new PortfolioManager(tradingAgents);
         marketDataNotifier.addObserver(portfolioManager);
@@ -61,7 +84,7 @@ public class ReportCreatorTest {
 
         String result = reportResult.getData();
         System.out.println(result);
-        assertTrue(result.contains("Finalny Balans:   20000.00 PLN"));
+        assertTrue(result.contains("Finalny Balans:   70000.00 PLN"));
         assertTrue(result.contains("Zwrot (ROR):      0.00 %"));
         assertTrue(result.contains("Max Drawdown:     0.00 %"));
         assertTrue(result.contains("Win Rate:         0.00 %"));
@@ -74,9 +97,9 @@ public class ReportCreatorTest {
 
         String result = reportResult.getData();
         System.out.println(result);
-        assertTrue(result.contains("Finalny Balans:   20439.11 PLN"));
-        assertTrue(result.contains("Zwrot (ROR):      2.20 %"));
-        assertTrue(result.contains("Max Drawdown:     -13.60 %"));
-        assertTrue(result.contains("Win Rate:         28.57 %"));
+        assertTrue(result.contains("Finalny Balans:   77162.24 PLN"));
+        assertTrue(result.contains("Zwrot (ROR):      10.23 %"));
+        assertTrue(result.contains("Max Drawdown:     -16.28 %"));
+        assertTrue(result.contains("Win Rate:         41.08 %"));
     }
 }
