@@ -88,6 +88,10 @@ public class Wallet {
         }
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getTransactionCount() {
         return transactionCount;
     }
