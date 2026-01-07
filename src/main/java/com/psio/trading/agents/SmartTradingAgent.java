@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class SmartTradingAgent extends TradingAgent {
     private final ArrayList<Float> prices = new ArrayList<>();
 
-    TradingStrategy[] strategies = new TradingStrategy[]{
+    private final TradingStrategy[] strategies = new TradingStrategy[]{
             new BuyAfterFallTradingStrategy(),
             new RelativeStrengthIndexTradingStrategy(),
             new VolatilityBreakoutTradingStrategy()
@@ -22,18 +22,17 @@ public class SmartTradingAgent extends TradingAgent {
 
     @Override
     public void update(MarketDataPayload marketDataPayload) {
-
         int window = 720;
-        if (prices.size() < window) {
-            prices.add(marketDataPayload.close);
-        } else {
+
+        if (prices.size() >= window) {
             prices.removeFirst();
-            prices.add(marketDataPayload.close);
         }
 
-        int minWindow = 100;
-        if (prices.size() >= minWindow) {
+        prices.add(marketDataPayload.close);
 
+        int minWindow = 100;
+
+        if (prices.size() >= minWindow) {
             double vol = calculateVolatility(prices);
 
             if (vol <= 0.005) {
@@ -82,5 +81,4 @@ public class SmartTradingAgent extends TradingAgent {
 
         return Math.sqrt(variance);
     }
-
 }
