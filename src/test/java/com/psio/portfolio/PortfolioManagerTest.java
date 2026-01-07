@@ -52,10 +52,8 @@ class PortfolioManagerTest {
 
         portfolioManager.end();
 
-        int i=0;
-        for (TradingAgent agent : portfolioManager.getAgents()) {
-            assertEquals(agent.getWallet().getName(), sortedTradingAgents[i].getWallet().getName());
-            i++;
+        for (int i = 0; i < portfolioManager.getAgents().length; i++) {
+            assertEquals(portfolioManager.getAgents()[i].getWallet().getName(), sortedTradingAgents[i].getWallet().getName());
         }
     }
 }
