@@ -5,7 +5,7 @@ import com.psio.trading.TradingAction;
 import com.psio.trading.strategies.TradingStrategy;
 import com.psio.trading.Wallet;
 
-public abstract class TradingAgent {
+public abstract class TradingAgent implements Comparable<TradingAgent> {
     protected Wallet wallet;
     protected TradingStrategy currentStrategy;
 
@@ -45,5 +45,10 @@ public abstract class TradingAgent {
 
     public Wallet getWallet() {
         return wallet;
+    }
+
+    @Override
+    public int compareTo(TradingAgent o) {
+        return (int) -(this.wallet.getTotalValue() - o.wallet.getTotalValue());
     }
 }

@@ -5,6 +5,7 @@ import com.psio.market.MarketDataPayload;
 import com.psio.trading.agents.TradingAgent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PortfolioManager implements MarketDataObserver {
@@ -44,6 +45,8 @@ public class PortfolioManager implements MarketDataObserver {
     @Override
     public void end() {
         lastPayload = null;
+
+        Arrays.sort(tradingAgents);
 
         for (TradingAgent tradingAgent : tradingAgents) {
             tradingAgent.end();
