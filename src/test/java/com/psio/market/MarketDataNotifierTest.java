@@ -4,6 +4,7 @@ import com.psio.portfolio.PortfolioManager;
 import com.psio.trading.Wallet;
 import com.psio.trading.agents.ConservativeTradingAgent;
 import com.psio.trading.agents.TradingAgent;
+import com.psio.trading.strategies.BuyAndHoldTradingStrategy;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -15,7 +16,10 @@ public class MarketDataNotifierTest {
     @Test
     void testAddExistingObserverToListOfObservers() {
         MarketDataNotifier notifier = new MarketDataNotifier();
-        ConservativeTradingAgent agent = new ConservativeTradingAgent(new Wallet(0, 0, "Conservative wallet"));
+        ConservativeTradingAgent agent = new ConservativeTradingAgent(
+                new Wallet(0, 0, "Conservative wallet"),
+                new BuyAndHoldTradingStrategy()
+        );
         TradingAgent[] tradingAgents = new TradingAgent[]{agent};
         PortfolioManager manager = new PortfolioManager(tradingAgents);
 

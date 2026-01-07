@@ -58,4 +58,9 @@ public class RelativeStrengthIndexTradingStrategy implements TradingStrategy {
 
         return TradingAction.HOLD;
     }
+
+    @Override
+    public void reset() {
+        prices.clear();
+    }
 }
