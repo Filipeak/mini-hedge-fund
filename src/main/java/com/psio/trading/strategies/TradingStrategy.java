@@ -4,4 +4,5 @@ import com.psio.trading.TradingAction;
 
 public interface TradingStrategy {
     TradingAction decide(MarketDataPayload marketDataPayload);
+    void reset();
 }
