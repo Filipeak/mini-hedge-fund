@@ -5,7 +5,6 @@ import com.psio.reporting.creators.StringWriterCreator;
 import com.psio.trading.Wallet;
 import com.psio.trading.agents.ConservativeTradingAgent;
 import com.psio.trading.agents.SmartTradingAgent;
-import com.psio.trading.agents.TestTradingAgent;
 import com.psio.trading.agents.TradingAgent;
 import com.psio.trading.strategies.BuyAndHoldTradingStrategy;
 import org.junit.jupiter.api.Test;
@@ -41,15 +40,13 @@ class PortfolioManagerTest {
     @Test
     void testTradingAgentSorting() {
         TradingAgent[] tradingAgents = new TradingAgent[]{
-                new ConservativeTradingAgent(new Wallet(100, 0, "BuyAndHold wallet")),
+                new ConservativeTradingAgent(new Wallet(100, 0, "BuyAndHold wallet"), new BuyAndHoldTradingStrategy()),
                 new SmartTradingAgent(new Wallet(200, 0, "MovingAverageCrossovers wallet")),
-                new TestTradingAgent(new Wallet(0, 0, "Test wallet"))
         };
 
         TradingAgent[] sortedTradingAgents = new TradingAgent[]{
                 new SmartTradingAgent(new Wallet(200, 0, "MovingAverageCrossovers wallet")),
-                new ConservativeTradingAgent(new Wallet(100, 0, "BuyAndHold wallet")),
-                new TestTradingAgent(new Wallet(0, 0, "Test wallet"))
+                new ConservativeTradingAgent(new Wallet(100, 0, "BuyAndHold wallet"), new BuyAndHoldTradingStrategy()),
         };
 
         PortfolioManager portfolioManager = new PortfolioManager(tradingAgents);

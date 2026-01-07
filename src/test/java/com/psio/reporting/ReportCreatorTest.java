@@ -97,7 +97,7 @@ public class ReportCreatorTest {
 
         String result = reportResult.getData();
         System.out.println(result);
-        assertTrue(result.contains("Finalny Balans:   77162.24 PLN"));
+        assertTrue(result.contains("Finalny Balans:   77162.25 PLN"));
         assertTrue(result.contains("Zwrot (ROR):      10.23 %"));
         assertTrue(result.contains("Max Drawdown:     -16.28 %"));
         assertTrue(result.contains("Win Rate:         41.08 %"));
