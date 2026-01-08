@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PortfolioManager implements MarketDataObserver {
+public class PortfolioManager implements MarketDataObserver, ValueProvider {
     private final TradingAgent[] tradingAgents;
     private final List<PortfolioObserver> observers;
     private MarketDataPayload lastPayload;
@@ -67,11 +67,12 @@ public class PortfolioManager implements MarketDataObserver {
         observers.remove(portfolioObserver);
     }
 
+    @Override
     public float getCurrentValue() {
         float result = 0;
 
         for (TradingAgent tradingAgent : tradingAgents) {
-            result += tradingAgent.getWallet().getTotalValue();
+            result += tradingAgent.getWallet().getCurrentValue();
         }
 
         return result;
@@ -91,5 +92,10 @@ public class PortfolioManager implements MarketDataObserver {
 
     public List<PortfolioObserver> getObservers() {
         return observers;
+    }
+
+    @Override
+    public String getName() {
+        return "PORTFOLIO";
     }
 }

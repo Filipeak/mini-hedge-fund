@@ -1,9 +1,10 @@
 package com.psio.trading;
 
+import com.psio.portfolio.ValueProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Wallet {
+public class Wallet implements ValueProvider {
     private final float defaultBalance;
     private final float defaultAssetAmount;
     private final String name;
@@ -25,27 +26,6 @@ public class Wallet {
         reset();
     }
 
-    public void reset() {
-        this.balance = defaultBalance;
-        this.assetAmount = defaultAssetAmount;
-        this.currentPrice = 0;
-        this.transactionCount = 0;
-        this.transactionWinCount = 0;
-        this.transactionBuyPrice = 0;
-    }
-
-    public void printInfo() {
-        System.out.println();
-        logger.info(
-                "{}\n\tBalance: {}\n\tAsset amount: {}\n\tTransaction count: {}\n\tTransactions won: {}",
-                name, balance, assetAmount, transactionCount, transactionWinCount
-        );
-    }
-
-    public void updateCurrentPrice(float currentPrice) {
-        this.currentPrice = currentPrice;
-    }
-
     public float getBalance() {
         return balance;
     }
@@ -54,8 +34,26 @@ public class Wallet {
         return assetAmount;
     }
 
-    public float getTotalValue() {
+    @Override
+    public float getCurrentValue() {
         return balance + assetAmount * currentPrice;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    public int getTransactionCount() {
+        return transactionCount;
+    }
+
+    public int getTransactionWinCount() {
+        return transactionWinCount;
+    }
+
+    public void updateCurrentPrice(float currentPrice) {
+        this.currentPrice = currentPrice;
     }
 
     public void tryBuyMaxAssets() {
@@ -88,15 +86,20 @@ public class Wallet {
         }
     }
 
-    public String getName() {
-        return name;
+    public void reset() {
+        this.balance = defaultBalance;
+        this.assetAmount = defaultAssetAmount;
+        this.currentPrice = 0;
+        this.transactionCount = 0;
+        this.transactionWinCount = 0;
+        this.transactionBuyPrice = 0;
     }
 
-    public int getTransactionCount() {
-        return transactionCount;
-    }
-
-    public int getTransactionWinCount() {
-        return transactionWinCount;
+    public void printInfo() {
+        System.out.println();
+        logger.info(
+                "{}\n\tBalance: {}\n\tAsset amount: {}\n\tTransaction count: {}\n\tTransactions won: {}",
+                name, balance, assetAmount, transactionCount, transactionWinCount
+        );
     }
 }
