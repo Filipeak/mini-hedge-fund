@@ -49,6 +49,6 @@ public abstract class TradingAgent implements Comparable<TradingAgent> {
 
     @Override
     public int compareTo(TradingAgent o) {
-        return (int) -(this.wallet.getTotalValue() - o.wallet.getTotalValue());
+        return (int) -(this.wallet.getCurrentValue() - o.wallet.getCurrentValue());
     }
 }
