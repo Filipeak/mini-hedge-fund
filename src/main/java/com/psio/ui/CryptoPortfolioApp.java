@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -34,7 +36,7 @@ public class CryptoPortfolioApp extends Application {
         AppMenu appMenu = new AppMenu(primaryStage, this::onFileSelected);
         root.setTop(appMenu.createMenu());
 
-        // 3. Bottom: Toggle Bar
+        // 3. Bottom: Controls Bar
         HBox bottomBar = createBottomBar();
         root.setBottom(bottomBar);
 
@@ -61,9 +63,28 @@ public class CryptoPortfolioApp extends Application {
             }
         });
 
-        HBox bottomBox = new HBox(toggleViewMode);
+        Label labelSource = new Label("Źródło danych:");
+        labelSource.getStyleClass().add("chart-selector-label");
+
+        ComboBox<String> sourceSelector = new ComboBox<>();
+        sourceSelector.getStyleClass().add("chart-selector");
+
+        sourceSelector.getItems().addAll(portfolioChart.getAvailableDataSources());
+        sourceSelector.getSelectionModel().select(portfolioChart.getDefaultDataSourceName());
+
+        sourceSelector.setMinWidth(200);
+
+        sourceSelector.setOnAction(e -> {
+            String selected = sourceSelector.getValue();
+            if (selected != null && portfolioChart != null) {
+                portfolioChart.setDataSource(selected);
+            }
+        });
+
+        HBox bottomBox = new HBox(toggleViewMode, labelSource, sourceSelector);
         bottomBox.getStyleClass().add("bottom-status-bar");
         bottomBox.setAlignment(Pos.CENTER);
+        bottomBox.setSpacing(5);
 
         return bottomBox;
     }

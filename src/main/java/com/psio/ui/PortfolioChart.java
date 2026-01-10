@@ -2,6 +2,8 @@ package com.psio.ui;
 
 import com.psio.portfolio.PortfolioManager;
 import com.psio.portfolio.PortfolioObserver;
+import com.psio.portfolio.ValueProvider;
+import com.psio.trading.agents.TradingAgent;
 import javafx.application.Platform;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -11,9 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class PortfolioChart implements PortfolioObserver {
 
@@ -21,9 +21,12 @@ public class PortfolioChart implements PortfolioObserver {
 
     private XYChart.Series<Number, Number> series;
     private final PortfolioManager portfolioManager;
-    private final List<Snapshot> history = new ArrayList<>();
 
-    private final float fixedInitialCapital;
+    private final Map<String, List<Snapshot>> histories = new HashMap<>();
+
+    private final Map<String, Float> initialCapitals = new LinkedHashMap<>();
+
+    private String currentDataSourceName;
 
     private boolean percentageMode = false;
     private NumberAxis yAxis;
@@ -32,11 +35,36 @@ public class PortfolioChart implements PortfolioObserver {
 
     public PortfolioChart(PortfolioManager portfolioManager) {
         this.portfolioManager = portfolioManager;
-        this.fixedInitialCapital = portfolioManager.getCurrentValue();
+
+        this.currentDataSourceName = portfolioManager.getName();
+        prepareDataSource(portfolioManager);
+
+        for (TradingAgent agent : portfolioManager.getAgents()) {
+            prepareDataSource(agent.getWallet());
+        }
 
         portfolioManager.addObserver(this);
+    }
 
-        logger.info("Base for percentage calculations set at: {} PLN", fixedInitialCapital);
+    private void prepareDataSource(ValueProvider provider) {
+        histories.put(provider.getName(), new ArrayList<>());
+        initialCapitals.put(provider.getName(), provider.getCurrentValue());
+        logger.info("Registered data source: {} with initial capital: {}", provider.getName(), provider.getCurrentValue());
+    }
+
+    public Set<String> getAvailableDataSources() {
+        return initialCapitals.keySet();
+    }
+
+    public String getDefaultDataSourceName() {
+        return portfolioManager.getName();
+    }
+
+    public void setDataSource(String name) {
+        if (histories.containsKey(name)) {
+            this.currentDataSourceName = name;
+            Platform.runLater(this::refreshSeries);
+        }
     }
 
     public LineChart<Number, Number> createChart() {
@@ -77,19 +105,29 @@ public class PortfolioChart implements PortfolioObserver {
 
     private void refreshSeries() {
         series.getData().clear();
-        for (Snapshot s : history) {
-            addPointToSeries(s.timestamp, s.currentTotalValue);
+
+        List<Snapshot> currentHistory = histories.get(currentDataSourceName);
+        Float initialCap = initialCapitals.get(currentDataSourceName);
+
+        if (currentHistory != null && initialCap != null) {
+            List<Snapshot> snapshotCopy;
+            synchronized (histories) {
+                snapshotCopy = new ArrayList<>(currentHistory);
+            }
+
+            for (Snapshot s : snapshotCopy) {
+                addPointToSeries(s.timestamp, s.currentTotalValue, initialCap);
+            }
         }
     }
 
-    private void addPointToSeries(long timestamp, float currentTotalValue) {
+    private void addPointToSeries(long timestamp, float currentTotalValue, float initialCap) {
         float valueToPlot;
-
-        float profitOrLoss = currentTotalValue - fixedInitialCapital;
+        float profitOrLoss = currentTotalValue - initialCap;
 
         if (percentageMode) {
-            if (fixedInitialCapital != 0) {
-                valueToPlot = (profitOrLoss / fixedInitialCapital) * 100;
+            if (initialCap != 0) {
+                valueToPlot = (profitOrLoss / initialCap) * 100;
             } else {
                 valueToPlot = 0;
             }
@@ -102,17 +140,30 @@ public class PortfolioChart implements PortfolioObserver {
 
     @Override
     public void onChange() {
-        float currentTotalValue = portfolioManager.getCurrentValue();
         long timestamp = portfolioManager.getLastTimestamp();
 
-        synchronized (history) {
-            history.add(new Snapshot(timestamp, currentTotalValue));
+        synchronized (histories) {
+            histories.get(portfolioManager.getName())
+                    .add(new Snapshot(timestamp, portfolioManager.getCurrentValue()));
+
+            for (TradingAgent agent : portfolioManager.getAgents()) {
+                String name = agent.getWallet().getName();
+                float value = agent.getWallet().getCurrentValue();
+
+                if (histories.containsKey(name)) {
+                    histories.get(name).add(new Snapshot(timestamp, value));
+                }
+            }
         }
     }
 
     @Override
     public void onBegin() {
-        history.clear();
+        synchronized (histories) {
+            for (List<Snapshot> list : histories.values()) {
+                list.clear();
+            }
+        }
     }
 
     @Override
