@@ -242,3 +242,25 @@
     -fx-font-weight: bold;
     -fx-padding: 0 10px 0 20px;
 }
+
+.loading-overlay {
+    -fx-background-color: rgba(30, 30, 46, 0.85);
+}
+
+.loading-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 210, 255, 0.5), 10, 0.0, 0, 0);
+    -fx-padding: 10px;
+}
+
+.progress-indicator {
+    -fx-progress-color: #00d2ff;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 210, 255, 0.4), 15, 0, 0, 0);
+}
+
+.progress-indicator .indicator {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}

@@ -93,7 +93,7 @@ public class ReportCreatorTest {
     @Test
     void testReportWithRealCsvFile() {
         File csvFile = new File(CSV_DATA_FILE);
-        simulationManager.doLoadAndRunSimulation(csvFile);
+        simulationManager.loadAndRunSimulation(csvFile);
 
         String result = reportResult.getData();
         System.out.println(result);

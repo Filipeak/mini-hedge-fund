@@ -22,21 +22,21 @@ public class PortfolioChart implements PortfolioObserver {
     private XYChart.Series<Number, Number> series;
     private final PortfolioManager portfolioManager;
 
+    private final List<ValueProvider> valueProviders = new ArrayList<>();
     private final Map<String, List<Snapshot>> histories = new HashMap<>();
-
     private final Map<String, Float> initialCapitals = new LinkedHashMap<>();
 
     private String currentDataSourceName;
-
     private boolean percentageMode = false;
     private NumberAxis yAxis;
 
-    private record Snapshot(long timestamp, float currentTotalValue) {}
+    private record Snapshot(long timestamp, float currentTotalValue) {
+    }
 
     public PortfolioChart(PortfolioManager portfolioManager) {
         this.portfolioManager = portfolioManager;
-
         this.currentDataSourceName = portfolioManager.getName();
+
         prepareDataSource(portfolioManager);
 
         for (TradingAgent agent : portfolioManager.getAgents()) {
@@ -47,6 +47,7 @@ public class PortfolioChart implements PortfolioObserver {
     }
 
     private void prepareDataSource(ValueProvider provider) {
+        valueProviders.add(provider);
         histories.put(provider.getName(), new ArrayList<>());
         initialCapitals.put(provider.getName(), provider.getCurrentValue());
         logger.info("Registered data source: {} with initial capital: {}", provider.getName(), provider.getCurrentValue());
@@ -60,11 +61,15 @@ public class PortfolioChart implements PortfolioObserver {
         return portfolioManager.getName();
     }
 
-    public void setDataSource(String name) {
+    public void setDataSourceInternal(String name) {
         if (histories.containsKey(name)) {
             this.currentDataSourceName = name;
-            Platform.runLater(this::refreshSeries);
         }
+    }
+
+    public void setDataSource(String name) {
+        setDataSourceInternal(name);
+        refreshSeries();
     }
 
     public LineChart<Number, Number> createChart() {
@@ -74,10 +79,16 @@ public class PortfolioChart implements PortfolioObserver {
         xAxis.setForceZeroInRange(false);
         xAxis.setTickLabelFormatter(new StringConverter<>() {
             private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
             @Override
-            public String toString(Number t) { return sdf.format(new Date(t.longValue())); }
+            public String toString(Number t) {
+                return sdf.format(new Date(t.longValue()));
+            }
+
             @Override
-            public Number fromString(String s) { return 0; }
+            public Number fromString(String s) {
+                return 0;
+            }
         });
 
         yAxis = new NumberAxis();
@@ -97,31 +108,38 @@ public class PortfolioChart implements PortfolioObserver {
         return lineChart;
     }
 
-    public void toggleViewMode() {
+    public void toggleViewModeInternal() {
         percentageMode = !percentageMode;
-        yAxis.setLabel(percentageMode ? "Zwrot z inwestycji (%)" : "Zysk / Strata (PLN)");
-        Platform.runLater(this::refreshSeries);
     }
 
-    private void refreshSeries() {
-        series.getData().clear();
+    public void toggleViewMode() {
+        toggleViewModeInternal();
+        refreshSeries();
+    }
+
+    public void refreshSeries() {
+        yAxis.setLabel(percentageMode ? "Zwrot z inwestycji (%)" : "Zysk / Strata (PLN)");
 
         List<Snapshot> currentHistory = histories.get(currentDataSourceName);
         Float initialCap = initialCapitals.get(currentDataSourceName);
 
         if (currentHistory != null && initialCap != null) {
             List<Snapshot> snapshotCopy;
-            synchronized (histories) {
-                snapshotCopy = new ArrayList<>(currentHistory);
-            }
+            snapshotCopy = new ArrayList<>(currentHistory);
+
+            List<XYChart.Data<Number, Number>> dataPoints = new ArrayList<>(snapshotCopy.size());
 
             for (Snapshot s : snapshotCopy) {
-                addPointToSeries(s.timestamp, s.currentTotalValue, initialCap);
+                dataPoints.add(createDataPoint(s.timestamp, s.currentTotalValue, initialCap));
             }
+
+            series.getData().setAll(dataPoints);
+        } else {
+            series.getData().clear();
         }
     }
 
-    private void addPointToSeries(long timestamp, float currentTotalValue, float initialCap) {
+    private XYChart.Data<Number, Number> createDataPoint(long timestamp, float currentTotalValue, float initialCap) {
         float valueToPlot;
         float profitOrLoss = currentTotalValue - initialCap;
 
@@ -135,34 +153,27 @@ public class PortfolioChart implements PortfolioObserver {
             valueToPlot = profitOrLoss;
         }
 
-        series.getData().add(new XYChart.Data<>(timestamp, valueToPlot));
+        return new XYChart.Data<>(timestamp, valueToPlot);
     }
 
     @Override
     public void onChange() {
         long timestamp = portfolioManager.getLastTimestamp();
 
-        synchronized (histories) {
-            histories.get(portfolioManager.getName())
-                    .add(new Snapshot(timestamp, portfolioManager.getCurrentValue()));
+        for (ValueProvider vp : valueProviders) {
+            String name = vp.getName();
+            float value = vp.getCurrentValue();
 
-            for (TradingAgent agent : portfolioManager.getAgents()) {
-                String name = agent.getWallet().getName();
-                float value = agent.getWallet().getCurrentValue();
-
-                if (histories.containsKey(name)) {
-                    histories.get(name).add(new Snapshot(timestamp, value));
-                }
+            if (histories.containsKey(name)) {
+                histories.get(name).add(new Snapshot(timestamp, value));
             }
         }
     }
 
     @Override
     public void onBegin() {
-        synchronized (histories) {
-            for (List<Snapshot> list : histories.values()) {
-                list.clear();
-            }
+        for (List<Snapshot> list : histories.values()) {
+            list.clear();
         }
     }
 

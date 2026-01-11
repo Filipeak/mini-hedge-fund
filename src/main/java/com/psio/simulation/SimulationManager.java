@@ -17,15 +17,6 @@ public class SimulationManager {
     }
 
     public void loadAndRunSimulation(File file) {
-        Thread simulationThread = new Thread(() -> {
-            doLoadAndRunSimulation(file);
-        });
-
-        simulationThread.setDaemon(true);
-        simulationThread.start();
-    }
-
-    public void doLoadAndRunSimulation(File file) {
         try {
             MarketDataProvider provider = createProvider(file);
             provider.getData(marketDataNotifier);
