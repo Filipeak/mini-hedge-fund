@@ -23,20 +23,19 @@ public class PortfolioChart implements PortfolioObserver {
     private final PortfolioManager portfolioManager;
 
     private final Map<String, List<Snapshot>> histories = new HashMap<>();
-
     private final Map<String, Float> initialCapitals = new LinkedHashMap<>();
 
     private String currentDataSourceName;
-
     private boolean percentageMode = false;
     private NumberAxis yAxis;
 
-    private record Snapshot(long timestamp, float currentTotalValue) {}
+    private record Snapshot(long timestamp, float currentTotalValue) {
+    }
 
     public PortfolioChart(PortfolioManager portfolioManager) {
         this.portfolioManager = portfolioManager;
-
         this.currentDataSourceName = portfolioManager.getName();
+
         prepareDataSource(portfolioManager);
 
         for (TradingAgent agent : portfolioManager.getAgents()) {
@@ -78,10 +77,16 @@ public class PortfolioChart implements PortfolioObserver {
         xAxis.setForceZeroInRange(false);
         xAxis.setTickLabelFormatter(new StringConverter<>() {
             private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
             @Override
-            public String toString(Number t) { return sdf.format(new Date(t.longValue())); }
+            public String toString(Number t) {
+                return sdf.format(new Date(t.longValue()));
+            }
+
             @Override
-            public Number fromString(String s) { return 0; }
+            public Number fromString(String s) {
+                return 0;
+            }
         });
 
         yAxis = new NumberAxis();
@@ -118,9 +123,7 @@ public class PortfolioChart implements PortfolioObserver {
 
         if (currentHistory != null && initialCap != null) {
             List<Snapshot> snapshotCopy;
-            synchronized (histories) {
-                snapshotCopy = new ArrayList<>(currentHistory);
-            }
+            snapshotCopy = new ArrayList<>(currentHistory);
 
             List<XYChart.Data<Number, Number>> dataPoints = new ArrayList<>(snapshotCopy.size());
 
@@ -155,27 +158,22 @@ public class PortfolioChart implements PortfolioObserver {
     public void onChange() {
         long timestamp = portfolioManager.getLastTimestamp();
 
-        synchronized (histories) {
-            histories.get(portfolioManager.getName())
-                    .add(new Snapshot(timestamp, portfolioManager.getCurrentValue()));
+        histories.get(portfolioManager.getName()).add(new Snapshot(timestamp, portfolioManager.getCurrentValue()));
 
-            for (TradingAgent agent : portfolioManager.getAgents()) {
-                String name = agent.getWallet().getName();
-                float value = agent.getWallet().getCurrentValue();
+        for (TradingAgent agent : portfolioManager.getAgents()) {
+            String name = agent.getWallet().getName();
+            float value = agent.getWallet().getCurrentValue();
 
-                if (histories.containsKey(name)) {
-                    histories.get(name).add(new Snapshot(timestamp, value));
-                }
+            if (histories.containsKey(name)) {
+                histories.get(name).add(new Snapshot(timestamp, value));
             }
         }
     }
 
     @Override
     public void onBegin() {
-        synchronized (histories) {
-            for (List<Snapshot> list : histories.values()) {
-                list.clear();
-            }
+        for (List<Snapshot> list : histories.values()) {
+            list.clear();
         }
     }
 
