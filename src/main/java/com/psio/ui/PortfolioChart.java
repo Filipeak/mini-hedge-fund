@@ -22,6 +22,7 @@ public class PortfolioChart implements PortfolioObserver {
     private XYChart.Series<Number, Number> series;
     private final PortfolioManager portfolioManager;
 
+    private final List<ValueProvider> valueProviders = new ArrayList<>();
     private final Map<String, List<Snapshot>> histories = new HashMap<>();
     private final Map<String, Float> initialCapitals = new LinkedHashMap<>();
 
@@ -46,6 +47,7 @@ public class PortfolioChart implements PortfolioObserver {
     }
 
     private void prepareDataSource(ValueProvider provider) {
+        valueProviders.add(provider);
         histories.put(provider.getName(), new ArrayList<>());
         initialCapitals.put(provider.getName(), provider.getCurrentValue());
         logger.info("Registered data source: {} with initial capital: {}", provider.getName(), provider.getCurrentValue());
@@ -158,11 +160,9 @@ public class PortfolioChart implements PortfolioObserver {
     public void onChange() {
         long timestamp = portfolioManager.getLastTimestamp();
 
-        histories.get(portfolioManager.getName()).add(new Snapshot(timestamp, portfolioManager.getCurrentValue()));
-
-        for (TradingAgent agent : portfolioManager.getAgents()) {
-            String name = agent.getWallet().getName();
-            float value = agent.getWallet().getCurrentValue();
+        for (ValueProvider vp : valueProviders) {
+            String name = vp.getName();
+            float value = vp.getCurrentValue();
 
             if (histories.containsKey(name)) {
                 histories.get(name).add(new Snapshot(timestamp, value));
