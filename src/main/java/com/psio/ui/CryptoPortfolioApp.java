@@ -1,13 +1,17 @@
 package com.psio.ui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.File;
 import java.util.Objects;
@@ -26,19 +30,25 @@ public class CryptoPortfolioApp extends Application {
     private static Consumer<File> fileImportHandler;
     private static PortfolioChart portfolioChart;
 
+    private VBox loadingOverlay;
+
     public void start(Stage primaryStage) {
-        BorderPane root = new BorderPane();
+        BorderPane mainContent = new BorderPane();
 
         // 1. Center: Chart
-        root.setCenter(portfolioChart.createChart());
+        mainContent.setCenter(portfolioChart.createChart());
 
         // 2. Top: Menu
         AppMenu appMenu = new AppMenu(primaryStage, this::onFileSelected);
-        root.setTop(appMenu.createMenu());
+        mainContent.setTop(appMenu.createMenu());
 
         // 3. Bottom: Controls Bar
         HBox bottomBar = createBottomBar();
-        root.setBottom(bottomBar);
+        mainContent.setBottom(bottomBar);
+
+        createLoadingOverlay();
+
+        StackPane root = new StackPane(mainContent, loadingOverlay);
 
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         try {
@@ -52,6 +62,46 @@ public class CryptoPortfolioApp extends Application {
         primaryStage.show();
     }
 
+    private void createLoadingOverlay() {
+        ProgressIndicator spinner = new ProgressIndicator();
+        spinner.getStyleClass().add("progress-indicator");
+        spinner.setMaxSize(60, 60);
+
+        Label loadingLabel = new Label("Przetwarzanie danych...");
+        loadingLabel.getStyleClass().add("loading-label");
+
+        loadingOverlay = new VBox(20, spinner, loadingLabel);
+        loadingOverlay.getStyleClass().add("loading-overlay");
+        loadingOverlay.setAlignment(Pos.CENTER);
+        loadingOverlay.setVisible(false);
+    }
+
+    private void executeAction(Runnable backgroundTask, Runnable uiUpdate) {
+        loadingOverlay.setVisible(true);
+
+        Thread thread = new Thread(() -> {
+            try {
+                Thread.sleep(200);
+
+                if (backgroundTask != null) {
+                    backgroundTask.run();
+                }
+            } catch (Exception e) {
+                logger.error("Błąd w tle: ", e);
+            } finally {
+                Platform.runLater(() -> {
+                    if (uiUpdate != null) {
+                        uiUpdate.run();
+                    }
+                    loadingOverlay.setVisible(false);
+                });
+            }
+        });
+
+        thread.setDaemon(true);
+        thread.start();
+    }
+
     private HBox createBottomBar() {
         CheckBox toggleViewMode = new CheckBox("Pokaż procentowy zwrot");
 
@@ -59,7 +109,10 @@ public class CryptoPortfolioApp extends Application {
 
         toggleViewMode.setOnAction(e -> {
             if (portfolioChart != null) {
-                portfolioChart.toggleViewMode();
+                executeAction(
+                        () -> portfolioChart.toggleViewModeInternal(),
+                        () -> portfolioChart.refreshSeries()
+                );
             }
         });
 
@@ -77,7 +130,10 @@ public class CryptoPortfolioApp extends Application {
         sourceSelector.setOnAction(e -> {
             String selected = sourceSelector.getValue();
             if (selected != null && portfolioChart != null) {
-                portfolioChart.setDataSource(selected);
+                executeAction(
+                        () -> portfolioChart.setDataSourceInternal(selected),
+                        () -> portfolioChart.refreshSeries()
+                );
             }
         });
 
@@ -94,7 +150,15 @@ public class CryptoPortfolioApp extends Application {
             logger.info("File Not Found");
             return;
         }
-        if (fileImportHandler != null) fileImportHandler.accept(file);
+
+        executeAction(
+                () -> {
+                    if (fileImportHandler != null) fileImportHandler.accept(file);
+                },
+                () -> {
+                    if (portfolioChart != null) portfolioChart.refreshSeries();
+                }
+        );
     }
 
     public static void start(String[] args, PortfolioChart portfolioChart, Consumer<File> fileImportHandler) {

@@ -60,11 +60,15 @@ public class PortfolioChart implements PortfolioObserver {
         return portfolioManager.getName();
     }
 
-    public void setDataSource(String name) {
+    public void setDataSourceInternal(String name) {
         if (histories.containsKey(name)) {
             this.currentDataSourceName = name;
-            Platform.runLater(this::refreshSeries);
         }
+    }
+
+    public void setDataSource(String name) {
+        setDataSourceInternal(name);
+        refreshSeries();
     }
 
     public LineChart<Number, Number> createChart() {
@@ -97,14 +101,17 @@ public class PortfolioChart implements PortfolioObserver {
         return lineChart;
     }
 
-    public void toggleViewMode() {
+    public void toggleViewModeInternal() {
         percentageMode = !percentageMode;
-        yAxis.setLabel(percentageMode ? "Zwrot z inwestycji (%)" : "Zysk / Strata (PLN)");
-        Platform.runLater(this::refreshSeries);
     }
 
-    private void refreshSeries() {
-        series.getData().clear();
+    public void toggleViewMode() {
+        toggleViewModeInternal();
+        refreshSeries();
+    }
+
+    public void refreshSeries() {
+        yAxis.setLabel(percentageMode ? "Zwrot z inwestycji (%)" : "Zysk / Strata (PLN)");
 
         List<Snapshot> currentHistory = histories.get(currentDataSourceName);
         Float initialCap = initialCapitals.get(currentDataSourceName);
@@ -115,13 +122,19 @@ public class PortfolioChart implements PortfolioObserver {
                 snapshotCopy = new ArrayList<>(currentHistory);
             }
 
+            List<XYChart.Data<Number, Number>> dataPoints = new ArrayList<>(snapshotCopy.size());
+
             for (Snapshot s : snapshotCopy) {
-                addPointToSeries(s.timestamp, s.currentTotalValue, initialCap);
+                dataPoints.add(createDataPoint(s.timestamp, s.currentTotalValue, initialCap));
             }
+
+            series.getData().setAll(dataPoints);
+        } else {
+            series.getData().clear();
         }
     }
 
-    private void addPointToSeries(long timestamp, float currentTotalValue, float initialCap) {
+    private XYChart.Data<Number, Number> createDataPoint(long timestamp, float currentTotalValue, float initialCap) {
         float valueToPlot;
         float profitOrLoss = currentTotalValue - initialCap;
 
@@ -135,7 +148,7 @@ public class PortfolioChart implements PortfolioObserver {
             valueToPlot = profitOrLoss;
         }
 
-        series.getData().add(new XYChart.Data<>(timestamp, valueToPlot));
+        return new XYChart.Data<>(timestamp, valueToPlot);
     }
 
     @Override
