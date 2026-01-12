@@ -50,6 +50,10 @@ public class Main {
                 ),
                 new SmartTradingAgent(
                         new Wallet(defaultBalance, defaultAssetAmount, "Smart wallet")
+                ),
+                new ConservativeTradingAgent(
+                        new Wallet(defaultBalance, defaultAssetAmount, "Random wallet"),
+                        new RandomTradingStrategy()
                 )
         };
     }
