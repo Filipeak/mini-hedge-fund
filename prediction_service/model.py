@@ -154,6 +154,6 @@ def run_model(model, inputs):
 if __name__ == "__main__":
     X_train, X_test, Y_train, Y_test = prepare_data()
     # model = train_model(X_train, Y_train)
-    # save_model(model, "./data/model.pth")
-    model = load_model("./data/model.pth")
+    # save_model(model, "./model/model.pth")
+    model = load_model("./model/model.pth")
     test_model(model, X_test, Y_test)
