@@ -52,6 +52,10 @@ public class Main {
                         new Wallet(defaultBalance, defaultAssetAmount, "Smart wallet")
                 ),
                 new ConservativeTradingAgent(
+                        new Wallet(defaultBalance, defaultAssetAmount, "Random wallet"),
+                        new RandomTradingStrategy()
+                ),
+                new ConservativeTradingAgent(
                         new Wallet(defaultBalance, defaultAssetAmount, "ML wallet"),
                         new MLTradingStrategy()
                 )
