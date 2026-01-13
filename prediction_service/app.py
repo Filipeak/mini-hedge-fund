@@ -8,7 +8,7 @@ import data_prep
 
 app = Flask(__name__)
 last_data = None
-mdl = model.load_model("./data/model.pth")
+mdl = model.load_model("./models/model.pth")
 
 
 @app.route("/predict", methods=['POST'])

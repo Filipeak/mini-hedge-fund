@@ -19,15 +19,13 @@ class TradingModel(nn.Module):
     def __init__(self):
         super(TradingModel, self).__init__()
 
-        self.conv = nn.Conv1d(in_channels=8, out_channels=32, kernel_size=3, padding=1)
+        self.conv = nn.Conv1d(in_channels=8, out_channels=32, kernel_size=2, padding=1)
         self.pool = nn.MaxPool1d(kernel_size=2)
         self.relu = nn.ReLU()
-        self.dropout_cnn = nn.Dropout(0.2)
+        self.dropout_cnn = nn.Dropout(0.3)
 
-        self.lstm = nn.LSTM(input_size=32, hidden_size=128, num_layers=2, batch_first=True, dropout=0.2)
-        self.fc1 = nn.Linear(128, 64)
-        self.fc2 = nn.Linear(64, 3)
-        self.sigmoid = nn.Sigmoid()
+        self.lstm = nn.LSTM(input_size=32, hidden_size=64, num_layers=2, batch_first=True, dropout=0.2)
+        self.fc = nn.Linear(64, 3)
 
     def forward(self, x):
         # CNN
@@ -39,13 +37,11 @@ class TradingModel(nn.Module):
 
         # LSTM
         x = x.permute(0, 2, 1)
-        out, _ = self.lstm(x)
-        last_step_out = out[:, -1, :]
+        x, _ = self.lstm(x)
+        x = x[:, -1, :]
 
         # Classify
-        x = self.fc1(last_step_out)
-        x = self.sigmoid(x)
-        x = self.fc2(x)
+        x = self.fc(x)
 
         return x
 
@@ -153,7 +149,7 @@ def run_model(model, inputs):
 
 if __name__ == "__main__":
     X_train, X_test, Y_train, Y_test = prepare_data()
-    # model = train_model(X_train, Y_train)
-    # save_model(model, "./model/model.pth")
-    model = load_model("./model/model.pth")
+    model = train_model(X_train, Y_train)
+    save_model(model, "./models/model.pth")
+    # model = load_model("./models/model.pth")
     test_model(model, X_test, Y_test)
