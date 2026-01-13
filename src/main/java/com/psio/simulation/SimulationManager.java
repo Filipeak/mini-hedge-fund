@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.IOException;
 
 public class SimulationManager {
 
@@ -20,18 +21,20 @@ public class SimulationManager {
         try {
             MarketDataProvider provider = createProvider(file);
             provider.getData(marketDataNotifier);
-        } catch (ValueBelowZeroException e) {
+        } catch (ValueBelowZeroException | IOException e) {
             logger.error("Error loading MarketDataProvider: {}", e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
-    private MarketDataProvider createProvider(File file) {
+     MarketDataProvider createProvider(File file) throws IOException {
         String path = file.getAbsolutePath();
         if (file.getName().toLowerCase().endsWith(".json")) {
             return new JSONMarketDataProvider(path);
-        } else {
+        } else if (file.getName().toLowerCase().endsWith(".csv")) {
             return new CSVMarketDataProvider(path);
+        } else {
+            throw new IOException("Unsupported file type: " + file.getName());
         }
     }
 }
