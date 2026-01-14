@@ -15,48 +15,58 @@ import org.apache.logging.log4j.Logger;
 public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
 
-    private static TradingAgent[] getTradingAgents() {
+    private static Wallet walletCreator(String name) {
         final float defaultBalance = 10000.0f;
         final float defaultAssetAmount = 0.0f;
+        return new Wallet(defaultBalance, defaultAssetAmount, name + " wallet");
+    }
 
+    private static TradingAgent[] getTradingAgents() {
         return new TradingAgent[]{
                 new ConservativeTradingAgent(
-                        new Wallet(defaultBalance, defaultAssetAmount, "BuyAfterFall wallet"),
+                        walletCreator("BuyAfterFall"),
                         new BuyAfterFallTradingStrategy()
                 ),
                 new ConservativeTradingAgent(
-                        new Wallet(defaultBalance, defaultAssetAmount, "BuyAndHold wallet"),
+                        walletCreator("BuyAndHold"),
                         new BuyAndHoldTradingStrategy()
                 ),
                 new ConservativeTradingAgent(
-                        new Wallet(defaultBalance, defaultAssetAmount, "MeanReversion wallet"),
+                        walletCreator("MeanReversion"),
                         new MeanReversionTradingStrategy()
                 ),
                 new ConservativeTradingAgent(
-                        new Wallet(defaultBalance, defaultAssetAmount, "Momentum wallet"),
+                        walletCreator("Momentum"),
                         new MomentumTradingStrategy()
                 ),
                 new ConservativeTradingAgent(
-                        new Wallet(defaultBalance, defaultAssetAmount, "MovingAverage wallet"),
+                        walletCreator("MovingAverage"),
                         new MovingAverageCrossoversTradingStrategy()
                 ),
                 new ConservativeTradingAgent(
-                        new Wallet(defaultBalance, defaultAssetAmount, "RelativeStrengthIndex wallet"),
+                        walletCreator("RelativeStrengthIndex"),
                         new RelativeStrengthIndexTradingStrategy()
                 ),
+                new CautiousTradingAgent(
+                        walletCreator("CautiousRSI"),
+                        new RelativeStrengthIndexTradingStrategy()
+                ),
+                new AdaptiveRSITradingAgent(
+                        walletCreator("AdaptiveRSI")
+                ),
                 new ConservativeTradingAgent(
-                        new Wallet(defaultBalance, defaultAssetAmount, "VolatilityBreakout wallet"),
+                        walletCreator("VolatilityBreakout"),
                         new VolatilityBreakoutTradingStrategy()
                 ),
                 new SmartTradingAgent(
-                        new Wallet(defaultBalance, defaultAssetAmount, "Smart wallet")
+                        walletCreator("Smart")
                 ),
                 new ConservativeTradingAgent(
-                        new Wallet(defaultBalance, defaultAssetAmount, "Random wallet"),
+                        walletCreator("Random"),
                         new RandomTradingStrategy()
                 ),
                 new ConservativeTradingAgent(
-                        new Wallet(defaultBalance, defaultAssetAmount, "ML wallet"),
+                        walletCreator("ML"),
                         new MLTradingStrategy()
                 )
         };
