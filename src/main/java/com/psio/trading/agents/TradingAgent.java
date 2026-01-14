@@ -31,7 +31,6 @@ public abstract class TradingAgent implements Comparable<TradingAgent> {
             case TradingAction.HOLD:
                 break;
         }
-
     }
 
     public void begin() {
