@@ -22,8 +22,6 @@ public class ReportCreatorTest {
     private PortfolioManager portfolioManager;
     private SimulationManager simulationManager;
 
-    private final String CSV_DATA_FILE = "src/main/resources/data.csv";
-
     private static TradingAgent[] getTradingAgents() {
         final float defaultBalance = 10000.0f;
         final float defaultAssetAmount = 0.0f;
@@ -92,8 +90,23 @@ public class ReportCreatorTest {
 
     @Test
     void testReportWithRealCsvFile() {
+        String CSV_DATA_FILE = "src/main/resources/data.csv";
         File csvFile = new File(CSV_DATA_FILE);
         simulationManager.loadAndRunSimulation(csvFile);
+
+        String result = reportResult.getData();
+        System.out.println(result);
+        assertTrue(result.contains("Finalny Balans:   77162.25 PLN"));
+        assertTrue(result.contains("Zwrot (ROR):      10.23 %"));
+        assertTrue(result.contains("Max Drawdown:     -16.28 %"));
+        assertTrue(result.contains("Win Rate:         41.08 %"));
+    }
+
+    @Test
+    void testReportWithRealJsonFile() {
+        String JSON_DATA_FILE = "src/main/resources/data.json";
+        File jsonFile = new File(JSON_DATA_FILE);
+        simulationManager.loadAndRunSimulation(jsonFile);
 
         String result = reportResult.getData();
         System.out.println(result);
